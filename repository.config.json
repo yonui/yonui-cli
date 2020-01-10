@@ -1,0 +1,10 @@
+{
+    "js":{
+        "type": "git",
+        "url": "https://github.com/iuap-design/libraui-template.git"
+    },
+    "ts":{
+        "type": "git",
+        "url": "https://github.com/iuap-design/libraui-template.git"
+    }
+}
