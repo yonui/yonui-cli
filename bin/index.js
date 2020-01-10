@@ -23,9 +23,6 @@ const libra = () => {
 		.command('create [name]')
 		.description('create a component')
 		.action( (env, options) => {
-			// cli.createNewComponent();
-			// console.log(options)
-			// console.log(program.args)
 			const componentName = program.args[0];
 			if (componentName){
 				cli.createNewComponent(componentName);
