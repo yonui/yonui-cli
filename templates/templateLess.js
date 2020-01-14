@@ -1,4 +1,5 @@
-const outputCss = `* {
+module.exports = `
+* {
     box-sizing: border-box;
 }
 
@@ -7,9 +8,25 @@ const outputCss = `* {
     margin: auto;
     background: #ffffff;
     .viewer-title{
-        color: #313131;
-        font-size: 28px;
-        padding: 20px;
+        padding: 0 20px;
+        &-name{
+            color: #313131;
+            font-size: 28px;
+            
+        }
+        &-keyword{
+            margin: 0 0 0 5px;
+        }
+        &-version{
+            margin-left: 5px;
+            top: -8px;
+            line-height: 14px;
+        }
+        &-desc{
+            color: #313131;
+            font-size: 14px;
+            line-height: 30px;
+        }
     }
     .left-nav{
         display: inline-block;
@@ -44,8 +61,16 @@ const outputCss = `* {
         min-height: 300px;
         vertical-align: top;
         padding: 10px;
+        .right-content-type{
+            text-align: center;
+            margin: 5px;
+        }
         .content-item{
             margin-bottom: 10px;
+            border: 1px solid #F0F0F0;
+            padding: 16px;
+            border-radius: 6px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
             .content-title{
                 font-size: 18px;
                 color: rgba(66,66,66,1);
@@ -64,14 +89,5 @@ const outputCss = `* {
             }
         }
     }
-}`;
-const fse = require('fs-extra');
-const path = require('path');
-let templateLess = require('../../templates/templateLess');
-const writeCss = () => {
-    const outputFile = path.resolve('./.libraui/temp/temp.less');
-    fse.outputFileSync(outputFile, templateLess)
-    console.log('write less file at',outputFile);
 }
-
-module.exports = writeCss;
+`;

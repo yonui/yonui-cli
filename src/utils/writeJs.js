@@ -16,12 +16,6 @@ const writeJs = () => {
         const demoList = getDir(demoPath, 'file',{
             include: /(js)|(jsx)|(tsx)/
         });
-        // temp += `${comp}:[`;
-        // demoList.forEach((demo, demoIndex) => {
-        //     importDemos += `import ${comp}Demo${demoIndex} from '../.${demoPath}/index';\n`;
-        //     temp += `${comp}Demo${demoIndex},`
-        // })
-
         importDemos += `import ${comp} from '../.${demoPath}/index';\n`;
         temp += `${comp}, `;
         // temp += `],`;
