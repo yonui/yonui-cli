@@ -5,10 +5,12 @@ module.exports = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Demo</title>
+    <link href="./hightlight/styles/vs2015.css" rel="stylesheet" />
     @cssImport
 </head>
 <body>
     <div id='app'></div>
+    <script src='./hightlight/highlight.pack.js'></script>
     @scriptImport
     
 </body>

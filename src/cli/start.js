@@ -7,6 +7,7 @@ const devConfig = require('../utils/webpack.dev.config');
 const writeJs = require('../utils/writeJs');
 const writeHtml = require('../utils/writeHtml');
 const writeLess = require('../utils/writeLess');
+const writeResources = require('../utils/writeResources');
 const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
 const { getLibraConfig } = require('../utils');
@@ -18,6 +19,7 @@ const start = (flag = false) => {
         writeHtml();
         writeJs();
         writeLess();
+        writeResources();
     }
     const webpackConfig = webpackMerge(baseConfig(), devConfig())
     const compiler = webpack(webpackConfig);

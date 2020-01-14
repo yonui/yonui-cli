@@ -59,8 +59,19 @@ const getDir = (_path = '.', type = 'dir', config = {}) => {
     const arr = fse.readdirSync(path.resolve(_path));
     const isNeed = (item) => (!config.include || config.include.test(item)) && (!config.exclude || !config.exclude.test(item));
     switch (type) {
-        case 'file': return arr.filter(item => item.includes('.') && isNeed(item));
-        case 'dir': return arr.filter(item => !item.includes('.') && isNeed(item));
+        case 'file': return arr.filter(item => {
+            // console.log('---1');
+            // console.log(item);
+            // console.log(isNeed(item));
+            // console.log(item.includes('.') && isNeed(item))
+            return item.includes('.') && isNeed(item);
+        });
+        case 'dir': return arr.filter(item => {
+            // console.log('---');
+            // console.log(item);
+            // console.log(isNeed(item));
+            return !item.includes('.') && isNeed(item);
+        });
         case 'all': default: return arr;
     }
 }
