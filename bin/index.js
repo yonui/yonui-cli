@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 const program = require('commander');
 const cli = require('../src/cli');
-
+const cfg = require('../package.json');
 const libra = () => {
-	
-
 	program
-		.version('0.0.1', '-v, --version')
+		.version(cfg.version, '-v, --version')
 		.option('-C, --chdir <path>', 'change the working directory')
 		.option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
 		.option('-T, --no-tests', 'ignore test hook');
-
 
 	program
 		.command('init')
@@ -30,7 +27,6 @@ const libra = () => {
 			else {
 				program.help();
 			}
-			
 		})
 
 	program
@@ -44,8 +40,6 @@ const libra = () => {
 		.command('start')
 		.description('start')
 		.action((env, options) => {
-			console.log('start dev')
-			console.log(options);
 			if (options && options[0] === 'save') {
 				cli.start(true);
 			}
@@ -60,7 +54,6 @@ const libra = () => {
 		.action((env, options) => {
 			console.log('test info')
 		});
-
 		program.parse(process.argv);
 }
 
