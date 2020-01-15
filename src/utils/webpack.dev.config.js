@@ -3,7 +3,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const OpenBrowserWebpackPlugin = require('open-browser-webpack-plugin');
+const { getLibraConfig } = require('./index');
 const getEntryList = () => {
     let res = {};
     res.view = path.resolve('./.libraui/temp/temp.js');
@@ -22,6 +23,7 @@ const htmlConf = {
 
 
 const devConfig = () => {
+    const { port = 8090 } = getLibraConfig();
     return {
         entry: getEntryList(),
         output: {
@@ -31,6 +33,7 @@ const devConfig = () => {
         mode: 'development',
         devtool: 'inline-source-map',
         plugins: [
+            new OpenBrowserWebpackPlugin({url: `http://localhost:${port}`}),
             new CleanWebpackPlugin(),
             new HtmlWebPackPlugin(htmlConf),
             new MiniCssExtractPlugin({
