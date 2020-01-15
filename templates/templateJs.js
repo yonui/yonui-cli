@@ -78,7 +78,7 @@ export default class IndexView extends Component {
     }
 
     renderKeywords = ( keyword ) => {
-        const source = keyword.split(/\s+/);
+        const source = keyword.split(/\\s+/);
         return source.map( item => {
             return <Tag colors="info" className='viewer-title-keyword'>{item}</Tag>
         })
