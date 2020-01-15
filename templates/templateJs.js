@@ -14,6 +14,9 @@ import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
 import manifest from '../../manifest.json';
 import marded from 'marked';
+import Highlight from 'react-highlight';
+import Icon from 'bee-icon';
+import 'bee-icon/build/Icon.css';
 export default class IndexView extends Component {
     constructor(props) {
         super(props)
@@ -22,7 +25,8 @@ export default class IndexView extends Component {
             previewCode: '',
             showPreview: false,
             showCode: false,
-            selectedValue: 'demo'
+            selectedValue: 'demo',
+            openHashMap: {},
         }
     }
 
@@ -37,9 +41,9 @@ export default class IndexView extends Component {
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i])
         }
-        this.setState({
-            showCode: true
-        })
+        // this.setState({
+        //     showCode: true
+        // })
     }
 
     onSelectComp = (component) => {
@@ -74,7 +78,7 @@ export default class IndexView extends Component {
     }
 
     renderKeywords = ( keyword ) => {
-        const source = keyword.split(/s+/);
+        const source = keyword.split(/\s+/);
         return source.map( item => {
             return <Tag colors="info" className='viewer-title-keyword'>{item}</Tag>
         })
@@ -86,17 +90,31 @@ export default class IndexView extends Component {
         })
     }
 
+    onOpenCodePreview = ( index, bool ) => {
+        // if (index === false){
+        //     this.setState({
+        //         openHashMap: {}
+        //     })
+        // }
+        // else {
+            this.setState({
+                openHashMap: {...this.state.openHashMap,[index]: bool}
+            })
+        // }
+    }
+
     renderDemos = (temp, selected) => {
         if(!selected) return null;
         const demos = selected ? temp[selected] : temp[Object.keys(temp)[0]];
-        return demos.map(item => {
+        const { openHashMap } = this.state;
+        return demos.map((item,index) => {
             return (
                 <div className='content-item'>
                     <div className='content-title'>
                         {item.title}
-                        <Button className='content-title-btn' onClick={() => {this.openModal(resources[selected][item.fileName])}} colors='primary' size='sm'>
+                        {/* <Button className='content-title-btn' onClick={() => {this.openModal(resources[selected][item.fileName])}} colors='primary' size='sm'>
                             查看源码
-                        </Button>
+                        </Button> */}
                     </div>
                     <div className='content-desc'>
                         {item.desc}
@@ -104,6 +122,10 @@ export default class IndexView extends Component {
                     <div className='content-demo'>
                         <item.content />                        
                     </div>
+                    <div className='content-extra-icon' onClick={()=>{this.onOpenCodePreview(index, !openHashMap[index])}}>{openHashMap[index] ? <Icon type="uf-2arrow-up" /> : <Icon type="uf-2arrow-down" />}</div> 
+                    {openHashMap[index] && <Highlight className='javascript'>
+                        {resources[selected][item.fileName]}
+                    </Highlight>}
                 </div>
             )
         })
@@ -143,11 +165,11 @@ export default class IndexView extends Component {
                         name="type"
                         selectedValue={selectedValue}
                         onChange={this.handleChangeType}>
-                            <Radio.RadioButton value="demo">Demos</Radio.RadioButton>
-                            <Radio.RadioButton value="api">APIs</Radio.RadioButton>
+                            <Radio.RadioButton value="demo">示例</Radio.RadioButton>
+                            <Radio.RadioButton value="api">文档</Radio.RadioButton>
                         </Radio.RadioGroup>
                     </div>
-                    { selectedValue === 'demo' ? this.renderDemos(temp, selected)  :  this.renderApi(temp, selected)}
+                    { selectedValue === 'demo' ? this.renderDemos(temp, selected):this.renderApi(temp, selected)}
 
                 </div>
                 <Modal  show={showPreview} onHide = { this.closeModal } onEntered={this.highlightCode} style={sty} >

@@ -46,12 +46,12 @@ module.exports = `
             &:hover{
                 color: rgb(245, 60, 50);
                 cursor: pointer;
-                box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 
             }
             &-selected{
                 color: rgb(245, 60, 50);
-                box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
             }
         }
     }
@@ -68,9 +68,10 @@ module.exports = `
         .content-item{
             margin-bottom: 10px;
             border: 1px solid #F0F0F0;
-            padding: 16px;
+            padding: 16px 16px 0;
             border-radius: 6px;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+            color: #424242;
             .content-title{
                 font-size: 18px;
                 color: rgba(66,66,66,1);
@@ -85,9 +86,13 @@ module.exports = `
                 line-height: 30px;
             }
             .content-demo{
-
+                margin: 5px;
+            }
+            .content-extra-icon{
+                text-align: center;
             }
         }
     }
 }
+
 `;
