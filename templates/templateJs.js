@@ -6,8 +6,6 @@ import './temp.less';
 import resources from './resources.json';
 import Modal from 'bee-modal';
 import 'bee-modal/build/Modal.css';
-import Button from 'bee-button';
-import 'bee-button/build/Button.css';
 import Tag from 'bee-tag';
 import 'bee-tag/build/Tag.css'
 import Radio from 'bee-radio';
@@ -30,20 +28,11 @@ export default class IndexView extends Component {
         }
     }
 
-    componentDidMount(){
-    }
-
-    componentDidUpdate( ) {
-    }
-
     highlightCode = () => {
         const nodes = this.refs.hightlight.querySelectorAll('pre code');
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i])
         }
-        // this.setState({
-        //     showCode: true
-        // })
     }
 
     onSelectComp = (component) => {
@@ -91,16 +80,9 @@ export default class IndexView extends Component {
     }
 
     onOpenCodePreview = ( index, bool ) => {
-        // if (index === false){
-        //     this.setState({
-        //         openHashMap: {}
-        //     })
-        // }
-        // else {
-            this.setState({
-                openHashMap: {...this.state.openHashMap,[index]: bool}
-            })
-        // }
+        this.setState({
+            openHashMap: {...this.state.openHashMap,[index]: bool}
+        })
     }
 
     renderDemos = (temp, selected) => {
@@ -112,9 +94,6 @@ export default class IndexView extends Component {
                 <div className='content-item'>
                     <div className='content-title'>
                         {item.title}
-                        {/* <Button className='content-title-btn' onClick={() => {this.openModal(resources[selected][item.fileName])}} colors='primary' size='sm'>
-                            查看源码
-                        </Button> */}
                     </div>
                     <div className='content-desc'>
                         {item.desc}
@@ -141,7 +120,6 @@ export default class IndexView extends Component {
         return (
             <div className='demo-viewer'>
                 <div className='viewer-title'>
-                    
                     <div className='viewer-title-name'>
                         {manifest.name}
                         <Tag className='viewer-title-version' colors='light' bordered>{manifest.version}</Tag>
@@ -152,14 +130,11 @@ export default class IndexView extends Component {
                     <div className='viewer-title-desc'>
                         {manifest.description}
                     </div>
-                    
-
                 </div>
                 <div className='left-nav'>
                     {this.renderNav(temp)}
                 </div>
                 <div className='right-content'>
-                    
                     <div className='right-content-type'>
                         <Radio.RadioGroup
                         name="type"
@@ -170,7 +145,6 @@ export default class IndexView extends Component {
                         </Radio.RadioGroup>
                     </div>
                     { selectedValue === 'demo' ? this.renderDemos(temp, selected):this.renderApi(temp, selected)}
-
                 </div>
                 <Modal  show={showPreview} onHide = { this.closeModal } onEntered={this.highlightCode} style={sty} >
                     <Modal.Header closeButton>
