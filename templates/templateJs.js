@@ -1,43 +1,47 @@
-module.exports = `import React, { Component } from 'react';
+const path = require('path');
+module.exports = `
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-@importDemos
-@temp
-import './temp.less';
-import resources from './resources.json';
-import Modal from 'bee-modal';
-import 'bee-modal/build/Modal.css';
 import Tag from 'bee-tag';
 import 'bee-tag/build/Tag.css'
 import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
-import manifest from '../../manifest.json';
-import marded from 'marked';
-import Highlight from 'react-highlight';
 import Icon from 'bee-icon';
 import 'bee-icon/build/Icon.css';
+import manifest from '${path.resolve('./manifest.json')}';
+import resources from '${path.resolve('./.libraui/demo/resources.json')}';
+import marded from 'marked';
+import Highlight from 'react-highlight';
+import 'highlight.js/styles/github.css';
+import './index.less';
 export default class IndexView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selected: Object.keys(temp)[0] || '',
+            selected: '',
             previewCode: '',
             showPreview: false,
             showCode: false,
             selectedValue: 'demo',
             openHashMap: {},
+            selectedComp: {},
+            loadScript: false,
+            resources: []
         }
     }
 
-    highlightCode = () => {
-        const nodes = this.refs.hightlight.querySelectorAll('pre code');
-        for (let i = 0; i < nodes.length; i++) {
-            hljs.highlightBlock(nodes[i])
-        }
-    }
-
-    onSelectComp = (component) => {
+    componentDidMount(){
         this.setState({
-            selected: component
+            resources
+        })
+        this.onSelectComp(resources[0]);
+    }
+    
+    onSelectComp = (item) => {
+        this.loadScriptAndCss(item.path);
+        this.setState({
+            selected: item.component,
+            selectedComp: item
         })
     }
 
@@ -47,20 +51,14 @@ export default class IndexView extends Component {
             previewCode: content
         })
     }
-    closeModal = ( ) => {
-        this.setState({
-            showPreview: false,
-            showCode: false,
-        })
-    }
 
-    renderNav = (temp) => {
+    renderNav = (resources) => {
         const { selected } = this.state;
-        return Object.keys(temp).map(item => {
-            const cls = selected === item ? 'left-nav-item left-nav-item-selected' : 'left-nav-item';
+        return resources.map(item => {
+            const cls = selected === item.component ? 'left-nav-item left-nav-item-selected' : 'left-nav-item';
             return (
                 <div className={cls} onClick={() => { this.onSelectComp(item) }}>
-                    {item}
+                    {item.component}
                 </div>
             )
         })
@@ -69,14 +67,35 @@ export default class IndexView extends Component {
     renderKeywords = ( keyword ) => {
         const source = keyword.split(/\\s+/);
         return source.map( item => {
-            return <Tag colors="info" className='viewer-title-keyword'>{item}</Tag>
+            return <Tag colors='info' className='viewer-title-keyword'>{item}</Tag>
         })
     }
 
     handleChangeType= ( value ) => {
+        if(value === 'demo'){
+            const { selectedComp } = this.state;
+            this.loadScriptAndCss(selectedComp.path)
+        }
         this.setState({
             selectedValue: value
         })
+    }
+
+    // 动态加载组件中的demo文件
+    loadScriptAndCss = ( dir) => {
+        let script = document.createElement('script');
+            script.setAttribute('id','_demoJs');
+            script.setAttribute('type','text/javascript');
+            script.setAttribute('async',true);
+            script.setAttribute('src',\`\${dir}/index.js\`);
+            document.body.appendChild(script);
+
+            let link = document.createElement('link');
+            link.setAttribute('id','_demoCss');
+            link.setAttribute('type','text/css');
+            link.setAttribute('rel','stylesheet');
+            link.setAttribute('href',\`\${dir}/index.css\`);
+            document.head.appendChild(link);
     }
 
     onOpenCodePreview = ( index, bool ) => {
@@ -85,37 +104,43 @@ export default class IndexView extends Component {
         })
     }
 
-    renderDemos = (temp, selected) => {
-        if(!selected) return null;
-        const demos = selected ? temp[selected] : temp[Object.keys(temp)[0]];
-        const { openHashMap } = this.state;
-        return demos.map((item,index) => {
-            return (
-                <div className='content-item'>
+    renderDemos = () => {
+        // if(
+        const { selected, selectedComp, openHashMap, loadScript } = this.state;
+        const { demos } = selectedComp;
+        if (demos && demos.length > 0){
+            
+            return demos.map( (item,index) => {
+                return (
+                    <div className='content-item'>
                     <div className='content-title'>
-                        {item.title}
+                        {item.name}
                     </div>
                     <div className='content-desc'>
-                        {item.desc}
+                        {item.description}
                     </div>
                     <div className='content-demo'>
-                        <item.content />                        
+                        <div id={item.id}></div>
                     </div>
-                    <div className='content-extra-icon' onClick={()=>{this.onOpenCodePreview(index, !openHashMap[index])}}>{openHashMap[index] ? <Icon type="uf-2arrow-up" /> : <Icon type="uf-2arrow-down" />}</div> 
+                    <div className='content-extra-icon' onClick={()=>{this.onOpenCodePreview(index, !openHashMap[index])}}>{openHashMap[index] ? <Icon type='uf-2arrow-up' /> : <Icon type='uf-2arrow-down' />}</div> 
                     {openHashMap[index] && <Highlight className='javascript'>
-                        {resources[selected][item.fileName]}
+                        {item.code}
                     </Highlight>}
                 </div>
-            )
-        })
+                )
+            })
+        }
+       
+
     }
 
-    renderApi = ( temp, selected) => {
-        return <div dangerouslySetInnerHTML = {{__html:marded(resources[selected].API)}}  className='content-item'></div>
+    renderApi = ( ) => {
+        const { selectedComp } = this.state;
+        return <div dangerouslySetInnerHTML = {{__html:marded(selectedComp.readme)}}  className='content-item'></div>
     }
 
     render() {
-        const { selected, showPreview, previewCode, showCode, selectedValue } = this.state;
+        const { selected, showPreview, previewCode, showCode, selectedValue, resources } = this.state;
         const sty = showCode ? {} : { display: 'none' };
         return (
             <div className='demo-viewer'>
@@ -132,32 +157,20 @@ export default class IndexView extends Component {
                     </div>
                 </div>
                 <div className='left-nav'>
-                    {this.renderNav(temp)}
+                    {this.renderNav(resources)}
                 </div>
                 <div className='right-content'>
                     <div className='right-content-type'>
                         <Radio.RadioGroup
-                        name="type"
+                        name='type'
                         selectedValue={selectedValue}
                         onChange={this.handleChangeType}>
-                            <Radio.RadioButton value="demo">示例</Radio.RadioButton>
-                            <Radio.RadioButton value="api">文档</Radio.RadioButton>
+                            <Radio.RadioButton value='demo'>示例</Radio.RadioButton>
+                            <Radio.RadioButton value='api'>文档</Radio.RadioButton>
                         </Radio.RadioGroup>
                     </div>
-                    { selectedValue === 'demo' ? this.renderDemos(temp, selected):this.renderApi(temp, selected)}
+                    { selectedValue === 'demo' ? this.renderDemos(resources, selected):this.renderApi(resources, selected)}
                 </div>
-                <Modal  show={showPreview} onHide = { this.closeModal } onEntered={this.highlightCode} style={sty} >
-                    <Modal.Header closeButton>
-                    <Modal.Title>代码预览</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <pre ref='hightlight' >
-                            <code className='javascript'>
-                                {previewCode}
-                            </code>
-                        </pre>
-                    </Modal.Body>                    
-                </Modal>
             </div>
         )
     }

@@ -37,11 +37,6 @@ const creatNewProject = async (_args) => {
     await download(repositoryConfig[ans.codeMode], ans.project);
     let libraConfigJson = {...libraConfigTemplate, type: ans.codeMode};
     fse.outputFileSync(path.resolve(`./${ans.project}/libra.config.json`),JSON.stringify(libraConfigJson));
-    // packageJson.type = ans.codeMode;
-    // console.log(packageJson);
-    // fse.outputFileSync(path.resolve(`./${ans.project}/package.json')`),libraConfigJson);
-    // shell.mkdir(ans.project);
-
 }
 
 const download = async( config, folderName ) => {
@@ -57,7 +52,6 @@ const download = async( config, folderName ) => {
         case 'url':
         default:{
             const res = await getRemoteZip(url);
-            
             if (res.success) {
                 fse.createReadStream(`${filepath}/ucf-webapp-master.tmp`).pipe(unzipper.Extract({ path: filepath })).on('close', () => {
                     // 删除压缩包

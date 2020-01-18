@@ -1,24 +1,161 @@
-# libraui/cli脚手架
+# @libraui/cli命令行工具
 
-## 简介
-@libraui/cli是一个前端组件开发的脚手架工具，服务于组件组册中心。
+### 安装
 
-## 下载
-请确认你在本地全局安装了Node.js和ynpm，之后全局安装@libraui/cli
+在使用该命令行工具之前，需要全局安装ynpm
+
+``` js
+$ npm install ynpm-tool -g
 ```
-$ npm install @libraui/cli -g 
+
+之后，使用ynpm全局安装@libraui/cli命令行工具
+
+```js
+$ ynpm install @libraui/cli -g
 ```
 
-## 使用
+安装成功后，在命令行中输入`libra -v`可以查看版本。如下：
 
-- `libra init`
-新建一个新的组件库工程
+```js
+$ libra -v
+0.0.1
+```
+
+### 命令
+
+`@libraui/cli`命令行工具支持以下命令：
+
+- `libra init` 
+
+  在当前目录创建一个新的工程。在输入该命令后，将进入一个交互状态，提示输入工程名称等信息。
 
 - `libra create <name>`
-创建一个新的组件，name为必填项
+
+  进入工程目录，输入该命令可在`./components`目录下创建一个新的组件，组件名称`<name>`为必填项。
 
 - `libra start`
-在各个组件的`demos`目录下编写demo后，可以使用该命令启动本地预览。
+
+  在工程目录，输入该命令可将编写的demo打包并在浏览器中预览。
 
 - `libra build`
-构建项目，输出的`dist`目录下为整个组件库的编译压缩后的代码，`lib`目录下为每个组件转译之后的代码。
+
+  在工程目录，输入该命令可将组件代码打包成以下资源：
+
+  - `dist/` 整个组件库打包压缩后的代码。
+  - `lib/` 各个组件源码经过babel转译后的资源，可在源码中引入并使用。
+  - `demo/` 组件的demo文件打包后的代码，按组件为单元划分，用于注册中心中的组件预览页面。
+  - 其他如 `package.json` `readme.md`等文件
+
+- `libra publish[未完成]` 
+
+  在构建完成后，使用该命令将打包后的资源发布到组件注册中心。
+
+### 工程目录结构
+
+```js
+├── README.md
+├── components	// 组件库源码目录
+│   ├── Button
+│   │   ├── Button.js // 组件实现代码
+│   │   ├── README.md // 组件的描述、api说明等
+│   │   ├── demos // demo文件目录
+│   │   ├── img	// 图片资源目录
+│   │   ├── index.js // 组件对外暴露的出口
+│   │   └── style // 组件样式目录
+│   │       ├── index.js // 样式的导入导出，无需修改
+│   │       └── index.less // 组件样式
+│   ├── _style  // 公共样式目录
+│   │   └── index.less // 定义样式变量、编写公共样式等
+│   └── _utils  // 公共方法目录
+├── libra.config.json // 开发配置文件
+├── manifest.json // 组件库描述文件
+├── package.json
+├── static // 静态资源目录
+│   └── hightlight
+│       ├── highlight.pack.js
+│       └── styles
+└── tsconfig.json
+```
+
+### 注意事项
+
+- 编写组件时组件代码中无需手动引入样式文件
+
+  执行`libra build` 时，会从`./components/<Component>/index.js`打包js文件，从`./components/<Component>/style/index.js`打包样式文件，生成的结果中js代码和css代码分离。
+
+  因此，在编写demo的过程中，需要有以下代码以保证demo中的样式正确：
+
+   ```js
+  ...
+  import MyComponent from '../index'; // 引入组件代码
+  import '../style'; // 引入组件样式代码
+  import './index.less'; // 引入demo文件的样式代码
+  ...
+   ```
+
+- demo代码的注释标识
+
+  在每个demo代码中，需要在开头用注释描述该demo的信息。如：
+
+  ```js
+  /**
+   * @name: Button组件的基本使用
+   * @description: Button组件使用size属性控制大小，使用colors属性控制主题色。
+   */
+  ```
+
+  以上将在预览页面渲染成对应的元素，因此不可忽略。
+
+### 使用案例
+
+以下将描述整个流程：
+
+- 安装工具
+
+  使用`ynpm install @libraui/cli -g`全局安装命令行工具。
+
+- 创建工程
+
+  在需要的目录，打开命令行，键入`libra init`命令，输入工程名、作者名、编码类型(js or ts)，创建新的工程。
+
+  ```js
+  $ libra init
+  ? Project Name: Demo
+  ? Author: Hyj
+  ? Use JavaScript or TypeScript: ts
+  正克隆到 'libraui-template'...
+  ```
+
+- 创建组件
+
+  进入工程目录，先安装依赖（推荐使用 `ynpm install`）。之后使用`create`命令创建组件，假设组件名为MyComponent。**禁止使用下划线开头，建议组件统一为大驼峰命名。**
+
+  ```js
+  $ cd Demo
+  $ ynpm install
+  ...
+  $ libra create MyComponent
+  ...Component MyComponent was successfully created.
+  ```
+
+- 编码
+
+  在组件对应的目录下编码，建议将组件代码写在单独的文件中如`MyComponent.js`中，通过`index.js`作为统一的出口对外暴露。组件的样式文件写在`./components/MyComponent/sytle/index.less`文件中，公共样式代码写在`./components/_style/index.less`中。**js代码中无需手动引入样式文件。**
+
+  编码demo时，参考*注意事项*。
+
+- 本地预览
+
+  在工程目录下，执行`libra start`命令启动本地预览。
+
+  ```js
+  $ libra start
+  ...
+  ```
+
+- 打包发布
+
+  在工程目录下，执行`libra build`命令将打包组件库文件，再执行`libra publish`命令发布组件库。
+
+  后续将提供一个符合命令完成打包发布。
+

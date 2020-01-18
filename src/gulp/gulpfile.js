@@ -21,7 +21,7 @@ task('hello', done => {
 
 // 转译js代码
 task('javascript', done => {
-    return src([jsSource,path.resolve(`${sourcePath}/index.{tsx,js}`)])
+    return src([jsSource,path.resolve(`${sourcePath}/**/*.{tsx,js}`)])
         .pipe(gulpBabel({
             "presets": [
                 resolve("@babel/preset-env"),
