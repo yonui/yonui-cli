@@ -1,7 +1,7 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const { getDir, getLibraConfig } = require('./index');
+const { getDir, getLibraConfig, getManifestJson } = require('./index');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fse = require('fs-extra');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -21,45 +21,45 @@ const getEntryList = (libName) => {
         return res;
     })
     
-    res[libName] = [path.resolve(`${sourcePath}/index.${suffixType}`),...styleList];
-    // res['style'] = styleList;
-    console.log(res);
+    // res[libName] = [path.resolve(`${sourcePath}/index.${suffixType}`),...styleList];
+    res[libName] = path.resolve(`./.libraui/temp/build/index.js`);
     return res;
 }
 
 const buildConfig = () => {
-    const manifestJson = fse.readJsonSync(path.resolve('./manifest.json'));
+    const manifestJson = getManifestJson();
     const libName = manifestJson.name;
     return {
         entry: getEntryList(libName),
         mode: 'development',
         output: {
-            filename: 'index.js',
+            filename: '[name].js',
             path: path.resolve('./.libraui/dist'),
             libraryTarget: "umd",
             library:'__[name]__',
+            libraryExport: 'default',
             globalObject: 'this',
         },
         devtool: 'source-map',
         plugins: [
             new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
-                filename: 'index.css',
-                chunkFilename: 'index.css'
+                filename: '[name].css',
+                chunkFilename: '[name].css'
             }),
-            new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {
-                    safe: true,
-                    mergeLonghand: false,
-                    discardComments: { removeAll: true }
-                },
-                canPrint: true
-            }),
-            new TerserPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: true
-            }),
+            // new OptimizeCSSAssetsPlugin({
+            //     cssProcessorOptions: {
+            //         safe: true,
+            //         mergeLonghand: false,
+            //         discardComments: { removeAll: true }
+            //     },
+            //     canPrint: true
+            // }),
+            // new TerserPlugin({
+            //     cache: true,
+            //     parallel: true,
+            //     sourceMap: true
+            // }),
         ],
         
     }

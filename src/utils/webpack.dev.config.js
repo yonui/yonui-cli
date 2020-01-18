@@ -7,23 +7,21 @@ const OpenBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const { getLibraConfig } = require('./index');
 const getEntryList = () => {
     let res = {};
-    res.view = path.resolve('./.libraui/temp/temp.js');
+    res.view = path.resolve('./.libraui/temp/view/index.js');
     return res;
 }
 
 const htmlConf = {
     filename: `index.html`,
-    // template: path.join(__dirname, '../templates/view.html'),
-    template: path.resolve('./.libraui/temp/temp.html'),
+    template: path.resolve('./.libraui/temp/view/index.html'),
     inject: 'body',
-    // chunks: ["index"],
     hash: true
 };
 
 
 
-const devConfig = () => {
-    const { port = 8090 } = getLibraConfig();
+const devConfig = ( port=8090 ) => {
+    // const { port = 8090 } = getLibraConfig();
     return {
         entry: getEntryList(),
         output: {

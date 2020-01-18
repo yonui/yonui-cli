@@ -46,15 +46,6 @@ const getRemoteZip = (url) => {
     });
 }
 
-// const getDir = (_path = '.', type = 'dir',  exclude = {}) => {
-//     console.log(path.resolve(_path));
-//     const arr = fse.readdirSync(path.resolve(_path));
-//     switch (type) {
-//         case 'file': return arr.filter(item => item.includes('.'));
-//         case 'dir': return arr.filter(item => !(item.includes('.') || exclude[item]));
-//         case 'all': default: return arr;
-//     }
-// }
 const getDir = (_path = '.', type = 'dir', config = {}) => {
     const arr = fse.readdirSync(path.resolve(_path));
     const isNeed = (item) => (!config.include || config.include.test(item)) && (!config.exclude || !config.exclude.test(item));
@@ -91,10 +82,16 @@ const getLibraConfig = () => {
     const suffixType = type === 'ts' ? 'tsx' : 'js';
     return { ...configJson, suffixType };
 }
+
+const getManifestJson = () => {
+    let manifestJson = fse.readJsonSync(path.resolve('./manifest.json'));
+    return manifestJson;
+}
 module.exports = {
     download,
     getRemoteZip,
     getDir,
     getLib,
-    getLibraConfig
+    getLibraConfig,
+    getManifestJson
 }

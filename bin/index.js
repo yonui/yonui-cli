@@ -15,13 +15,13 @@ const libra = () => {
 		.action(() => {
 			cli.create();
 		});
-	
+
 	program
 		.command('create [name]')
 		.description('create a component')
-		.action( (env, options) => {
+		.action((env, options) => {
 			const componentName = program.args[0];
-			if (componentName){
+			if (componentName) {
 				cli.createNewComponent(componentName);
 			}
 			else {
@@ -40,21 +40,25 @@ const libra = () => {
 		.command('start')
 		.description('start')
 		.action((env, options) => {
-			if (options && options[0] === 'save') {
-				cli.start(true);
-			}
-			else {
-				cli.start();
-			}
+			let port = 8090;
+			let args = program.args;
+			args.forEach( item => {
+				
+				if( /port=/.test(item)){
+					port = item.match(/^port=(\d+)$/)[1];
+				}
+			})
+			cli.start(port);
 		});
 
 	program
 		.command('clg')
+		// .option("--c", "cc")
 		.description('test console.log')
 		.action((env, options) => {
 			console.log('test info')
 		});
-		program.parse(process.argv);
+	program.parse(process.argv);
 }
 
 libra();
