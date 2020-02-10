@@ -14,6 +14,7 @@ import marded from 'marked';
 import Highlight from 'react-highlight';
 import 'highlight.js/styles/github.css';
 import './index.less';
+import cb from '@mdf/cube/lib/cube';
 export default class IndexView extends Component {
     constructor(props) {
         super(props)
