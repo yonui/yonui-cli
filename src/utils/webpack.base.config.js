@@ -15,18 +15,24 @@ const defaultLib = [{
 },]
 module.exports = () => {
     // const entryList = getEntryList();
-    const { lib } = getLibraConfig();
+    const { lib,sourcePath } = getLibraConfig();
     let externals = {};
     lib.concat(defaultLib).forEach(item => {
         externals[item.key] = item.value;
     })
+    // console.log('---------------------')
+    // console.log(path.resolve(sourcePath,'_style'));
     return {
         // entry: entryList,
 
         externals: externals,
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
-            extensions: [".ts", ".tsx", ".js", ".json"]
+            extensions: [ ".js",".ts", ".tsx", ".json"], // 影响import的优先级
+            alias:{
+                '_style': path.resolve(sourcePath,'_style'),
+                '_utils': path.resolve(sourcePath,'_utils')
+            }
         },
         module: {
             rules: [
@@ -45,16 +51,11 @@ module.exports = () => {
                                 ],
                                 "plugins": [
                                     [require.resolve('@babel/plugin-transform-modules-commonjs')],
-                                    [require.resolve('@babel/plugin-proposal-class-properties'), { "legacy": true }]
+                                    [require.resolve('@babel/plugin-proposal-class-properties'), { "legacy": true }],
+                                    ["import", { "libraryName": "@libraui/base-mobile", "libraryDirectory": "lib/components"}, "@libraui/base-mobile"]
                                 ]
                             }
                         },
-                        // {
-                        //     loader: require.resolve('ts-loader'),
-                        //     options: {
-                        //         "noEmit": false
-                        //     }
-                        // },
                     ]
                 },
                 {
