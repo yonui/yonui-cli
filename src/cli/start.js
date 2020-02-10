@@ -15,13 +15,25 @@ const { getLibraConfig } = require('../utils');
 const express = require('express');
 const app = new express();
 
-const buildDemo = () => {
-    
+const buildDemo = () => { 
     const webpackConfig = webpackMerge(baseConfig(),demoConfig());
     const compiler = webpack(webpackConfig);
-    compiler.run( (err, status) => {
-        // console.log(status);
-    })
+    const instance = devMiddleware(compiler, {
+        publicPath: webpackConfig.output.publicPath,
+        logTime: true,
+        logLevel: "info",
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        },
+        stats: {
+            colors: true,
+            hash: false,
+            children: false,
+            chunks: false
+        }
+    });
+
+    app.use(instance);
 }
 const start = (port) => {
     writeResources();
@@ -40,6 +52,11 @@ const start = (port) => {
     //     compiler.run();
     //     return;
     // }
+
+
+    // compiler.run();
+    // return;
+
     const instance = devMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
         logTime: true,
