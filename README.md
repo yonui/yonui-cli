@@ -1,17 +1,11 @@
-# @libraui/cli命令行工具
+# libraui-cli 命令行工具
 
 ### 安装
 
-在使用该命令行工具之前，需要全局安装ynpm
-
-``` js
-$ npm install ynpm-tool -g
-```
-
-之后，使用ynpm全局安装@libraui/cli命令行工具
+全局安装libraui-cli命令行工具
 
 ```js
-$ ynpm install @libraui/cli -g
+$ npm install libraui-cli -g
 ```
 
 安装成功后，在命令行中输入`libra -v`可以查看版本。如下：
@@ -23,7 +17,7 @@ $ libra -v
 
 ### 命令
 
-`@libraui/cli`命令行工具支持以下命令：
+`libraui-cli`命令行工具支持以下命令：
 
 - `libra init` 
 
@@ -112,7 +106,7 @@ $ libra -v
 
 - 安装工具
 
-  使用`ynpm install @libraui/cli -g`全局安装命令行工具。
+  使用`npm install libraui-cli -g`全局安装命令行工具。
 
 - 创建工程
 
@@ -128,11 +122,11 @@ $ libra -v
 
 - 创建组件
 
-  进入工程目录，先安装依赖（推荐使用 `ynpm install`）。之后使用`create`命令创建组件，假设组件名为MyComponent。**禁止使用下划线开头，建议组件统一为大驼峰命名。**
+  进入工程目录，先安装依赖（推荐使用 `npm install`）。之后使用`create`命令创建组件，假设组件名为MyComponent。**禁止使用下划线开头，建议组件统一为大驼峰命名。**
 
   ```js
   $ cd Demo
-  $ ynpm install
+  $ npm install
   ...
   $ libra create MyComponent
   ...Component MyComponent was successfully created.
