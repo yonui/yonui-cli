@@ -5,11 +5,9 @@ const inquirer = require('inquirer');
 const path = require('path');
 const fse = require('fs-extra');
 const shell = require('shelljs');
-const unzipper = require('unzipper');
-const { getRemoteZip } = require('../utils');
-const repositoryConfig = require('../../repository.config.json');
 const codeMode = ['js','ts'];
-const libraConfigTemplate = require('../../templates/libra.config.json')
+const libraConfigTemplate = require('../../templates/templateConfig');
+const url = `https://github.com/iuap-design/libraui-template.git`;
 const creatNewProject = async (_args) => {
     // 输入相关的配置参数
     const ans = await inquirer.prompt([
@@ -34,34 +32,17 @@ const creatNewProject = async (_args) => {
         },
     ]);
 
-    await download(repositoryConfig[ans.codeMode], ans.project);
-    let libraConfigJson = {...libraConfigTemplate, type: ans.codeMode};
-    fse.outputFileSync(path.resolve(`./${ans.project}/libra.config.json`),JSON.stringify(libraConfigJson));
+    await download( ans.project);
+    // let libraConfigJson = {...libraConfigTemplate, type: ans.codeMode};
+    let libraConfigJson = libraConfigTemplate.replace('@type',ans.codeMode)
+    fse.outputFileSync(path.resolve(`./${ans.project}/libra.config.json`),libraConfigJson);
 }
 
-const download = async( config, folderName ) => {
-    const { type, url } = config;
+const download = async( folderName ) => {
     const filepath = path.resolve('.');
-    switch(type){
-        case 'git':{
-            await shell.exec(`git clone ${url}`);
-            await fse.remove(`${filepath}/libraui-template/.git`);
-            await fse.renameSync(`${filepath}/libraui-template`,`${filepath}/${folderName}`);
-            break;
-        }
-        case 'url':
-        default:{
-            const res = await getRemoteZip(url);
-            if (res.success) {
-                fse.createReadStream(`${filepath}/ucf-webapp-master.tmp`).pipe(unzipper.Extract({ path: filepath })).on('close', () => {
-                    // 删除压缩包
-                    fse.remove(`${filepath}/ucf-webapp-master.tmp`);
-                    fse.renameSync(`${filepath}/ucf-webapp-master`,`${filepath}/${folderName}`);
-                });
-                console.log('Complete!')
-            }
-        }
-    }
+    await shell.exec(`git clone ${url}`);
+    await fse.remove(`${filepath}/libraui-template/.git`);
+    await fse.renameSync(`${filepath}/libraui-template`,`${filepath}/${folderName}`);
 }
 
 module.exports = creatNewProject;
