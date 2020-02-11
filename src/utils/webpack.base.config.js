@@ -28,7 +28,7 @@ module.exports = () => {
         externals: externals,
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
-            extensions: [ ".js",".ts", ".tsx", ".json"], // 影响import的优先级
+            extensions: [ ".js",".jsx",".ts", ".tsx", ".json"], // 影响import的优先级
             alias:{
                 '_style': path.resolve(sourcePath,'_style'),
                 '_utils': path.resolve(sourcePath,'_utils')
