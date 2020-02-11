@@ -27,4 +27,7 @@ jobs:
     - run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-    - run: npm i -g ynpm-tool && ynpm sync tinper-libraui
+    - name: Sync ynpm
+      uses: 'iuap-design/actions-ynpm-sync@master'
+      with:
+        package-name: 'libraui-cli'
