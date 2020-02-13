@@ -90,10 +90,10 @@ $ libra -v
 
 ```json
 {
-	key: 'react', // 对应webpack中externals属性的key值
-  value: 'React', // 对应webpack中externals属性的value值
-  js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',  // 在本地预览时js代码的cdn地址
-  css: '',  // 在本地预览时css代码的cdn地址
+	"key": "react", // 对应webpack中externals属性的key值
+  "value": "React", // 对应webpack中externals属性的value值
+  "js": "//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js",  // 在本地预览时js代码的cdn地址
+  "css": "",  // 在本地预览时css代码的cdn地址
 }
 ```
 
