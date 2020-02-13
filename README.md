@@ -71,6 +71,76 @@ $ libra -v
 └── tsconfig.json
 ```
 
+### 文件说明
+
+#### libra.config.json
+
+描述组件库在开发过程中的相关配置。
+
+| 字段名称     | 说明                                                         | 默认值         |
+| ------------ | ------------------------------------------------------------ | -------------- |
+| port         | 启动本地预览时的端口号                                       | "8090"         |
+| autoTemplate | 启动本地预览时，是否自动生成预览框架                         | true           |
+| sourcePath   | 组件库中组件源码所在目录                                     | "./components" |
+| type         | 组件库使用的是js代码还是ts代码                               | "js"           |
+| lib          | 组件库依赖的组件库，在此配置后将在构建中排除，并可通过配置加入cdn地址以在预览时引入 | []             |
+| extraImport  | 本地预览时额外导入的js/css文件                               | -              |
+
+其中，工具中已经默认将react、react-dom作为依赖库，且不可修改，如对`react`的描述为：
+
+```json
+{
+	key: 'react', // 对应webpack中externals属性的key值
+  value: 'React', // 对应webpack中externals属性的value值
+  js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',  // 在本地预览时js代码的cdn地址
+  css: '',  // 在本地预览时css代码的cdn地址
+}
+```
+
+extraImport属性中js和css属性的值均为字符串形式，需要注意对引号的转译，示例如下：
+
+```js
+{
+  "js": "<script src=\"//design.yonyoucloud.com/static/console-polyfill/console-polyfill.js\"></script><script src=\"//design.yonyoucloud.com/static/es5-shim/es5-shim.min.js\"></script>",
+  "css": "<link href=\"./index.css\" rel=\"stylesheet\">"
+}
+```
+
+#### manifest.json
+
+描述了组件库整体的信息
+
+| 字段名称    | 说明                                                         |
+| ----------- | ------------------------------------------------------------ |
+| name        | 开发的组件库的名称，且在组件打包后可以通过`__[name]__`的形式注入到全局对象中 |
+| version     | 组件库的版本                                                 |
+| keyword     | 组件库的关键字                                               |
+| description | 对组件库的描述、介绍                                         |
+| components  | 描述了组件库中打包后组件的结构。可通过此属性灵活配置需要打包的组件、组件的结构关系。 |
+
+一个文件示例如下：
+
+```json
+{
+    "name":"Libra",
+    "version": "0.0.1",
+    "keyword": "demo library libra",
+    "themes": "A demo component library.",
+    "description": "metaui-mobile组件库",
+    "components": {
+        "basic": {
+          "Col": "./components/Col",
+          "Row": "./components/Row"
+        },
+        "other": {
+          "Button": "./components/Button",
+        }
+    }
+}
+```
+
+若使用`libra build`命令打包，则可以直接在页面中引入打包后的js文件，使用`__Libra__.basic.Col`去使用`Col`组件，也可以npm发包或直接引用dist文件等方式使用。
+
 ### 注意事项
 
 - 编写组件时组件代码中无需手动引入样式文件
