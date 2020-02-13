@@ -51,8 +51,7 @@ module.exports = () => {
                                 ],
                                 "plugins": [
                                     [require.resolve('@babel/plugin-transform-modules-commonjs')],
-                                    [require.resolve('@babel/plugin-proposal-class-properties'), { "legacy": true }],
-                                    ["import", { "libraryName": "@libraui/base-mobile", "libraryDirectory": "lib/components"}, "@libraui/base-mobile"]
+                                    [require.resolve('@babel/plugin-proposal-class-properties'), { "legacy": true }]
                                 ]
                             }
                         },
