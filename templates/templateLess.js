@@ -87,6 +87,9 @@ module.exports = `
             }
             .content-demo{
                 margin: 5px;
+                width: 375px;
+                height: 667px;
+                border: 1px solid #000000;
             }
             .content-extra-icon{
                 text-align: center;
