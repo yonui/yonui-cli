@@ -27,7 +27,8 @@ const buildDemo = () => {
 
 // 产出lib文件
 const buildLib = () => {
-    runGulp(['javascript','less','css','img']);
+    // runGulp(['javascript','less','css','img']);
+    runGulp(['build']);
 }
 
 // 产出其他文件，如package.json等
