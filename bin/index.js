@@ -44,6 +44,7 @@ const libra = () => {
 		.action((env, options) => {
 			let port;
 			let args = program.args;
+			process.env.NODE_ENV = "development";
 			args.forEach( item => {
 				
 				if( /port=/.test(item)){
