@@ -77,7 +77,6 @@ const getLib = () => {
 
 const getLibraConfig = (  ) => {
     const isDev = process.env.NODE_ENV === "development";
-    console.log(process.env.NODE_ENV)
     const filePath = path.resolve('./libra.config.json');
     const overridePath = path.resolve('./libra.config.override.json');
     let configJson = {};
@@ -102,7 +101,6 @@ const getLibraConfig = (  ) => {
 
 const getManifestJson = ( ) => {
     const isDev = process.env.NODE_ENV === "development";
-    console.log(isDev)
     const filePath = path.resolve('./manifest.json');
     const overridePath = path.resolve('./manifest.override.json');
     if( isDev && fse.existsSync(overridePath)){
