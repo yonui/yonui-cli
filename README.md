@@ -223,3 +223,19 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
 
   后续将提供一个符合命令完成打包发布。
 
+### 更新日志
+
+- 0.1.12
+  - 支持在.libraui/dist目录下产出manifest.json文件
+  - 修改了预览框架的背景色为#eee
+  - `<html>`标签添加属性`font-size=50px`
+  - 解决生成lib目录时由于别名配置、引用第三方包等导致的打包错误
+  - 解决了使用`libra create <name>`创建demo时`style/idnex.js`中重复引入全局less文件的问题
+
+- 0.1.13
+  - libra.config.json和manifest.json文件支持override
+    开发过程中，为避免对libra.config.json和manifest.json的提交，现支持以下功能：在读取配置信息时，优先获取manifest.override.json的信息，其次获取manifest.json的信息，否则报错，libra.config.json文件同理。
+  
+  - libra build修改
+    执行`libra build -p`或`libra build --prod`时不会获取*.override.json文件的信息
+
