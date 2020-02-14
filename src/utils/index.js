@@ -75,17 +75,46 @@ const getLib = () => {
     return [...defaultLib, ...lib]
 }
 
-const getLibraConfig = () => {
-    // let config = require(path.resolve('./libra.config.js'));
-    let configJson = fse.readJsonSync(path.resolve('./libra.config.json'));
+const getLibraConfig = (  ) => {
+    const isDev = process.env.NODE_ENV === "development";
+    console.log(process.env.NODE_ENV)
+    const filePath = path.resolve('./libra.config.json');
+    const overridePath = path.resolve('./libra.config.override.json');
+    let configJson = {};
+    if(isDev && fse.existsSync(overridePath)){
+        console.log('exist,use override file',overridePath)
+        configJson = fse.readJsonSync(overridePath);
+    }
+    else if(fse.existsSync(filePath)){
+        console.log('exist,use file',overridePath)
+        configJson = fse.readJsonSync(filePath);
+    }
+    else {
+        console.log("Missing file: libra.config.json ")
+        process.exit(0);
+    }
+
     const { type } = configJson;
     const suffixType = type === 'ts' ? 'tsx' : 'js';
     return { ...configJson, suffixType };
 }
 
-const getManifestJson = () => {
-    let manifestJson = fse.readJsonSync(path.resolve('./manifest.json'));
-    return manifestJson;
+
+const getManifestJson = ( ) => {
+    const isDev = process.env.NODE_ENV === "development";
+    console.log(isDev)
+    const filePath = path.resolve('./manifest.json');
+    const overridePath = path.resolve('./manifest.override.json');
+    if( isDev && fse.existsSync(overridePath)){
+        return fse.readJsonSync(overridePath);
+    }
+    else if(fse.existsSync(filePath)){
+        return fse.readJsonSync(filePath);
+    }
+    else {
+        console.log("Missing file: manifest.json ")
+        process.exit(0);
+    }
 }
 module.exports = {
     download,
