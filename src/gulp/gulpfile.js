@@ -1,9 +1,10 @@
 const gulp = require('gulp');
 const path = require('path');
-const { task, src, dest } = gulp;
+const { task, src, dest, series, parallel } = gulp;
 const gulpBabel = require('gulp-babel');
 const gulpLess = require('gulp-less');
 const { getLibraConfig } = require('../utils')
+const replace = require('gulp-replace');
 // const gulpRename = require('gulp-rename');
 // const gulpCleanCss = require('gulp-clean-css');
 const { sourcePath } = getLibraConfig();
@@ -14,6 +15,7 @@ const dist = path.resolve('./.libraui/lib');
 const lessSource = path.resolve(`${basePath}{style/,}index.less`);
 const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico}`)
 const extraSource = path.resolve('./{package.json,*.md}');
+const writeManifest = require('../utils/writeManifest');
 task('hello', done => {
     console.log('hello world');
     done();
@@ -46,7 +48,8 @@ task('less', done => {
 // less生成css文件
 task('css', done => {
     return src(lessSource)
-        .pipe(gulpLess())
+        .pipe(replace('~_style',path.resolve(sourcePath,'_style')) )
+        .pipe(gulpLess({'javascriptEnabled':true}))
         .pipe(dest(dist))
 })
 
@@ -62,3 +65,8 @@ task('extra',done => {
     .pipe(dest(path.resolve('./.libraui')))
 })
 
+task('manifest', done => {
+    writeManifest();
+    done();
+})
+task('build', parallel(series('javascript','manifest'),'less', 'css', 'img'));
