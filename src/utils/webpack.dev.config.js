@@ -21,7 +21,6 @@ const htmlConf = {
 
 
 const devConfig = ( port=8090 ) => {
-    // const { port = 8090 } = getLibraConfig();
     return {
         entry: getEntryList(),
         output: {

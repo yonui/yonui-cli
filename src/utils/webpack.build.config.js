@@ -8,29 +8,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 /**
  * 根据libra.config.js中的参数判断入口文件
  */
-const getEntryList = (libName) => {
-    const { sourcePath , bootList = true, suffixType} = getLibraConfig();
-    let res = {};
-   console.log('xxxx',suffixType)
-    const compList = getDir(`${sourcePath}`, 'dir', {
-        exclude: /(_style)|(_utils)/
-    })
-    // console.log(compList)
-    const styleList = compList.map( item => {
-        const res = path.resolve(`${sourcePath}/${item}/style/index.${suffixType}`);
-        return res;
-    })
-    
-    // res[libName] = [path.resolve(`${sourcePath}/index.${suffixType}`),...styleList];
-    res[libName] = path.resolve(`./.libraui/temp/build/index.js`);
-    return res;
-}
 
 const buildConfig = () => {
     const manifestJson = getManifestJson();
     const libName = manifestJson.name;
     return {
-        entry: getEntryList(libName),
+        entry: {
+            [libName]: path.resolve(`./.libraui/temp/build/index.js`)
+        },
         mode: 'development',
         output: {
             filename: '[name].js',

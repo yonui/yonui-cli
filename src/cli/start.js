@@ -35,18 +35,18 @@ const buildDemo = () => {
 
     app.use(instance);
 }
-const start = (port) => {
+const start = (cmdPort) => {
     writeResources();
     buildDemo();
-    const { autoTemplate } = getLibraConfig();
+    const { autoTemplate, port } = getLibraConfig();
     if (autoTemplate) {
         writeViewHtml();
         writeViewJs();
         writeViewLess();
     }
-    const webpackConfig = webpackMerge(baseConfig(), devConfig(port))
+    const _port = cmdPort ? cmdPort : port;
+    const webpackConfig = webpackMerge(baseConfig(), devConfig(_port))
     const compiler = webpack(webpackConfig);
-    console.log('xxx')
     // if (flag) {
     //     console.log('flag')
     //     compiler.run();
@@ -78,8 +78,8 @@ const start = (port) => {
     app.use(instance);
     // 热更新
     app.use(hotMiddleware(compiler));
-    app.listen(port, () => {
-        console.log(`start server at port ${port}`);
+    app.listen(_port, () => {
+        console.log(`start server at port ${_port}`);
     });
 }
 

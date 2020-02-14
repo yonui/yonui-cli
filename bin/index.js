@@ -32,7 +32,9 @@ const libra = () => {
 	program
 		.command('build')
 		.description('build')
+		.option("-p,--prod")
 		.action((env, options) => {
+			process.env.NODE_ENV = env.prod ? "production" : "development";
 			cli.build();
 		});
 
@@ -40,7 +42,7 @@ const libra = () => {
 		.command('start')
 		.description('start')
 		.action((env, options) => {
-			let port = 8090;
+			let port;
 			let args = program.args;
 			args.forEach( item => {
 				
