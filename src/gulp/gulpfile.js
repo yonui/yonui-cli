@@ -8,7 +8,7 @@ const replace = require('gulp-replace');
 // const gulpRename = require('gulp-rename');
 // const gulpCleanCss = require('gulp-clean-css');
 const { sourcePath } = getLibraConfig();
-const basePath = `${sourcePath}/*/`;
+const basePath = `${sourcePath}/**/`;
 const resolve = (module) => require.resolve(module);
 const jsSource = path.resolve(`${basePath}{*,style/*}.{tsx,js}`);
 const dist = path.resolve('./.libraui/lib');
@@ -47,11 +47,37 @@ task('less', done => {
 
 // less生成css文件
 task('css', done => {
-    return src(lessSource)
-        .pipe(replace('~_style',path.resolve(sourcePath,'_style')) )
-        .pipe(gulpLess({'javascriptEnabled':true}))
+    console.log('css')
+    return src(path.resolve('.libraui/temp/less/**/*.less'))
+        // .pipe(replace('~_style','_style'))
+        // .pipe(replace('~antd-mobile','antd-mobile'))
+        .pipe(gulpLess({'javascriptEnabled':true,
+    paths: [ path.resolve('node_modules'), path.resolve('.libraui/temp/less')],}))
         .pipe(dest(dist))
 })
+
+
+
+task('changeLess',() => {
+    return src([path.resolve('src/components/**/*.less'), path.resolve('src/components/**/*.css')])
+    .pipe(replace(/(~_style)|~antd-mobile/gi, ( match )=> {
+      console.log('----    ',match)
+      switch(match){
+        case '~antd-mobile': {
+          return 'antd-mobile';
+        }
+        case '~_style': {
+          return '_style';
+        }
+        default: {
+          return match;
+        }
+      }
+      
+    }))
+    .pipe(dest(path.resolve('.libraui/temp/less')))
+  })
+
 
 // 复制图片文件
 task('img', done => {
@@ -69,4 +95,4 @@ task('manifest', done => {
     writeManifest();
     done();
 })
-task('build', parallel(series('javascript','manifest'),'less', 'css', 'img'));
+task('build', parallel(series('javascript','manifest'),series('changeLess','css'), 'img'));
