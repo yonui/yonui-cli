@@ -40,9 +40,9 @@ $ libra -v
   - `demo/` 组件的demo文件打包后的代码，按组件为单元划分，用于注册中心中的组件预览页面。
   - 其他如 `package.json` `readme.md`等文件
 
-- `libra publish[未完成]` 
+- `libra compress` 
 
-  在构建完成后，使用该命令将打包后的资源发布到组件注册中心。
+  在构建完成后，使用该命令将打包后的多个资源压缩成一个文件`result.tgz`，位于项目根目录，以供后续发布使用。
 
 ### 工程目录结构
 
@@ -238,4 +238,9 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
   
   - libra build修改
     执行`libra build -p`或`libra build --prod`时不会获取*.override.json文件的信息
+  
+- 0.1.14
+  - 修复了模版html文件中字体大小产生的问题
+  - 为解决webpack和gulp同时使用时在less文件中引用库存在的冲突(webpack中需要加`~`，gulp不需要)，在生成lib目录先生成一套去除`~`的临时代码。后续将考虑对此做优化
+  - 新增`libra compress`命令，将产出文件打包压缩，供后续发布时使用
 
