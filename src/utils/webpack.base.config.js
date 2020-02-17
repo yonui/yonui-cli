@@ -29,10 +29,11 @@ module.exports = () => {
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
             extensions: [ ".js",".jsx",".ts", ".tsx", ".json"], // 影响import的优先级
-            alias:{
-                '_style': path.resolve(sourcePath,'_style'),
-                '_utils': path.resolve(sourcePath,'_utils')
-            }
+            // alias:{
+            //     '_style': path.resolve(sourcePath,'_style'),
+            //     '_utils': path.resolve(sourcePath,'_utils')
+            // },
+            modules: [ path.resolve('node_modules'), path.resolve(sourcePath)]
         },
         module: {
             rules: [

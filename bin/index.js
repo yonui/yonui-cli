@@ -54,6 +54,13 @@ const libra = () => {
 			cli.start(port);
 		});
 
+	program.command('compress')
+		.description('compress file')
+		.action((env, options) => {
+			console.log('compress file:')
+			cli.compress();
+		})
+
 	program
 		.command('clg')
 		// .option("--c", "cc")
