@@ -239,8 +239,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
   - libra build修改
     执行`libra build -p`或`libra build --prod`时不会获取*.override.json文件的信息
   
-- 0.1.14
-  - 修复了模版html文件中字体大小产生的问题
+- 0.1.15
   - 为解决webpack和gulp同时使用时在less文件中引用库存在的冲突(webpack中需要加`~`，gulp不需要)，在生成lib目录前先生成一套去除`~`的临时代码。后续将考虑对此做优化
   - 新增`libra compress`命令，将产出文件打包压缩，供后续发布时使用
 
