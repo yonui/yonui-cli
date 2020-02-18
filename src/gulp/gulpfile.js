@@ -10,9 +10,9 @@ const replace = require('gulp-replace');
 const { sourcePath } = getLibraConfig();
 const basePath = `${sourcePath}/**/`;
 const resolve = (module) => require.resolve(module);
-const jsSource = path.resolve(`${basePath}{*,style/*}.{tsx,js}`);
+const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`);
 const dist = path.resolve('./.libraui/lib');
-const lessSource = path.resolve(`${basePath}{style/,}index.less`);
+const lessSource = path.resolve(`${basePath}{style,demos,}/*.less`);
 const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico}`)
 const extraSource = path.resolve('./{package.json,*.md}');
 const writeManifest = require('../utils/writeManifest');
@@ -95,4 +95,4 @@ task('manifest', done => {
     writeManifest();
     done();
 })
-task('build', parallel(series('javascript','manifest'),series('changeLess','css'), 'img'));
+task('build', parallel(series('javascript','manifest'),series('less'), 'img'));

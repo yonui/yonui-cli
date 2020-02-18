@@ -1,7 +1,7 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const { getDir, getLibraConfig } = require('./index');
+const { getDir, getLibraConfig } = require('../utils');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const fse = require('fs-extra');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');

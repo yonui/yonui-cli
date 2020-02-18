@@ -1,6 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { getLibraConfig } = require('./index');
+const { getLibraConfig } = require('../utils');
 const defaultLib = [{
     key: 'react',
     value: 'React',
