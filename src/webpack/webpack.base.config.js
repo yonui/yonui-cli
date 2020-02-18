@@ -15,7 +15,7 @@ const defaultLib = [{
 },]
 module.exports = () => {
     // const entryList = getEntryList();
-    const { lib,sourcePath } = getLibraConfig();
+    const { lib,sourcePath,plugins } = getLibraConfig();
     let externals = {};
     lib.concat(defaultLib).forEach(item => {
         externals[item.key] = item.value;
@@ -50,7 +50,8 @@ module.exports = () => {
                                     require.resolve('@babel/preset-typescript')
                                     // require.resolve('babel-preset-stage-0'),
                                 ],
-                                "plugins": [
+                                plugins: [
+                                    ...plugins, // babel-plugin-import 插件的顺序会影响功能，只能放在前面
                                     [require.resolve('@babel/plugin-transform-modules-commonjs')],
                                     [require.resolve('@babel/plugin-proposal-class-properties'), { "legacy": true }]
                                 ]
