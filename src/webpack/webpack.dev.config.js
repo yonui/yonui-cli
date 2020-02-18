@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OpenBrowserWebpackPlugin = require('open-browser-webpack-plugin');
-const { getLibraConfig } = require('./index');
+const { getLibraConfig } = require('../utils');
 const getEntryList = () => {
     let res = {};
     res.view = path.resolve('./.libraui/temp/view/index.js');

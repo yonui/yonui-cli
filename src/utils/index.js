@@ -114,11 +114,30 @@ const getManifestJson = ( ) => {
         process.exit(0);
     }
 }
+
+const getEntryArr = ( ) => {
+    const { components } = getManifestJson();
+    let res = [];
+    const foo = ( obj ) => {
+        Object.keys(obj).forEach( item => {
+            if( typeof obj[item] === 'string') {
+                res.push(obj[item])
+            }
+            else {
+                foo(obj[item])
+            }
+        })
+    }
+    foo(components);
+    console.log('Entry Array: ',res)
+    return res;
+}
 module.exports = {
     download,
     getRemoteZip,
     getDir,
     getLib,
     getLibraConfig,
-    getManifestJson
+    getManifestJson,
+    getEntryArr
 }
