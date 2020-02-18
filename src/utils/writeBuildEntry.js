@@ -1,26 +1,35 @@
-const { getManifestJson } = require('./index');
+const { getManifestJson,getLibraConfig } = require('./index');
 const path = require('path');
 const fse = require('fs-extra');
-const components = {
-    "LibraButton": "./components/LibraButton",
-    "LibraButtonPlus": "./components/LibraButtonPlus",
-    "basic": {
-        "BsBtn": "./components/LibraButton1"
-    }
-}
+
 const writeBuildEntry = () => {
     const manifestJson = getManifestJson();
+    const { buildImport = {} } = getLibraConfig();
     // console.log(components);
     
     let imp = ``;
-    let regStr = '';
+
+    let impLess = ``;
+    if(buildImport.js){
+        buildImport.js.forEach( item => {
+            imp += `import '${item}';`
+        })
+    }
+
+    if(buildImport.css){
+        buildImport.css.forEach( item => {
+            impLess += `@import '${item}';`
+        })
+    }
+    // let regStr = '';
     let exp = {};
     const foo = ( obj, res={}) => {
         Object.keys(obj).map( item => {
             if (typeof obj[item] === 'string'){
                 const _path = path.resolve(obj[item]);
-                imp += `import ${item} from '${_path}';\nimport '${_path+'/style'}';\n`;
-                regStr += `\\${obj[item]}|`;
+                imp += `import ${item} from '${_path}';\n`;
+                impLess += `@import '${_path}/style/index.less';\n`
+                // regStr += `\\${obj[item]}|`;
                 res[item] = item;
             }
             else {
@@ -30,8 +39,9 @@ const writeBuildEntry = () => {
         })
     }
     foo(manifestJson.components,exp);
-    // console.log(imp)
-    // console.log(JSON.stringify(exp).replace(/'|"/g,''))
-    fse.outputFile(path.resolve('./.libraui/temp/build/index.js'),imp+'export default '+JSON.stringify(exp).replace(/'|"/g,''))
+
+    imp += `import './index.less';\nexport default ${JSON.stringify(exp).replace(/'|"/g,'')}`;
+    fse.outputFile(path.resolve('./.libraui/temp/build/index.js'),imp);
+    fse.outputFile(path.resolve('./.libraui/temp/build/index.less'),impLess)
 }
 module.exports = writeBuildEntry;
