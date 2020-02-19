@@ -38,16 +38,16 @@ const buildDemo = () => {
 // 产出lib文件
 const buildLib = () => {
     // runGulp(['javascript','less','css','img']);
-    const webpackConfig = webpackMerge(baseConfig(),lessConfig());
-    const compiler = webpack(webpackConfig);
-    compiler.run( (err, status) => {
-        if(err){
-            console.error(err);
-        }
-        else {
-            console.log('build lib file success ')
-        }
-    })
+    // const webpackConfig = webpackMerge(baseConfig(),lessConfig());
+    // const compiler = webpack(webpackConfig);
+    // compiler.run( (err, status) => {
+    //     if(err){
+    //         console.error(err);
+    //     }
+    //     else {
+    //         console.log('build lib file success ')
+    //     }
+    // })
     runGulp(['build']);
 }
 
