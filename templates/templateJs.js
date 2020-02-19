@@ -1,4 +1,3 @@
-const path = require('path');
 module.exports = `
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -8,8 +7,8 @@ import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
 import Icon from 'bee-icon';
 import 'bee-icon/build/Icon.css';
-import manifest from '${path.resolve('./manifest.json')}';
-import resources from '${path.resolve('./.libraui/demo/resources.json')}';
+import manifest from '../../../manifest.json';
+import resources from '../../demo/resources.json';
 import marded from 'marked';
 import Highlight from 'react-highlight';
 import 'highlight.js/styles/github.css';
