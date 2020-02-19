@@ -54,8 +54,8 @@ const buildLib = () => {
 // 产出其他文件，如package.json等
 const buildExtra = () => {
     // runGulp(['extra'])
-    copyFile('./package.json','./.libraui/package.json');
-    copyFile('./README.md','./.libraui/README.md');
+    // copyFile('./package.json','./.libraui/package.json');
+    // copyFile('./README.md','./.libraui/README.md');
 }
 
 const build =  () => {

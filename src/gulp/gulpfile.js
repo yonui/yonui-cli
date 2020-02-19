@@ -11,7 +11,7 @@ const { sourcePath } = getLibraConfig();
 const basePath = `${sourcePath}/**/`;
 const resolve = (module) => require.resolve(module);
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`);
-const dist = path.resolve('./.libraui/lib');
+const dist = path.resolve('lib');
 const lessSource = path.resolve(`${basePath}{style,demos,}/*.less`);
 const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico}`)
 const extraSource = path.resolve('./{package.json,*.md}');
@@ -87,8 +87,8 @@ task('img', done => {
 
 // 复制package.json文件
 task('extra',done => {
-    return src(extraSource)
-    .pipe(dest(path.resolve('./.libraui')))
+    // return src(extraSource)
+    // .pipe(dest(path.resolve('./.libraui')))
 })
 
 task('manifest', done => {

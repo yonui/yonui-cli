@@ -32,7 +32,7 @@ const writeManifest = () => {
     for (const key in obj) {
       const item = obj[key];
       if (typeof item === "string") {
-        const libPath = item.replace(sourcePath, '.libraui/lib/')
+        const libPath = item.replace(sourcePath, 'lib')
         console.log(path.resolve(libPath));
         const CLS = require(path.resolve(libPath)).default;
         if (typeof CLS !== "function") {
@@ -59,7 +59,7 @@ const writeManifest = () => {
   // console.log(manifestComponents)
   // console.log('manifest target: ', path.resolve("./.libraui/dist/manifest.json"))
   fse.outputFileSync(
-    path.resolve("./.libraui/dist/manifest.json"),
+    path.resolve("./dist/manifest.json"),
     JSON.stringify(output, customJsonStringify)
   );
   process.exit(0)

@@ -23,7 +23,7 @@ const demoConfig = () => {
         mode: 'development',
         output: {
             filename: '.trash/index.js',
-            path: path.resolve('./.libraui/lib'),
+            path: path.resolve('lib'),
         },
         plugins: [
             // new CleanWebpackPlugin(),

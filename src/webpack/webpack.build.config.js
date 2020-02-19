@@ -18,8 +18,8 @@ const buildConfig = () => {
         },
         mode: 'development',
         output: {
-            filename: '[name].js',
-            path: path.resolve('./.libraui/dist'),
+            filename: 'index.js',
+            path: path.resolve('dist'),
             libraryTarget: "umd",
             library:'__[name]__',
             libraryExport: 'default',
@@ -29,8 +29,8 @@ const buildConfig = () => {
         plugins: [
             new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
-                filename: '[name].css',
-                chunkFilename: '[name].css'
+                filename: 'index.css',
+                chunkFilename: 'index.css'
             }),
             // new OptimizeCSSAssetsPlugin({
             //     cssProcessorOptions: {

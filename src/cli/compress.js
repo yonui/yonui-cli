@@ -4,20 +4,20 @@ const pump = require('pump');
 const path = require('path');
 const resolve = (param) => path.resolve(param);
 const compress = () => {
-    const tarStream = new compressing.tar.Stream();
-    tarStream.addEntry(resolve('.libraui/dist'));
-    tarStream.addEntry(resolve('.libraui/lib'));
-    tarStream.addEntry(resolve('.libraui/demo'));
-    tarStream.addEntry(resolve('package.json'));
-    tarStream.addEntry(resolve('readme.md'));
-    const destStream = fse.createWriteStream(resolve('result.tgz'));
-    pump(tarStream, new compressing.gzip.FileStream(), destStream, err => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log('success');
-        }
-      });
+    // const tarStream = new compressing.tar.Stream();
+    // tarStream.addEntry(resolve('.libraui/dist'));
+    // tarStream.addEntry(resolve('.libraui/lib'));
+    // tarStream.addEntry(resolve('.libraui/demo'));
+    // tarStream.addEntry(resolve('package.json'));
+    // tarStream.addEntry(resolve('readme.md'));
+    // const destStream = fse.createWriteStream(resolve('result.tgz'));
+    // pump(tarStream, new compressing.gzip.FileStream(), destStream, err => {
+    //     if (err) {
+    //       console.error(err);
+    //     } else {
+    //       console.log('success');
+    //     }
+    //   });
     // console.log('success')
     // let zip = new JSZip();
     // const inp = fse.createReadStream(path.resolve('./index.tsx')) // 创建可读的流
