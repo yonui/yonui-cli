@@ -4,6 +4,7 @@ const { getLibraConfig, getDir, getManifestJson } = require('../utils');
 
 const writeResources = () => {
     const components = getManifestJson().components;
+    const { sourcePath } = getLibraConfig();
     let demoList = [];
     let demoPath = [];
     const writeHelper = ( obj, prePath = './') => {
@@ -32,8 +33,9 @@ import ReactDOM from 'react-dom';
                 description,
                 code,
             });
-            const _path = path.resolve(resourcePath);
-            template += `import ${demoName} from '${_path}';\nReactDOM.render(<${demoName} />,document.getElementById('${demoName}'));\n`;
+            // const _path = path.resolve(resourcePath,resourcePath);
+            const _path = path.join(resourcePath)
+            template += `import ${demoName} from '../../../${_path}';\nReactDOM.render(<${demoName} />,document.getElementById('${demoName}'));\n`;
         })
         component['component'] = item;
         component['readme'] = fse.readFileSync(`${obj[item]}/README.md`, 'utf8');

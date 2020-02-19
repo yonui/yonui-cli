@@ -26,7 +26,7 @@ const writeBuildEntry = () => {
     const foo = ( obj, res={}) => {
         Object.keys(obj).map( item => {
             if (typeof obj[item] === 'string'){
-                const _path = path.resolve(obj[item]);
+                const _path = path.join('../../../',obj[item]); //path.resolve(obj[item]);
                 imp += `import ${item} from '${_path}';\n`;
                 impLess += `@import '${_path}/style/index.less';\n`
                 // regStr += `\\${obj[item]}|`;
