@@ -34,6 +34,7 @@ const writeManifest = () => {
       if (typeof item === "string") {
         const libPath = item.replace(sourcePath, 'lib')
         console.log(path.resolve(libPath));
+        require('ignore-styles').default(['.sass', '.scss', 'png', 'jpg', 'jpeg', 'gif', 'css', 'less', 'svg'])
         const CLS = require(path.resolve(libPath)).default;
         if (typeof CLS !== "function") {
           // throw new Error(`${componentName} is not a Class`)
@@ -55,9 +56,6 @@ const writeManifest = () => {
 
   loop(manifestJson.components);
   const output = {...manifestJson, components: manifestComponents};
-  console.log(JSON.stringify(manifestComponents, customJsonStringify))
-  // console.log(manifestComponents)
-  // console.log('manifest target: ', path.resolve("./.libraui/dist/manifest.json"))
   fse.outputFileSync(
     path.resolve("./dist/manifest.json"),
     JSON.stringify(output, customJsonStringify)
