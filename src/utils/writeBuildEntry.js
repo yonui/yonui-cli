@@ -1,7 +1,7 @@
 const { getManifestJson,getLibraConfig } = require('./index');
 const path = require('path');
 const fse = require('fs-extra');
-
+const { formatPath } = require('./index');
 const writeBuildEntry = () => {
     const manifestJson = getManifestJson();
     const { buildImport = {} } = getLibraConfig();
@@ -26,7 +26,7 @@ const writeBuildEntry = () => {
     const foo = ( obj, res={}) => {
         Object.keys(obj).map( item => {
             if (typeof obj[item] === 'string'){
-                const _path = path.join('../../../',obj[item]); //path.resolve(obj[item]);
+                const _path = formatPath(path.join('../../../',obj[item])); //path.resolve(obj[item]);
                 imp += `import ${item} from '${_path}';\n`;
                 impLess += `@import '${_path}/style/index.less';\n`
                 // regStr += `\\${obj[item]}|`;

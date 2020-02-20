@@ -151,6 +151,11 @@ const getEntryObj = ( ) => {
     return res;
 }
 
+// 使用path时windows下的分隔符是 '\'，写入模板文件需要转成 '/'
+const formatPath = (path) => {
+    return path.replace(/\\/g,'/');
+}
+
 module.exports = {
     download,
     getRemoteZip,
@@ -159,5 +164,6 @@ module.exports = {
     getLibraConfig,
     getManifestJson,
     getEntryArr,
-    getEntryObj
+    getEntryObj,
+    formatPath
 }
