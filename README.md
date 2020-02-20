@@ -277,3 +277,24 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
   - 为避免windows和Mac OS系统之间的差异带来的问题，去除了绝对路径的使用，替换成相对路径
   - 生成的dist目录位置改为项目根目录
   - dist目录下面的文件统一改为 index.js /index.css，不再根据项目名称改变
+
+- 0.1.27
+  - 默认配置的externals属性修改: umd模式下react、react-dom需配置多个externals类型
+  - libra.config.json文件的`buildImport`属性新增`export`子属性，可额外导出内容，如
+    ```json
+    `"buildImport": {
+        "js":["import * as AntdMobile from 'antd-mobile/lib/index'"],
+        "css":[],
+        "export":[
+          "AntdMobile"
+        ]
+      }`
+    ```
+    生成的临时入口文件会变成：
+    ```js
+      import * as AntdMobile from 'antd-mobile/lib/index'
+      ...
+      export default {...AntdMobile, ...other};
+
+    ```
+  - 模板文件中的路径分隔符改为`/`
