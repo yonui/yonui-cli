@@ -1,9 +1,10 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { getLibraConfig } = require('../utils')
+const { getLibraConfig, getLib } = require('../utils')
 
 module.exports = () => {
-  const { lib, sourcePath, plugins } = getLibraConfig()
+  const { sourcePath, plugins } = getLibraConfig()
+  const lib = getLib()
   const externals = {}
   lib.forEach(item => {
     externals[item.key] = item.value
