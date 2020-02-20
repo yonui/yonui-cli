@@ -1,16 +1,10 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { getLibraConfig, getLib } = require('../utils')
+const { getLibraConfig } = require('../utils')
 
 module.exports = () => {
   const { sourcePath, plugins } = getLibraConfig()
-  const lib = getLib()
-  const externals = {}
-  lib.forEach(item => {
-    externals[item.key] = item.value
-  })
   return {
-    externals: externals,
     resolve: {
       // Add '.ts' and '.tsx' as resolvable extensions.
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'], // 影响import的优先级

@@ -1,40 +1,40 @@
 const rp = require('request-promise')
 const path = require('path')
 const fse = require('fs-extra')
-// const defaultLib = [{
-//   key: 'react',
-//   value: {
-//     commonjs: 'react',
-//     amd: 'react',
-//     commonjs2: 'react',
-//     root: 'React' // 指向全局变量
-//   },
-//   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',
-//   css: ''
-// },
-// {
-//   key: 'react-dom',
-//   value: {
-//     commonjs: 'react-dom',
-//     amd: 'react-dom',
-//     commonjs2: 'react-dom',
-//     root: 'ReactDOM' // 指向全局变量
-//   },
-//   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
-//   css: ''
-// }]
 const defaultLib = [{
   key: 'react',
-  value: 'React',
+  value: {
+    commonjs: 'react',
+    amd: 'react',
+    commonjs2: 'react',
+    root: 'React' // 指向全局变量
+  },
   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',
   css: ''
 },
 {
   key: 'react-dom',
-  value: 'ReactDOM',
+  value: {
+    commonjs: 'react-dom',
+    amd: 'react-dom',
+    commonjs2: 'react-dom',
+    root: 'ReactDOM' // 指向全局变量
+  },
   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
   css: ''
 }]
+// const defaultLib = [{
+//   key: 'react',
+//   value: 'React',
+//   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',
+//   css: ''
+// },
+// {
+//   key: 'react-dom',
+//   value: 'ReactDOM',
+//   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
+//   css: ''
+// }]
 const download = async (options, filename, cb) => {
   let opts = {
     method: 'get',

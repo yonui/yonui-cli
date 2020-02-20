@@ -1,10 +1,15 @@
 const path = require('path')
-const { getManifestJson } = require('../utils')
+const { getManifestJson, getLib } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const buildConfig = () => {
+  const lib = getLib()
+  const externals = {}
+  lib.forEach(item => {
+    externals[item.key] = item.value
+  })
   const manifestJson = getManifestJson()
   const libName = manifestJson.name
   return {
@@ -12,6 +17,7 @@ const buildConfig = () => {
       [libName]: path.resolve('./.libraui/temp/build/index.js')
     },
     mode: 'development',
+    externals,
     output: {
       filename: 'index.js',
       path: path.resolve('dist'),
