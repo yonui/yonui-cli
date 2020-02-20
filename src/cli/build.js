@@ -13,7 +13,6 @@ const buildDist = () => {
   const webpackConfig = webpackMerge(baseConfig(), buildConfig())
   const compiler = webpack(webpackConfig)
   compiler.run((err, s) => {
-    console.log(s)
     if (err) {
       console.error(err)
     } else {
