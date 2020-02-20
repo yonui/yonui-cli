@@ -119,7 +119,7 @@ export default class IndexView extends Component {
                     <div className='content-desc'>
                         {item.description}
                     </div>
-                    <div className='content-demo' style={{background:'#eee',fontSize:'50px'}}>
+                    <div className='content-demo'>
                         <div id={item.id}></div>
                     </div>
                     <div className='content-extra-icon' onClick={()=>{this.onOpenCodePreview(index, !openHashMap[index])}}>{openHashMap[index] ? <Icon type='uf-2arrow-up' /> : <Icon type='uf-2arrow-down' />}</div> 

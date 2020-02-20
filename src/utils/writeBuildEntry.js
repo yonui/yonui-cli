@@ -28,8 +28,7 @@ const writeBuildEntry = () => {
             if (typeof obj[item] === 'string'){
                 const _path = formatPath(path.join('../../../',obj[item])); //path.resolve(obj[item]);
                 imp += `import ${item} from '${_path}';\n`;
-                impLess += `@import '${_path}/style/index.less';\n`
-                // regStr += `\\${obj[item]}|`;
+                impLess += `@import '${_path}/style/index.less';\n`;
                 res[item] = item;
             }
             else {

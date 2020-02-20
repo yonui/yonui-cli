@@ -90,6 +90,8 @@ module.exports = `
                 width: 375px;
                 height: 667px;
                 border: 1px solid #000000;
+                background: #eee;
+                overflow: auto;
             }
             .content-extra-icon{
                 text-align: center;
