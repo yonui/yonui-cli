@@ -1,32 +1,11 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { getLibraConfig } = require('../utils')
-const defaultLib = [{
-  key: 'react',
-  value: {
-    commonjs: 'react',
-    amd: 'react',
-    commonjs2: 'react',
-    root: 'React' // 指向全局变量
-  },
-  js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',
-  css: ''
-},
-{
-  key: 'react-dom',
-  value: {
-    commonjs: 'react-dom',
-    amd: 'react-dom',
-    commonjs2: 'react-dom',
-    root: 'ReactDOM' // 指向全局变量
-  },
-  js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
-  css: ''
-}]
+
 module.exports = () => {
   const { lib, sourcePath, plugins } = getLibraConfig()
   const externals = {}
-  lib.concat(defaultLib).forEach(item => {
+  lib.forEach(item => {
     externals[item.key] = item.value
   })
   return {
