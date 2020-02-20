@@ -8,7 +8,10 @@
   },
   "scripts": {
     "postversion": "git push --follow-tags",
-    "test": "echo no test"
+    "test": "echo no test",
+    "lint": "eslint . --ext .js",
+    "lint:quiet": "npm run lint -- --quiet",
+    "lint:fix": "npm run lint -- --quiet --fix"
   },
   "author": "",
   "license": "ISC",
@@ -62,5 +65,13 @@
     "webpack-dev-server": "^3.10.1",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }
