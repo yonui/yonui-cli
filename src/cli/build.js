@@ -12,7 +12,8 @@ const writeBuildEntry = require('../utils/writeBuildEntry')
 const buildDist = () => {
   const webpackConfig = webpackMerge(baseConfig(), buildConfig())
   const compiler = webpack(webpackConfig)
-  compiler.run((err) => {
+  compiler.run((err, s) => {
+    console.log(s)
     if (err) {
       console.error(err)
     } else {

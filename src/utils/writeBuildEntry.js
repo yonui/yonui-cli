@@ -7,14 +7,15 @@ const writeBuildEntry = () => {
   const { buildImport = {} } = getLibraConfig()
   let imp = ''
   let impLess = ''
+  let expStr = ''
   if (buildImport.js) {
     buildImport.js.forEach(item => {
-      imp += `import '${item}';`
+      imp += `${item}\n`
     })
   }
   if (buildImport.css) {
     buildImport.css.forEach(item => {
-      impLess += `@import '${item}';`
+      impLess += `${item}\n`
     })
   }
   const exp = {}
@@ -32,8 +33,13 @@ const writeBuildEntry = () => {
     })
   }
   foo(manifestJson.components, exp)
-
-  imp += `import './index.less';\nexport default ${JSON.stringify(exp).replace(/'|"/g, '')}`
+  if (buildImport.export) {
+    buildImport.export.forEach(item => {
+      expStr += `...${item},`
+    })
+  }
+  const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
+  imp += `import './index.less';\n${__Library}export default {${expStr}...__Library}`
   fse.outputFile(path.resolve('./.libraui/temp/build/index.js'), imp)
   fse.outputFile(path.resolve('./.libraui/temp/build/index.less'), impLess)
 }
