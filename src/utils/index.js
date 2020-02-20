@@ -73,7 +73,7 @@ const getLibraConfig = () => {
     console.log('exist,use override file', overridePath)
     configJson = fse.readJsonSync(overridePath)
   } else if (fse.existsSync(filePath)) {
-    console.log('exist,use file', overridePath)
+    console.log('exist,use file', filePath)
     configJson = fse.readJsonSync(filePath)
   } else {
     console.log('Missing file: libra.config.json ')
