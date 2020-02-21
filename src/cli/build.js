@@ -11,27 +11,16 @@ const path = require('path')
 const fse = require('fs-extra')
 // 打包产出dist文件
 const buildDist = () => {
-  const webpackConfig = webpackMerge(baseConfig(), buildConfig())
-  const compiler = webpack(webpackConfig)
-  compiler.run((err, s) => {
-    if (err) {
-      console.error(err)
-    } else {
-      console.log('build dist file success ')
-    }
-  })
-}
-
-const buildDemo = () => {
-  const webpackConfig = webpackMerge(baseConfig(), demoConfig('build'))
-  const compiler = webpack(webpackConfig)
+  const distWebpackConfig = webpackMerge(baseConfig(), buildConfig())
+  const demoWebpackConfig = webpackMerge(baseConfig(), demoConfig('build'))
+  const compiler = webpack([distWebpackConfig, demoWebpackConfig])
   compiler.run((err) => {
-    fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
-    fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
     if (err) {
       console.error(err)
     } else {
-      console.log('build demo file success ')
+      console.log('build dist and demo files success ')
+      fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
+      fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
     }
   })
 }
@@ -65,7 +54,7 @@ const build = () => {
   buildDist()
   buildLib()
   buildExtra()
-  buildDemo()
+  // buildDemo()
 }
 
 module.exports = build

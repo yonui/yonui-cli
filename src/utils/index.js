@@ -25,6 +25,22 @@ const defaultLib = [{
   css: ''
 }]
 
+const getJson = (_path) => {
+  let res = null
+  try {
+    res = require(path.resolve(_path))
+  } catch (err) {
+    res = null
+  };
+
+  return res
+}
+
+const libraConfigJson = getJson('libra.config.json')
+const libraConfigOverrideJson = getJson('libra.config.override.json')
+const manifestJson = getJson('manifest.json')
+const manifestOverrideJson = getJson('manifest.override.json')
+
 const getIp = () => {
   const interfaces = os.networkInterfaces()
   for (const devName in interfaces) {
@@ -79,15 +95,13 @@ const getLib = () => {
 
 const getLibraConfig = () => {
   const isDev = process.env.NODE_ENV === 'development'
-  const filePath = path.resolve('./libra.config.json')
-  const overridePath = path.resolve('./libra.config.override.json')
   let configJson = {}
-  if (isDev && fse.existsSync(overridePath)) {
-    console.log('exist,use override file', overridePath)
-    configJson = fse.readJsonSync(overridePath)
-  } else if (fse.existsSync(filePath)) {
-    console.log('exist,use file', filePath)
-    configJson = fse.readJsonSync(filePath)
+  if (isDev && libraConfigOverrideJson) {
+    console.log('use override file')
+    configJson = libraConfigOverrideJson
+  } else if (libraConfigJson) {
+    console.log('use file')
+    configJson = libraConfigJson
   } else {
     console.log('Missing file: libra.config.json ')
     process.exit(0)
@@ -100,12 +114,10 @@ const getLibraConfig = () => {
 
 const getManifestJson = () => {
   const isDev = process.env.NODE_ENV === 'development'
-  const filePath = path.resolve('./manifest.json')
-  const overridePath = path.resolve('./manifest.override.json')
-  if (isDev && fse.existsSync(overridePath)) {
-    return fse.readJsonSync(overridePath)
-  } else if (fse.existsSync(filePath)) {
-    return fse.readJsonSync(filePath)
+  if (isDev && manifestOverrideJson) {
+    return manifestOverrideJson
+  } else if (manifestJson) {
+    return manifestJson
   } else {
     console.log('Missing file: manifest.json ')
     process.exit(0)

@@ -1,29 +1,38 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const fse = require('fs-extra')
+// const fse = require('fs-extra')
 const getEntryList = () => {
   const res = {}
-  const demoList = fse.readJSONSync(path.resolve('./.libraui/temp/demo/demo-path.json'))
+  const demoList = require(path.resolve('./.libraui/temp/demo/demo-path.json'))
   demoList.map(item => {
     res[item] = path.resolve('./.libraui/temp/demo', `${item}.js`)
   })
   return res
 }
-const demoConfig = () => {
+const demoConfig = (param) => {
+  const externals = {
+    react: 'React',
+    'react-dom': 'ReactDOM'
+  }
+  const prod = param === 'build'
+  const mode = prod ? 'production' : 'development'
+  const devtool = prod ? 'source-map' : 'eval-source-map'
   return {
     entry: getEntryList(),
-    mode: 'development',
+    mode,
+    externals,
     output: {
       filename: '[name]/index.js',
       path: path.resolve('./.libraui/demo')
     },
-    devtool: 'source-map',
+    devtool,
     plugins: [
       // new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
         filename: '[name]/index.css',
         chunkFilename: '[name]/index.css'
       })
+      // new SimpleProgressWebpackPlugin()
       // new OptimizeCSSAssetsPlugin({
       //     cssProcessorOptions: {
       //         safe: true,

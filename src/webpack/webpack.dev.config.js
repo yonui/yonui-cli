@@ -18,14 +18,19 @@ const htmlConf = {
 }
 
 const devConfig = (port = 8090) => {
+  const externals = {
+    react: 'React',
+    'react-dom': 'ReactDOM'
+  }
   return {
     entry: getEntryList(),
     output: {
       filename: 'index.js',
       path: path.resolve('./.libraui/server')
     },
+    externals,
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     plugins: [
       new OpenBrowserWebpackPlugin({ url: `http://localhost:${port}` }),
       new CleanWebpackPlugin(),

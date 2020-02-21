@@ -1,7 +1,8 @@
 const path = require('path')
 const { getManifestJson, getLib } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const buildConfig = () => {
@@ -16,7 +17,7 @@ const buildConfig = () => {
     entry: {
       [libName]: path.resolve('./.libraui/temp/build/index.js')
     },
-    mode: 'development',
+    mode: 'production',
     externals,
     output: {
       filename: 'index.js',
@@ -32,7 +33,12 @@ const buildConfig = () => {
       new MiniCssExtractPlugin({
         filename: 'index.css',
         chunkFilename: 'index.css'
-      })
+      }),
+      new BundleAnalyzerPlugin({
+        analyzerPort: 8080,
+        generateStatsFile: false
+      }),
+      new SimpleProgressWebpackPlugin()
       // new OptimizeCSSAssetsPlugin({
       //     cssProcessorOptions: {
       //         safe: true,
