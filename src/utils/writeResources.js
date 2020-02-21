@@ -22,12 +22,12 @@ const writeResources = () => {
           const sourceCode = fse.readFileSync(path.resolve(resourcePath), 'utf8')
           const name = sourceCode.match(/@name:(.*)/g)[0].replace(/@name:\s*/, '')
           const description = sourceCode.match(/@description:(.*)/g)[0].replace(/@description:\s*/, '')
-          const code = sourceCode.replace(/\/\*(.|\r|\n|\t)*\*\//, '')
+          // const code = sourceCode.replace(/(\/\*(.|\r|\n|\t)*\*\/)/, '')
           demos.push({
             id: demoName,
             name,
             description,
-            code
+            code: sourceCode
           })
           const _path = formatPath(path.join(resourcePath))
           template += `import ${demoName} from '../../../${_path}';\ndocument.getElementById('${demoName}') && ReactDOM.render(<${demoName} />,document.getElementById('${demoName}'));\n`
