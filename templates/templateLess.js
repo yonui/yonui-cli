@@ -12,7 +12,7 @@ module.exports = `
         &-name{
             color: #313131;
             font-size: 28px;
-            
+
         }
         &-keyword{
             margin: 0 0 0 5px;
@@ -76,6 +76,7 @@ module.exports = `
                 font-size: 18px;
                 color: rgba(66,66,66,1);
                 line-height: 30px;
+                cursor: pointer;
                 &-btn{
                     float: right;
                 }
