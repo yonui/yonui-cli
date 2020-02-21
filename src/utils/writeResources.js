@@ -30,7 +30,7 @@ const writeResources = () => {
             code
           })
           const _path = formatPath(path.join(resourcePath))
-          template += `import ${demoName} from '../../../${_path}';\nReactDOM.render(<${demoName} />,document.getElementById('${demoName}'));\n`
+          template += `import ${demoName} from '../../../${_path}';\ndocument.getElementById('${demoName}') && ReactDOM.render(<${demoName} />,document.getElementById('${demoName}'));\n`
         })
         component.component = item
         component.readme = fse.readFileSync(`${obj[item]}/README.md`, 'utf8')

@@ -11,7 +11,8 @@ const writeViewLess = require('../utils/writeViewLess')
 const writeResources = require('../utils/writeResources')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
-const { getLibraConfig } = require('../utils')
+const fse = require('fs-extra')
+const { getLibraConfig, getIp } = require('../utils')
 const Express = require('express')
 const app = new Express()
 
@@ -32,19 +33,24 @@ const buildDemo = () => {
       chunks: false
     }
   })
-
   app.use(instance)
+  fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
+  fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
 }
 const start = (cmdPort) => {
+  const { autoTemplate, port } = getLibraConfig()
+  const _port = cmdPort || port
+  const _ip = getIp()
+  process.env.devPort = _port
+  process.env.devIp = _ip
   writeResources()
   buildDemo()
-  const { autoTemplate, port } = getLibraConfig()
   if (autoTemplate) {
     writeViewHtml()
     writeViewJs()
     writeViewLess()
   }
-  const _port = cmdPort || port
+
   const webpackConfig = webpackMerge(baseConfig(), devConfig(_port))
   const compiler = webpack(webpackConfig)
   const instance = devMiddleware(compiler, {

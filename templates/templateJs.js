@@ -7,6 +7,9 @@ import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
 import Icon from 'bee-icon';
 import 'bee-icon/build/Icon.css';
+import Popover from 'bee-popover';
+import 'bee-popover/build/Popover.css';
+import QRCode from 'qrcode.react';
 import manifest from '../../../manifest.json';
 import resources from '../../demo/resources.json';
 import marded from 'marked';
@@ -36,12 +39,13 @@ export default class IndexView extends Component {
         })
         this.onSelectComp(resources[0]);
     }
-    
+
     onSelectComp = (item) => {
         this.loadScriptAndCss(item.path);
         this.setState({
             selected: item.component,
-            selectedComp: item
+            selectedComp: item,
+            selectedValue: "demo"
         })
     }
 
@@ -104,17 +108,26 @@ export default class IndexView extends Component {
         })
     }
 
+    viewSingleDemp = (compId) => () => {
+      window.open(\`/demo-view/#/\${compId}\`)
+    }
+
     renderDemos = () => {
         // if(
         const { selected, selectedComp, openHashMap, loadScript } = this.state;
         const { demos } = selectedComp;
         if (demos && demos.length > 0){
-            
+
             return demos.map( (item,index) => {
                 return (
                     <div className='content-item'>
-                    <div className='content-title'>
-                        {item.name}
+                    <div className='content-title' onClick={this.viewSingleDemp(item.id)}>
+                      <Popover placement="rightTop" content={<QRCode
+                        value={\`http://\${IP}:\${PORT}/demo-view/#/\${item.id}\`}
+                      />}
+                      >
+                        <span>{item.name}</span>
+                      </Popover>
                     </div>
                     <div className='content-desc'>
                         {item.description}
@@ -122,7 +135,7 @@ export default class IndexView extends Component {
                     <div className='content-demo'>
                         <div id={item.id}></div>
                     </div>
-                    <div className='content-extra-icon' onClick={()=>{this.onOpenCodePreview(index, !openHashMap[index])}}>{openHashMap[index] ? <Icon type='uf-2arrow-up' /> : <Icon type='uf-2arrow-down' />}</div> 
+                    <div className='content-extra-icon' onClick={()=>{this.onOpenCodePreview(index, !openHashMap[index])}}>{openHashMap[index] ? <Icon type='uf-2arrow-up' /> : <Icon type='uf-2arrow-down' />}</div>
                     {openHashMap[index] && <Highlight className='javascript'>
                         {item.code}
                     </Highlight>}
@@ -130,7 +143,7 @@ export default class IndexView extends Component {
                 )
             })
         }
-       
+
 
     }
 

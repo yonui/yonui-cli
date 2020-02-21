@@ -7,7 +7,8 @@ const demoConfig = require('../webpack/webpack.demo.config')
 // const lessConfig = require('../webpack/webpack.less2css.config');
 const writeResources = require('../utils/writeResources')
 const writeBuildEntry = require('../utils/writeBuildEntry')
-// const copyFile = require('../utils/copyFile');
+const path = require('path')
+const fse = require('fs-extra')
 // 打包产出dist文件
 const buildDist = () => {
   const webpackConfig = webpackMerge(baseConfig(), buildConfig())
@@ -25,6 +26,8 @@ const buildDemo = () => {
   const webpackConfig = webpackMerge(baseConfig(), demoConfig('build'))
   const compiler = webpack(webpackConfig)
   compiler.run((err) => {
+    fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
+    fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
     if (err) {
       console.error(err)
     } else {

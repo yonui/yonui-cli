@@ -1,6 +1,7 @@
 const rp = require('request-promise')
 const path = require('path')
 const fse = require('fs-extra')
+const os = require('os')
 const defaultLib = [{
   key: 'react',
   value: {
@@ -23,18 +24,19 @@ const defaultLib = [{
   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
   css: ''
 }]
-// const defaultLib = [{
-//   key: 'react',
-//   value: 'React',
-//   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',
-//   css: ''
-// },
-// {
-//   key: 'react-dom',
-//   value: 'ReactDOM',
-//   js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
-//   css: ''
-// }]
+
+const getIp = () => {
+  const interfaces = os.networkInterfaces()
+  for (const devName in interfaces) {
+    const iface = interfaces[devName]
+    for (let i = 0; i < iface.length; i++) {
+      const alias = iface[i]
+      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+        return alias.address
+      }
+    }
+  }
+}
 const download = async (options, filename, cb) => {
   let opts = {
     method: 'get',
@@ -149,6 +151,10 @@ const formatPath = (path) => {
   return path.replace(/\\/g, '/')
 }
 
+const copyFile = (src, dest) => {
+  fse.copyFileSync(path.resolve(src), path.resolve(dest))
+}
+
 module.exports = {
   download,
   getDir,
@@ -157,5 +163,7 @@ module.exports = {
   getManifestJson,
   getEntryArr,
   getEntryObj,
-  formatPath
+  formatPath,
+  getIp,
+  copyFile
 }

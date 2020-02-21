@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>demo预览</title>
+</head>
+<body>
+    <script>
+      (function(doc, win) {
+       window._dbVersion = 1;
+       window._dbTables = ['billNodata', 'business']
+       window.__fontUnit = 0
+       var docEl = doc.documentElement,
+           recalc = function() {
+               var clientWidth = docEl.clientWidth;
+               if (!clientWidth) return;
+               if (clientWidth >= 750) { //750这个值，根据设计师的psd宽度来修改，是多少就写多少，现在手机端一般是750px的设计稿，如果设计师给的1920的psd，自己用Photoshop等比例缩小
+                   window.__fontUnit = 100;
+                   docEl.style.fontSize = window.__fontUnit + 'px';
+
+               } else {
+                   window.__fontUnit = 100 * (clientWidth / 750);
+                   docEl.style.fontSize = window.__fontUnit + 'px'; //750这个值，根据设计师的psd宽度来修改，是多少就写多少，现在手机端一般是750px的设计稿，如果设计师给的1920的psd，自己用Photoshop等比例缩小
+               }
+           };
+
+       if (!doc.addEventListener) return;
+    //   win.addEventListener(resizeEvt, recalc, false);
+       doc.addEventListener('DOMContentLoaded', recalc, false);
+
+   })(document, window);
+    </script>
+
+    <script>
+            (function(compId){
+              let divEle = document.createElement('div');
+              divEle.setAttribute('id',compId)
+              document.body.appendChild(divEle);
+              let script = document.createElement('script');
+              script.setAttribute('id','_demoJs');
+              script.setAttribute('type','text/javascript');
+              script.setAttribute('async',true);
+              script.setAttribute('src',`../${compId.split('_')[1]}/index.js`);
+              document.body.appendChild(script);
+              let link = document.createElement('link');
+              link.setAttribute('id','_demoCss');
+              link.setAttribute('type','text/css');
+              link.setAttribute('rel','stylesheet');
+              link.setAttribute('href',`../${compId.split('_')[1]}/index.css`);
+              document.head.appendChild(link);
+            })(location.hash.split('#/').pop());
+    </script>
+</body>
+</html>
