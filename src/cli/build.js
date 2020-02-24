@@ -19,6 +19,8 @@ const buildDist = () => {
       console.error(err)
     } else {
       console.log('build dist and demo files success ')
+      buildLib()
+      buildExtra()
       fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
       fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
     }
@@ -52,9 +54,6 @@ const build = () => {
   writeBuildEntry()
   writeResources('build')
   buildDist()
-  buildLib()
-  buildExtra()
-  // buildDemo()
 }
 
 module.exports = build

@@ -19,21 +19,14 @@ const app = new Express()
 const buildDemo = () => {
   const webpackConfig = webpackMerge(baseConfig(), demoConfig())
   const compiler = webpack(webpackConfig)
-  const instance = devMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    logTime: true,
-    logLevel: 'info',
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
-    stats: {
-      colors: true,
-      hash: false,
-      children: false,
-      chunks: false
-    }
+  compiler.watch({
+    // watchOptions 示例
+    aggregateTimeout: 300,
+    poll: undefined
+  }, () => {
+    // 在这里打印 watch/build 结果...
+    console.log('update')
   })
-  app.use(instance)
   fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
   fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
 }
@@ -75,7 +68,7 @@ const start = (cmdPort) => {
   // 热更新
   app.use(hotMiddleware(compiler))
   app.listen(_port, () => {
-    console.log(`start server at port ${_port}`)
+    console.log(`start server at 127.0.0.1:${_port}`)
   })
 }
 
