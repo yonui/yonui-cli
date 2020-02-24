@@ -40,7 +40,8 @@ const libra = () => {
   program
     .command('start')
     .description('start')
-    .action(() => {
+    .option('-p,--prod')
+    .action((env) => {
       let port
       const args = program.args
       process.env.NODE_ENV = 'development'
@@ -49,7 +50,9 @@ const libra = () => {
           port = item.match(/^port=(\d+)$/)[1]
         }
       })
-      cli.start(port)
+      const openBrowser = !env.prod
+      console.log(openBrowser)
+      cli.start(port, openBrowser)
     })
 
   program.command('compress')

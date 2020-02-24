@@ -30,7 +30,7 @@ const buildDemo = () => {
   fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
   fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
 }
-const start = (cmdPort) => {
+const start = (cmdPort, openBrowser) => {
   const { autoTemplate, port } = getLibraConfig()
   const _port = cmdPort || port
   const _ip = getIp()
@@ -44,7 +44,7 @@ const start = (cmdPort) => {
     writeViewLess()
   }
 
-  const webpackConfig = webpackMerge(baseConfig(), devConfig(_port))
+  const webpackConfig = webpackMerge(baseConfig(), devConfig(_port, openBrowser))
   const compiler = webpack(webpackConfig)
   const instance = devMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,

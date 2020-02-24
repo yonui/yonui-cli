@@ -17,10 +17,21 @@ const htmlConf = {
   hash: true
 }
 
-const devConfig = (port = 8090) => {
+const devConfig = (port = 8090, openBrowser = true) => {
   const externals = {
     react: 'React',
     'react-dom': 'ReactDOM'
+  }
+  const plugins = [
+    new CleanWebpackPlugin(),
+    new HtmlWebPackPlugin(htmlConf),
+    new MiniCssExtractPlugin({
+      filename: 'index.css',
+      chunkFilename: 'index.css'
+    })
+  ]
+  if (openBrowser) {
+    plugins.push(new OpenBrowserWebpackPlugin({ url: `http://localhost:${port}` }))
   }
   return {
     entry: getEntryList(),
@@ -31,15 +42,7 @@ const devConfig = (port = 8090) => {
     externals,
     mode: 'development',
     devtool: 'eval-source-map',
-    plugins: [
-      new OpenBrowserWebpackPlugin({ url: `http://localhost:${port}` }),
-      new CleanWebpackPlugin(),
-      new HtmlWebPackPlugin(htmlConf),
-      new MiniCssExtractPlugin({
-        filename: 'index.css',
-        chunkFilename: 'index.css'
-      })
-    ]
+    plugins
   }
 }
 
