@@ -123,7 +123,7 @@ export default class IndexView extends Component {
                     <div className='content-item'>
                     <div className='content-title' onClick={this.viewSingleDemp(item.id)}>
                       <Popover placement="rightTop" content={<QRCode
-                        value={\`http://\${IP}:\${PORT}/demo-view/#/\${item.id}\`}
+                        value={\`\${previewUrl}/demo-view/#/\${item.id}\`}
                       />}
                       >
                         <span>{item.name}</span>

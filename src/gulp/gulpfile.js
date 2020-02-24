@@ -89,8 +89,7 @@ task('extra', () => {
   // .pipe(dest(path.resolve('./.libraui')))
 })
 
-task('manifest', (done) => {
+task('manifest', () => {
   writeManifest()
-  done()
 })
 task('build', parallel(series('javascript', 'manifest'), series('less'), 'img'))
