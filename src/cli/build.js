@@ -50,10 +50,23 @@ const buildExtra = () => {
   // copyFile('./README.md','./.libraui/README.md');
 }
 
-const build = () => {
-  writeBuildEntry()
-  writeResources('build')
-  buildDist()
+const build = (arg) => {
+  switch (arg) {
+    case 'entry': {
+      writeBuildEntry()
+      writeResources('build') // write demo entry
+      break
+    }
+    case 'lib': {
+      runGulp(['build'])
+      break
+    }
+    default : {
+      writeBuildEntry()
+      writeResources('build')
+      buildDist()
+    }
+  }
 }
 
 module.exports = build

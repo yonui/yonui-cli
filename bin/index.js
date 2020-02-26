@@ -2,6 +2,7 @@
 const program = require('commander')
 const cli = require('../src/cli')
 const cfg = require('../package.json')
+const runGulp = require('../src/gulp/index')
 const libra = () => {
   program
     .version(cfg.version, '-v, --version')
@@ -34,7 +35,8 @@ const libra = () => {
     .option('-p,--prod')
     .action((env) => {
       process.env.NODE_ENV = env.prod ? 'production' : 'development'
-      cli.build()
+      const args = program.args[0]
+      cli.build(args)
     })
 
   program
@@ -44,14 +46,13 @@ const libra = () => {
     .action((env) => {
       let port
       const args = program.args
-      process.env.NODE_ENV = 'development'
+      process.env.NODE_ENV = env.prod ? 'production' : 'development'
       args.forEach(item => {
         if (/port=/.test(item)) {
           port = item.match(/^port=(\d+)$/)[1]
         }
       })
       const openBrowser = !env.prod
-      console.log(openBrowser)
       cli.start(port, openBrowser)
     })
 
@@ -69,6 +70,16 @@ const libra = () => {
     .action(() => {
       console.log('test info')
     })
+
+  program
+    .command('manifest')
+  // .option("--c", "cc")
+    .description('test console.log')
+    .action(() => {
+      runGulp(['build'])
+      console.log('write manifest.json')
+    })
+
   program.parse(process.argv)
 }
 
