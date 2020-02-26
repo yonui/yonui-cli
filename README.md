@@ -310,3 +310,14 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
     2. 将127.0.0.1:8090(默认)映射到外网url上
     3. 在libra.config.json中新增`previewUrl`属性，对应外网的url
     4. 无`previewUrl`属性或为空字符串/false时，走本地局域网
+
+- 0.1.35
+  - `build`命令更新
+    - libra build: 完整的输出
+    - libra build lib: 构建lib文件个manifest.json文件
+    - libra build entry: 构建组件库和demo入口的临时文件
+    - libra build dist: 完整的输出
+  
+  - `build`和`start`命令新增参数 `-p`或`--prod`
+    - libra build/start -p 将不会使用 *.override.json 文件的配置
+    - libra start -p 将不自动打开浏览器
