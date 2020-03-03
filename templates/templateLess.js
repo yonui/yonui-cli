@@ -2,7 +2,9 @@ module.exports = `
 * {
     box-sizing: border-box;
 }
-
+body {
+  font-size: 14px;
+}
 .demo-viewer{
     width: 1200px;
     margin: auto;
