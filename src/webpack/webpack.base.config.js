@@ -57,7 +57,7 @@ module.exports = () => {
           ]
         },
         {
-          test: /\.(png|jpg|jpeg|gif)(\?.+)?$/,
+          test: /\.(svg|png|jpg|jpeg|gif)(\?.+)?$/,
           use: [{
             loader: require.resolve('url-loader'),
             options: {
