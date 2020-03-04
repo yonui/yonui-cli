@@ -19,7 +19,8 @@ const buildDist = () => {
       console.error(err)
     } else {
       console.log('build dist and demo files success ')
-      buildLib()
+      // buildLib()
+      runGulp(['build']) //  产出lib文件和manifest.json
       buildExtra()
       fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
       fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
@@ -28,20 +29,20 @@ const buildDist = () => {
 }
 
 // 产出lib文件
-const buildLib = () => {
-  // runGulp(['javascript','less','css','img']);
-  // const webpackConfig = webpackMerge(baseConfig(),lessConfig());
-  // const compiler = webpack(webpackConfig);
-  // compiler.run( (err, status) => {
-  //     if(err){
-  //         console.error(err);
-  //     }
-  //     else {
-  //         console.log('build lib file success ')
-  //     }
-  // })
-  runGulp(['build'])
-}
+// const buildLib = () => {
+//   // runGulp(['javascript','less','css','img']);
+//   // const webpackConfig = webpackMerge(baseConfig(),lessConfig());
+//   // const compiler = webpack(webpackConfig);
+//   // compiler.run( (err, status) => {
+//   //     if(err){
+//   //         console.error(err);
+//   //     }
+//   //     else {
+//   //         console.log('build lib file success ')
+//   //     }
+//   // })
+//   runGulp(['build'])
+// }
 
 // 产出其他文件，如package.json等
 const buildExtra = () => {
@@ -62,7 +63,7 @@ const build = (arg) => {
       break
     }
     case 'manifest': {
-      runGulp(['manifest'])
+      runGulp(['manifest']) // 产出manifest.json
       break
     }
     default : {

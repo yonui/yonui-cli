@@ -321,3 +321,9 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
   - `build`和`start`命令新增参数 `-p`或`--prod`
     - libra build/start -p 将不会使用 *.override.json 文件的配置
     - libra start -p 将不自动打开浏览器
+
+- 0.1.41
+  - `build`命令更新
+    - libra build manifest: 构建manifest.json文件(需保证dist/index.js文件存在)
+  
+  - 生成manifest.json文件逻辑修改
