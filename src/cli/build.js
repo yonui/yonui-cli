@@ -61,6 +61,10 @@ const build = (arg) => {
       runGulp(['build'])
       break
     }
+    case 'manifest': {
+      runGulp(['manifest'])
+      break
+    }
     default : {
       writeBuildEntry()
       writeResources('build')
