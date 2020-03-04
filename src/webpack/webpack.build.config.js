@@ -13,11 +13,13 @@ const buildConfig = () => {
   })
   const manifestJson = getManifestJson()
   const libName = manifestJson.name
+  const mode = process.env.NODE_ENV
+  console.log('mode = ', mode)
   return {
     entry: {
       [libName]: path.resolve('./.libraui/temp/build/index.js')
     },
-    mode: 'production',
+    mode,
     externals,
     output: {
       filename: 'index.js',
