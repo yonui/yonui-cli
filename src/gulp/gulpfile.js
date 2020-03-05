@@ -7,8 +7,8 @@ const { getLibraConfig } = require('../utils')
 const replace = require('gulp-replace')
 // const gulpRename = require('gulp-rename');
 // const gulpCleanCss = require('gulp-clean-css');
-const { sourcePath } = getLibraConfig()
-const basePath = `${sourcePath}/**/`
+const { libPath, sourcePath } = getLibraConfig()
+const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`)
 const dist = path.resolve('lib')
@@ -23,7 +23,8 @@ task('hello', done => {
 
 // 转译js代码
 task('javascript', () => {
-  return src([jsSource, path.resolve(`${sourcePath}/**/*.{ts,tsx,js,jsx}`)])
+  console.log('javascript')
+  return src([jsSource, path.resolve(`${basePath}*.{ts,tsx,js,jsx}`)])
     .pipe(gulpBabel({
       presets: [
         resolve('@babel/preset-env'),
@@ -92,4 +93,5 @@ task('extra', () => {
 task('manifest', () => {
   writeManifest()
 })
-task('build', parallel(series('javascript', 'manifest'), series('less'), 'img'))
+task('lib', parallel('javascript', 'less', 'img'))
+task('build', series('lib', 'manifest'))

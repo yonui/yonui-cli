@@ -59,7 +59,7 @@ const build = (arg) => {
       break
     }
     case 'lib': {
-      runGulp(['build'])
+      runGulp(['lib'])
       break
     }
     case 'manifest': {
