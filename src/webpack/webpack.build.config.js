@@ -14,7 +14,21 @@ const buildConfig = () => {
   const manifestJson = getManifestJson()
   const libName = manifestJson.name
   const mode = process.env.NODE_ENV
-  console.log('mode = ', mode)
+  const plugins = [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'index.css',
+      chunkFilename: 'index.css'
+    }),
+    new SimpleProgressWebpackPlugin()
+  ]
+  if (mode === 'development') {
+    plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerPort: 8080,
+        generateStatsFile: false
+      }))
+  }
   return {
     entry: {
       [libName]: path.resolve('./.libraui/temp/build/index.js')
@@ -30,32 +44,7 @@ const buildConfig = () => {
       globalObject: 'this'
     },
     devtool: 'source-map',
-    plugins: [
-      new CleanWebpackPlugin(),
-      new MiniCssExtractPlugin({
-        filename: 'index.css',
-        chunkFilename: 'index.css'
-      }),
-      new BundleAnalyzerPlugin({
-        analyzerPort: 8080,
-        generateStatsFile: false
-      }),
-      new SimpleProgressWebpackPlugin()
-      // new OptimizeCSSAssetsPlugin({
-      //     cssProcessorOptions: {
-      //         safe: true,
-      //         mergeLonghand: false,
-      //         discardComments: { removeAll: true }
-      //     },
-      //     canPrint: true
-      // }),
-      // new TerserPlugin({
-      //     cache: true,
-      //     parallel: true,
-      //     sourceMap: true
-      // }),
-    ]
-
+    plugins
   }
 }
 
