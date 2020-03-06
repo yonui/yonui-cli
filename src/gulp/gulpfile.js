@@ -7,7 +7,7 @@ const { getLibraConfig } = require('../utils')
 const replace = require('gulp-replace')
 // const gulpRename = require('gulp-rename');
 // const gulpCleanCss = require('gulp-clean-css');
-const { libPath, sourcePath } = getLibraConfig()
+const { libPath, sourcePath, plugins } = getLibraConfig()
 const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`)
@@ -32,6 +32,7 @@ task('javascript', () => {
         resolve('@babel/preset-typescript')
       ],
       plugins: [
+        ...plugins,
         [resolve('@babel/plugin-transform-modules-commonjs')],
         [resolve('@babel/plugin-proposal-class-properties'), { legacy: true }]
       ]
