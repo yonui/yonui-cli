@@ -1,6 +1,6 @@
 const gulp = require('gulp')
-require('./gulpfile')
 const runGulp = (task) => {
+  require('./gulpfile')
   runTask(task)
 }
 
