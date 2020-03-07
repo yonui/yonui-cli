@@ -1,9 +1,7 @@
 const gulp = require('gulp')
-const runGulp = (task = []) => {
-  require('./gulpfile')
-  task.forEach(item => {
-    runTask(item)
-  })
+require('./gulpfile')
+const runGulp = (task) => {
+  runTask(task)
 }
 
 // 执行命令

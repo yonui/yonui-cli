@@ -20,7 +20,7 @@ const buildDist = () => {
     } else {
       console.log('build dist and demo files success ')
       // buildLib()
-      runGulp(['build']) //  产出lib文件和manifest.json
+      runGulp('build') //  产出lib文件和manifest.json
       buildExtra()
       fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
       fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
@@ -59,11 +59,11 @@ const build = (arg) => {
       break
     }
     case 'lib': {
-      runGulp(['lib'])
+      runGulp('lib')
       break
     }
     case 'manifest': {
-      runGulp(['manifest']) // 产出manifest.json
+      runGulp('manifest') // 产出manifest.json
       break
     }
     default : {
