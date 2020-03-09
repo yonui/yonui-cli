@@ -34,6 +34,8 @@ body {
         display: inline-block;
         width: 180px;
         min-height: 300px;
+        max-height: 80vh;
+        overflow: auto;
         vertical-align: top;
         padding: 10px;
         border-right: 1px solid #f5f5f5;
