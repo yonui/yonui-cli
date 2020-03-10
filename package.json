@@ -1,10 +1,11 @@
 {
-  "name": "libraui-cli",
+  "name": "yonui-cli",
   "version": "0.1.46",
   "description": "",
   "main": "index.js",
   "bin": {
-    "libra": "./bin/index.js"
+    "libra": "./bin/index.js",
+    "yonui": "./bin/index.js"
   },
   "scripts": {
     "postversion": "git push --follow-tags",
