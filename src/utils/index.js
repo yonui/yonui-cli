@@ -10,7 +10,7 @@ const defaultLib = [{
     commonjs2: 'react',
     root: 'React' // 指向全局变量
   },
-  js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react.production.min.js',
+  js: './react/react.development.js',
   css: ''
 },
 {
@@ -21,7 +21,7 @@ const defaultLib = [{
     commonjs2: 'react-dom',
     root: 'ReactDOM' // 指向全局变量
   },
-  js: '//design.yonyoucloud.com/static/react/16.8.4/umd/react-dom.production.min.js',
+  js: './react-dom/react-dom.development.js',
   css: ''
 }]
 
