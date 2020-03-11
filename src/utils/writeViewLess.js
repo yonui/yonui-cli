@@ -1,6 +1,6 @@
 const fse = require('fs-extra')
 const path = require('path')
-const templateLess = require('../../templates/templateLess')
+const templateLess = require('../../templates/View/templateLess')
 const writeViewLess = () => {
   const outputFile = path.resolve('./.libraui/temp/view/index.less')
   fse.outputFileSync(outputFile, templateLess)

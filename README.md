@@ -210,6 +210,13 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
 
 - 本地预览
 
+  在manifest.json文件的components属性中配置组件的入口。如：
+  ```json
+  components:{
+    "MyComponent": "./src/components/MyComponent"
+  }
+  ```
+  
   在工程目录下，执行`libra start`命令启动本地预览。
 
   ```js

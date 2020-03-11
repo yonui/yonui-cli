@@ -8,7 +8,6 @@ const compressing = require('compressing')
 // const shell = require('shelljs')
 const codeMode = ['js', 'ts']
 const deviceType = ['mobile', 'PC']
-// const libraConfigTemplate = require('../../templates/templateConfig')
 // const url = 'https://github.com/iuap-design/libraui-template.git'
 const init = async () => {
   // 输入相关的配置参数

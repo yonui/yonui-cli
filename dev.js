@@ -17,7 +17,7 @@ const compress = () => {
     if (err) {
       console.error(err)
     } else {
-      console.log('success')
+      console.log('Compress project file successfully')
     }
   })
 }

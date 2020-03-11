@@ -1,7 +1,7 @@
 const fse = require('fs-extra')
 const path = require('path')
 const { getLib, getLibraConfig } = require('./index')
-const templateHtml = require('../../templates/templateHtml')
+const templateHtml = require('../../templates/View/templateHtml')
 const writeViewHtml = () => {
   const { extraImport } = getLibraConfig()
   let scriptInput = extraImport.js
