@@ -14,7 +14,7 @@ const libra = () => {
     .command('init')
     .description('create a new libra project')
     .action(() => {
-      cli.create()
+      cli.init()
     })
 
   program
@@ -23,7 +23,7 @@ const libra = () => {
     .action(() => {
       const componentName = program.args[0]
       if (componentName) {
-        cli.createNewComponent(componentName)
+        cli.create(componentName)
       } else {
         program.help()
       }

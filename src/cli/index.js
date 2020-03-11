@@ -1,12 +1,12 @@
-const creatNewProject = require('./init')
+const init = require('./init')
 const buildProject = require('./build')
 const developProject = require('./start')
-const createNewComponent = require('./new')
+const create = require('./create')
 const compress = require('./compress')
 module.exports = {
-  create: creatNewProject,
+  init: init,
   build: buildProject,
   start: developProject,
-  createNewComponent,
+  create,
   compress
 }

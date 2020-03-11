@@ -1,0 +1,20 @@
+{
+    "port": "8090",
+    "autoTemplate": true,
+    "sourcePath": "components",
+    "libPath": "components",
+    "type": "@type",
+    "device": "@device",
+    "lib": [],
+    "previewUrl": "",
+    "plugins": [],
+    "extraImport": {
+        "js": "",
+        "css": ""
+    },
+    "buildImport": {
+      "js":[],
+      "css":[],
+      "export":[]
+    }
+  }

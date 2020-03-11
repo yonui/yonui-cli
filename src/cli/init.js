@@ -4,11 +4,13 @@
 const inquirer = require('inquirer')
 const path = require('path')
 const fse = require('fs-extra')
-const shell = require('shelljs')
+const compressing = require('compressing')
+// const shell = require('shelljs')
 const codeMode = ['js', 'ts']
-const libraConfigTemplate = require('../../templates/templateConfig')
-const url = 'https://github.com/iuap-design/libraui-template.git'
-const creatNewProject = async () => {
+const deviceType = ['mobile', 'PC']
+// const libraConfigTemplate = require('../../templates/templateConfig')
+// const url = 'https://github.com/iuap-design/libraui-template.git'
+const init = async () => {
   // 输入相关的配置参数
   const ans = await inquirer.prompt([
     {
@@ -18,6 +20,12 @@ const creatNewProject = async () => {
       default: function () {
         return 'libra-project'
       }
+    },
+    {
+      type: 'list',
+      name: 'device',
+      message: 'What devices will your components be used on?',
+      choices: deviceType
     },
     {
       type: 'input',
@@ -32,16 +40,23 @@ const creatNewProject = async () => {
     }
   ])
 
-  await download(ans.project)
-  const libraConfigJson = libraConfigTemplate.replace('@type', ans.codeMode)
-  fse.outputFileSync(path.resolve(`./${ans.project}/libra.config.json`), libraConfigJson)
+  await create(ans)
 }
 
-const download = async (folderName) => {
-  const filepath = path.resolve('.')
-  await shell.exec(`git clone ${url}`)
-  await fse.remove(`${filepath}/libraui-template/.git`)
-  await fse.renameSync(`${filepath}/libraui-template`, `${filepath}/${folderName}`)
+const create = async (ans = { codeMode: 'ts', device: 'PC', author: 'Hyj', project: 'xx' }) => {
+  const filepath = path.resolve(ans.project)
+  // const filepath = '.'
+  const libraConfigPath = path.resolve(filepath, 'libra.config.json')
+  const packagePath = path.resolve(filepath, 'package.json')
+  const manifestPath = path.resolve(filepath, 'manifest.json')
+  compressing.tgz.uncompress(path.join(__dirname, '../../templates/project.tgz'), filepath).then(() => {
+    const packageJson = require(packagePath)
+    const libraConfig = require(libraConfigPath)
+    const manifestJson = require(manifestPath)
+    fse.outputJSONSync(libraConfigPath, { ...libraConfig, type: ans.codeMode, device: ans.device }, { replacer: null, spaces: 2 })
+    fse.outputJSONSync(packagePath, { ...packageJson, author: ans.author, name: ans.project }, { replacer: null, spaces: 2 })
+    fse.outputJSONSync(manifestPath, { ...manifestJson, name: ans.project }, { replacer: null, spaces: 2 })
+  })
 }
 
-module.exports = creatNewProject
+module.exports = init

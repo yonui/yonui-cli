@@ -1,0 +1,30 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "libra build",
+    "start": "libra start",
+    "dev": "libra start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "libraui-extension": "^0.7.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "bee-button": "^2.0.11",
+    "bee-loading": "^2.0.3",
+    "bee-modal": "^2.1.5",
+    "bee-popover": "^3.1.0",
+    "bee-radio": "^2.0.18",
+    "bee-tag": "0.0.3",
+    "highlight.js": "^9.18.1",
+    "marked": "^0.8.0",
+    "qrcode.react": "^1.0.0",
+    "react-highlight": "^0.12.0"
+  }
+}
