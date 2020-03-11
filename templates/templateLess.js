@@ -92,11 +92,16 @@ body {
             }
             .content-demo{
                 margin: 5px;
-                width: 375px;
-                height: 667px;
-                border: 1px solid #000000;
-                background: #eee;
-                overflow: auto;
+                &-mobile{
+                  width: 375px;
+                  height: 667px;
+                  border: 1px solid #000000;
+                  background: #eee;
+                  overflow: auto;
+              }
+              &-PC{
+                max-height: 100vh;
+              }
             }
             .content-extra-icon{
                 text-align: center;
