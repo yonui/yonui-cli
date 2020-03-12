@@ -4,32 +4,32 @@ const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 const baseConfig = require('../webpack/webpack.base.config')
 const devConfig = require('../webpack/webpack.dev.config')
-const demoConfig = require('../webpack/webpack.demo.config')
+// const demoConfig = require('../webpack/webpack.demo.config')
+const { buildDemo } = require('../webpack/runWebpack')
 const writeViewJs = require('../utils/writeViewJs')
 const writeViewHtml = require('../utils/writeViewHtml')
 const writeViewLess = require('../utils/writeViewLess')
 const writeResources = require('../utils/writeResources')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
-const fse = require('fs-extra')
 const { getLibraConfig, getIp } = require('../utils')
 const Express = require('express')
 const app = new Express()
 
-const buildDemo = () => {
-  const webpackConfig = webpackMerge(baseConfig(), demoConfig())
-  const compiler = webpack(webpackConfig)
-  compiler.watch({
-    // watchOptions 示例
-    aggregateTimeout: 300,
-    poll: undefined
-  }, () => {
-    // 在这里打印 watch/build 结果...
-    console.log('update')
-  })
-  fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
-  fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
-}
+// const buildDemo = () => {
+//   const webpackConfig = webpackMerge(baseConfig(), demoConfig())
+//   const compiler = webpack(webpackConfig)
+//   compiler.watch({
+//     // watchOptions 示例
+//     aggregateTimeout: 300,
+//     poll: undefined
+//   }, () => {
+//     // 在这里打印 watch/build 结果...
+//     console.log('update')
+//   })
+//   fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
+//   fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
+// }
 const start = (cmdPort, openBrowser) => {
   const { autoTemplate, port, output } = getLibraConfig()
   const _port = cmdPort || port
