@@ -7,11 +7,11 @@ const { getLibraConfig } = require('../utils')
 const replace = require('gulp-replace')
 // const gulpRename = require('gulp-rename');
 // const gulpCleanCss = require('gulp-clean-css');
-const { libPath, sourcePath, plugins } = getLibraConfig()
+const { libPath, sourcePath, plugins, output } = getLibraConfig()
 const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`)
-const dist = path.resolve('lib')
+const dist = path.resolve(output.lib)
 const lessSource = path.resolve(`${basePath}{style,demos,}/*.less`)
 const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico}`)
 // const extraSource = path.resolve('./{package.json,*.md}');

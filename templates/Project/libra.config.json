@@ -5,6 +5,12 @@
     "libPath": "components",
     "type": "@type",
     "device": "@device",
+    "output": {
+      "dist": "./dist",
+      "lib": "./lib",
+      "demo": "./.libraui/demo",
+      "result": "./result"
+    },
     "lib": [],
     "previewUrl": "",
     "plugins": [],

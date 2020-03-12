@@ -1,6 +1,7 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const fse = require('fs-extra')
+const { getLibraConfig } = require('../utils')
 const getEntryList = () => {
   const res = {}
   const demoList = require(path.resolve('./.libraui/temp/demo/demo-path.json'))
@@ -10,6 +11,8 @@ const getEntryList = () => {
   return res
 }
 const demoConfig = (param) => {
+  const libraConfigJson = getLibraConfig()
+  const { output } = libraConfigJson
   const externals = {
     react: 'React',
     'react-dom': 'ReactDOM'
@@ -23,7 +26,7 @@ const demoConfig = (param) => {
     externals,
     output: {
       filename: '[name]/index.js',
-      path: path.resolve('./.libraui/demo')
+      path: path.resolve(output.demo)
     },
     devtool,
     plugins: [

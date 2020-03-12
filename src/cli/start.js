@@ -31,7 +31,7 @@ const buildDemo = () => {
   fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
 }
 const start = (cmdPort, openBrowser) => {
-  const { autoTemplate, port } = getLibraConfig()
+  const { autoTemplate, port, output } = getLibraConfig()
   const _port = cmdPort || port
   const _ip = getIp()
   process.env.devPort = _port
@@ -62,7 +62,7 @@ const start = (cmdPort, openBrowser) => {
   })
 
   app.use(Express.static(path.resolve('./static')))
-  app.use(Express.static(path.resolve('./.libraui/demo')))
+  app.use(Express.static(path.resolve(output.demo)))
   // 加载实例
   app.use(instance)
   // 热更新

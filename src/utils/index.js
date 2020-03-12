@@ -107,9 +107,16 @@ const getLibraConfig = () => {
     process.exit(0)
   }
 
-  const { type } = configJson
+  const { type, output = {} } = configJson
+  const outputObj = {
+    dist: './dist',
+    lib: './lib',
+    demo: './.libraui/demo',
+    result: './result',
+    ...output
+  }
   const suffixType = type === 'ts' ? 'tsx' : 'js'
-  return { ...configJson, suffixType }
+  return { ...configJson, suffixType, output: outputObj }
 }
 
 const getManifestJson = () => {

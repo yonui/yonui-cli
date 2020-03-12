@@ -1,4 +1,4 @@
-const { getManifestJson } = require('./index')
+const { getManifestJson, getLibraConfig } = require('./index')
 const path = require('path')
 const fse = require('fs-extra')
 // const { getLibraConfig } = require('../utils')
@@ -12,8 +12,9 @@ function customJsonStringify (key, value) {
 }
 
 const writeManifest = () => {
+  const output = getLibraConfig().output
   require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
-  const library = require(path.resolve('dist/index.js'))
+  const library = require(path.resolve(output.dist, 'index.js'))
   // console.log(library)
   const manifestComponents = []
   Object.keys(library).forEach(compName => {
@@ -66,10 +67,10 @@ const writeManifest = () => {
   // }
 
   // loop(manifestJson.components)
-  const output = { ...manifestJson, components: manifestComponents }
+  const outputFile = { ...manifestJson, components: manifestComponents }
   fse.outputFileSync(
-    path.resolve('./dist/manifest.json'),
-    JSON.stringify(output, customJsonStringify)
+    path.resolve(output.dist, 'manifest.json'),
+    JSON.stringify(outputFile, customJsonStringify)
   )
   process.exit(0)
 }

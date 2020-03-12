@@ -1,9 +1,10 @@
 const fse = require('fs-extra')
 const path = require('path')
-const { getDir, getManifestJson, formatPath } = require('../utils')
+const { getDir, getManifestJson, formatPath, getLibraConfig } = require('../utils')
 
 const writeResources = () => {
   const components = getManifestJson().components
+  const output = getLibraConfig().output
   const demoList = []
   const demoPath = []
   const writeHelper = (obj, prePath = './') => {
@@ -46,7 +47,7 @@ const writeResources = () => {
     })
   }
   writeHelper(components)
-  const outputFile = path.resolve('./.libraui/demo/resources.json')
+  const outputFile = path.resolve(output.demo, 'resources.json')
   fse.outputFileSync(outputFile, JSON.stringify(demoList))
   fse.outputJSONSync(path.resolve('./.libraui/temp/demo/demo-path.json'), demoPath)
 }

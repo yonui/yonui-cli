@@ -1,5 +1,5 @@
 const path = require('path')
-const { getManifestJson, getLib } = require('../utils')
+const { getManifestJson, getLib, getLibraConfig } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
@@ -12,6 +12,8 @@ const buildConfig = () => {
     externals[item.key] = item.value
   })
   const manifestJson = getManifestJson()
+  const libraConfigJson = getLibraConfig()
+  const { output } = libraConfigJson
   const libName = manifestJson.name
   const mode = process.env.NODE_ENV
   const plugins = [
@@ -37,7 +39,7 @@ const buildConfig = () => {
     externals,
     output: {
       filename: 'index.js',
-      path: path.resolve('dist'),
+      path: path.resolve(output.dist),
       libraryTarget: 'umd',
       library: '__[name]__',
       libraryExport: 'default',
