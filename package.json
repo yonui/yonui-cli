@@ -8,7 +8,7 @@
     "yonui": "./bin/index.js"
   },
   "scripts": {
-    "postversion": "npm run pub && git push --follow-tags",
+    "postversion": "git push --follow-tags",
     "pub": "node dev.js",
     "test": "echo no test",
     "lint": "eslint . --ext .js",
