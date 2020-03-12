@@ -7,9 +7,9 @@ module.exports = `<!DOCTYPE html>
     <title>Demo</title>
     @cssImport
 </head>
-<body>
+<body class='demo-view'>
     <div id='app'></div>
     @scriptImport
-    
+
 </body>
 </html>`

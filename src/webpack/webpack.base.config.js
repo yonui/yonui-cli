@@ -68,6 +68,10 @@ module.exports = () => {
               // publicPath: `/${_context}assets/images`
             }
           }]
+        },
+        {
+          test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+          loader: require.resolve('url-loader')
         }
       ]
     }
