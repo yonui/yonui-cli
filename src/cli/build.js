@@ -9,8 +9,39 @@ const writeResources = require('../utils/writeResources')
 const writeBuildEntry = require('../utils/writeBuildEntry')
 const path = require('path')
 const fse = require('fs-extra')
-// 打包产出dist文件
+
+// 产出dist文件
 const buildDist = () => {
+  const distWebpackConfig = webpackMerge(baseConfig(), buildConfig())
+  const compiler = webpack(distWebpackConfig)
+  compiler.run((err) => {
+    if (err) {
+      console.error(err)
+    } else {
+      console.log('build dist successfully')
+      runGulp('manifest') //  产出manifest.json
+      buildExtra()
+    }
+  })
+}
+
+// 产出demo文件
+const buildDemo = () => {
+  const demoWebpackConfig = webpackMerge(baseConfig(), demoConfig('build'))
+  const compiler = webpack(demoWebpackConfig)
+  compiler.run((err) => {
+    if (err) {
+      console.error(err)
+    } else {
+      console.log('build demo successfully')
+      fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
+      fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
+    }
+  })
+}
+
+// 产出dist和demo
+const buildDistAndDemo = () => {
   const distWebpackConfig = webpackMerge(baseConfig(), buildConfig())
   const demoWebpackConfig = webpackMerge(baseConfig(), demoConfig('build'))
   const compiler = webpack([distWebpackConfig, demoWebpackConfig])
@@ -18,8 +49,7 @@ const buildDist = () => {
     if (err) {
       console.error(err)
     } else {
-      console.log('build dist and demo files success ')
-      // buildLib()
+      console.log('build dist and demos successfully ')
       runGulp('build') //  产出lib文件和manifest.json
       buildExtra()
       fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
@@ -27,23 +57,6 @@ const buildDist = () => {
     }
   })
 }
-
-// 产出lib文件
-// const buildLib = () => {
-//   // runGulp(['javascript','less','css','img']);
-//   // const webpackConfig = webpackMerge(baseConfig(),lessConfig());
-//   // const compiler = webpack(webpackConfig);
-//   // compiler.run( (err, status) => {
-//   //     if(err){
-//   //         console.error(err);
-//   //     }
-//   //     else {
-//   //         console.log('build lib file success ')
-//   //     }
-//   // })
-//   runGulp(['build'])
-// }
-
 // 产出其他文件，如package.json等
 const buildExtra = () => {
   // runGulp(['extra'])
@@ -55,21 +68,27 @@ const build = (arg) => {
   switch (arg) {
     case 'entry': {
       writeBuildEntry()
-      writeResources('build') // write demo entry
+      writeResources() // write demo entry
       break
     }
     case 'lib': {
       runGulp('lib')
       break
     }
-    case 'manifest': {
-      runGulp('manifest') // 产出manifest.json
+    case 'dist': {
+      writeBuildEntry()
+      buildDist()
+      break
+    }
+    case 'demo': {
+      writeResources()
+      buildDemo()
       break
     }
     default : {
       writeBuildEntry()
-      writeResources('build')
-      buildDist()
+      writeResources()
+      buildDistAndDemo()
     }
   }
 }

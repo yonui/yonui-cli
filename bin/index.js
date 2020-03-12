@@ -2,7 +2,6 @@
 const program = require('commander')
 const cli = require('../src/cli')
 const cfg = require('../package.json')
-const runGulp = require('../src/gulp/index')
 const libra = () => {
   program
     .version(cfg.version, '-v, --version')
@@ -69,15 +68,6 @@ const libra = () => {
     .description('test console.log')
     .action(() => {
       console.log('test info')
-    })
-
-  program
-    .command('manifest')
-  // .option("--c", "cc")
-    .description('test console.log')
-    .action(() => {
-      runGulp(['build'])
-      console.log('write manifest.json')
     })
 
   program.parse(process.argv)
