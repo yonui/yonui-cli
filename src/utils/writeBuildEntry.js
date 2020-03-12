@@ -4,10 +4,13 @@ const fse = require('fs-extra')
 const { formatPath } = require('./index')
 const writeBuildEntry = () => {
   const manifestJson = getManifestJson()
-  const { buildImport = {} } = getLibraConfig()
+  const { buildImport = {}, excludeNidAndUiType, useManifest = true } = getLibraConfig()
   let imp = ''
   let impLess = ''
   let expStr = ''
+  if (useManifest) {
+    imp += 'import { ReactWrapper } from \'libraui-extension\'\n'
+  }
   if (buildImport.js) {
     buildImport.js.forEach(item => {
       imp += `${item}\n`
@@ -18,12 +21,17 @@ const writeBuildEntry = () => {
       impLess += `${item}\n`
     })
   }
+
   const exp = {}
   const foo = (obj, res = {}) => {
     Object.keys(obj).map(item => {
       if (typeof obj[item] === 'string') {
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
-        imp += `import ${item} from '${_path}';\n`
+        if (useManifest) {
+          imp += `import ${item}Comp from '${_path}'\nimport ${item}Manifest from '${_path}/manifest'\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType ? ', { excludeNidAndUiType: true }' : ''})\n`
+        } else {
+          imp += `import ${item} from '${_path}'\n`
+        }
         impLess += `@import '${_path}/style/index.less';\n`
         res[item] = item
       } else {
