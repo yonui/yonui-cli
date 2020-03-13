@@ -1,7 +1,7 @@
 const { getManifestJson, getLibraConfig } = require('./index')
 const path = require('path')
 const fse = require('fs-extra')
-const { formatPath } = require('./index')
+const { formatPath, getDir } = require('./index')
 const writeBuildEntry = () => {
   const manifestJson = getManifestJson()
   const { buildImport = {}, excludeNidAndUiType, useManifest = true } = getLibraConfig()
@@ -27,8 +27,16 @@ const writeBuildEntry = () => {
     Object.keys(obj).map(item => {
       if (typeof obj[item] === 'string') {
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
+        const fileArr = getDir(obj[item], 'file')
+        const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
+        // const _manifestExists = fse.existsSync(`${_path}/manifest.tsx`) || fse.existsSync(`${_path}/manifest.ts`) || fse.existsSync(`${_path}/manifest.jsx`) || fse.existsSync(`${_path}/manifest.js`)
         if (useManifest) {
-          imp += `import ${item}Comp from '${_path}'\nimport ${item}Manifest from '${_path}/manifest'\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType ? ', { excludeNidAndUiType: true }' : ''})\n`
+          if (_manifestExists) {
+            imp += `import ${item}Comp from '${_path}'\nimport ${item}Manifest from '${_path}/manifest'\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType ? ', { excludeNidAndUiType: true }' : ''})\n`
+          } else {
+            imp += `import ${item} from '${_path}'\n`
+            console.log(`Component ${item} misses manifest file.`)
+          }
         } else {
           imp += `import ${item} from '${_path}'\n`
         }
