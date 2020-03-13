@@ -10,8 +10,9 @@ const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`)
 const dist = path.resolve(output.lib)
-const lessSource = path.resolve(`${basePath}{style,demos,}/*.less`)
-const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico}`)
+const lessSource = path.resolve(`${basePath}{style,demos,}/*.{less,css}`)
+const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico,svg}`)
+const extraSource = path.resolve(`${basePath}{*.,*/*.}{html,eot,ttf,woff,woff2}`)
 const writeManifest = require('../utils/writeManifest')
 task('hello', done => {
   console.log('hello world')
@@ -80,14 +81,14 @@ task('img', () => {
     .pipe(dest(dist))
 })
 
-// 复制package.json文件
+// 复制其他文件
 task('extra', () => {
-  // return src(extraSource)
-  // .pipe(dest(path.resolve('./.libraui')))
+  return src(extraSource)
+    .pipe(dest(dist))
 })
 
 task('manifest', () => {
   writeManifest()
 })
-task('lib', parallel('javascript', 'less', 'img'))
+task('lib', parallel('javascript', 'less', 'img', 'extra'))
 task('build', series('lib', 'manifest'))
