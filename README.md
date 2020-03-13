@@ -354,3 +354,16 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
   - 优化新增组件代码
     - 新增时组件名自动替换成首字母大写形式
     - 新增时代码中相关字段替换成组件名称
+  
+- 0.1.55
+  - 修改build命令代码逻辑
+  - 优化使用webpack的逻辑
+  - manifest和逻辑代码取消关联，libra.config.json新增属性
+    - `useManifest: boolean`  为true时，产出的文件中每个组件会引入manifest并与组件使用ReactWrapper连接；为false时产出单纯的react组件。默认为true
+    - `excludeNidAndUiType: boolean` 为true，不加nid和uitype；为false时，外套一层div并添加nid和uitype。在useManifest为true时生效，默认为true  
+  
+- 0.1.57
+  - 增加打包和转译对字体文件的支持
+
+- 0.1.58
+  - 产出的manifest中组件名称小写
