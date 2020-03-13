@@ -23,6 +23,10 @@ const build = (arg) => {
       buildDemo('build')
       break
     }
+    case 'manifest': {
+      runGulp('manifest')
+      break
+    }
     default: {
       writeBuildEntry()
       writeResources()

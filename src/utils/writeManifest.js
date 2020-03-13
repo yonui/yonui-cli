@@ -26,7 +26,10 @@ const writeManifest = () => {
       return
     }
     const componentManifest = Comp.manifest
-    componentManifest && manifestComponents.push(componentManifest)
+    if (componentManifest) {
+      const outputManifest = { ...componentManifest, name: componentManifest.name.toLowerCase() }
+      manifestComponents.push(outputManifest)
+    }
   })
   // for (const compName in library) {
   //   if( )
