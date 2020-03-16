@@ -180,15 +180,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
 
 - 创建工程
 
-  在需要的目录，打开命令行，键入`yonui init`命令，输入工程名、作者名、编码类型(js or ts)，创建新的工程。
-
-  ```js
-  $ yonui init
-  ? Project Name: Demo
-  ? Author: Hyj
-  ? Use JavaScript or TypeScript: ts
-  正克隆到 'libraui-template'...
-  ```
+  在需要的目录，打开命令行，键入`yonui init`命令，输入工程名、作者名、编码类型(js or ts)等信息，创建新的工程。
 
 - 创建组件
 
@@ -233,7 +225,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
 ### 更新日志
 
 - 0.1.12
-  - 支持在.libraui/dist目录下产出manifest.json文件
+  - 支持在.yonuiui/dist目录下产出manifest.json文件
   - 修改了预览框架的背景色为#eee
   - `<html>`标签添加属性`font-size=50px`
   - 解决生成lib目录时由于别名配置、引用第三方包等导致的打包错误
@@ -241,7 +233,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
 
 - 0.1.13
   - yonui.config.json和manifest.json文件支持override
-    开发过程中，为避免对libra.config.json和manifest.json的提交，现支持以下功能：在读取配置信息时，优先获取manifest.override.json的信息，其次获取manifest.json的信息，否则报错，libra.config.json文件同理。
+    开发过程中，为避免对yonui.config.json和manifest.json的提交，现支持以下功能：在读取配置信息时，优先获取manifest.override.json的信息，其次获取manifest.json的信息，否则报错，yonui.config.json文件同理。
   
   - yonui build修改
     执行`yonui build -p`或`yonui build --prod`时不会获取*.override.json文件的信息
@@ -315,7 +307,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
   - 开发预览支持自定义ur。考虑到网络环境问题，工具支持使用外部内网穿透功能
     1. 使用任意内网穿透工具，如utools
     2. 将127.0.0.1:8090(默认)映射到外网url上
-    3. 在libra.config.json中新增`previewUrl`属性，对应外网的url
+    3. 在yonui.config.json中新增`previewUrl`属性，对应外网的url
     4. 无`previewUrl`属性或为空字符串/false时，走本地局域网
 
 - 0.1.35
@@ -348,7 +340,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
         "output": {
           "dist": "./dist",
           "lib": "./lib",
-          "demo": "./.libraui/demo"
+          "demo": "./.yonuiui/demo"
       }
     ```
   - 优化新增组件代码
@@ -358,7 +350,7 @@ extraImport属性中js和css属性的值均为字符串形式，需要注意对�
 - 0.1.55
   - 修改build命令代码逻辑
   - 优化使用webpack的逻辑
-  - manifest和逻辑代码取消关联，libra.config.json新增属性
+  - manifest和逻辑代码取消关联，yonui.config.json新增属性
     - `useManifest: boolean`  为true时，产出的文件中每个组件会引入manifest并与组件使用ReactWrapper连接；为false时产出单纯的react组件。默认为true
     - `excludeNidAndUiType: boolean` 为true，不加nid和uitype；为false时，外套一层div并添加nid和uitype。在useManifest为true时生效，默认为true  
   

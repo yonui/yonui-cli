@@ -6,10 +6,10 @@
     "type": "@type",
     "device": "@device",
     "output": {
-      "dist": "./dist",
-      "lib": "./lib",
-      "demo": "./.libraui/demo",
-      "result": "./result"
+      "dist": "dist",
+      "lib": "lib",
+      "demo": ".yonui/demo",
+      "result": "result"
     },
     "lib": [],
     "previewUrl": "",

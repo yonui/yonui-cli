@@ -4,9 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "libra build",
-    "start": "libra start",
-    "dev": "libra start"
+    "build": "yonui build",
+    "start": "yonui start"
   },
   "author": "",
   "license": "ISC",
