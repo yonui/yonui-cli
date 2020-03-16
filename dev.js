@@ -7,7 +7,7 @@ const compress = () => {
   const tarStream = new compressing.tar.Stream()
   tarStream.addEntry(join('templates/Project/components'))
   tarStream.addEntry(join('templates/Project/static'))
-  tarStream.addEntry(join('templates/Project/libra.config.json'))
+  tarStream.addEntry(join('templates/Project/config.json'))
   tarStream.addEntry(join('templates/Project/manifest.json'))
   tarStream.addEntry(join('templates/Project/package.json'))
   tarStream.addEntry(join('templates/Project/README.md'))

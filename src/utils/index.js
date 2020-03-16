@@ -35,7 +35,8 @@ const getJson = (_path) => {
 
   return res
 }
-
+const configJson = getJson('config.json')
+const configOverrideJson = getJson('config.override.json')
 const libraConfigJson = getJson('libra.config.json')
 const libraConfigOverrideJson = getJson('libra.config.override.json')
 const manifestJson = getJson('manifest.json')
@@ -95,19 +96,19 @@ const getLib = () => {
 
 const getLibraConfig = () => {
   const isDev = process.env.NODE_ENV === 'development'
-  let configJson = {}
-  if (isDev && libraConfigOverrideJson) {
+  let res = {}
+  if (isDev && (configOverrideJson || libraConfigOverrideJson)) {
     console.log('use override file')
-    configJson = libraConfigOverrideJson
-  } else if (libraConfigJson) {
+    res = configOverrideJson || libraConfigOverrideJson
+  } else if (configJson || libraConfigJson) {
     console.log('use file')
-    configJson = libraConfigJson
+    res = configJson || libraConfigJson
   } else {
-    console.log('Missing file: libra.config.json ')
+    console.log('Missing file: config.json ')
     process.exit(0)
   }
 
-  const { type, output = {} } = configJson
+  const { type, output = {} } = res
   const outputObj = {
     dist: './dist',
     lib: './lib',
@@ -116,7 +117,7 @@ const getLibraConfig = () => {
     ...output
   }
   const suffixType = type === 'ts' ? 'tsx' : 'js'
-  return { ...configJson, suffixType, output: outputObj }
+  return { ...res, suffixType, output: outputObj }
 }
 
 const getManifestJson = () => {

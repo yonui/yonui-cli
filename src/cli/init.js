@@ -45,7 +45,7 @@ const init = async () => {
 const create = async (ans = { codeMode: 'ts', device: 'PC', author: 'Hyj', project: 'xx' }) => {
   const filepath = path.resolve(ans.project)
   // const filepath = '.'
-  const libraConfigPath = path.resolve(filepath, 'libra.config.json')
+  const libraConfigPath = path.resolve(filepath, 'config.json')
   const packagePath = path.resolve(filepath, 'package.json')
   const manifestPath = path.resolve(filepath, 'manifest.json')
   compressing.tgz.uncompress(path.join(__dirname, '../../templates/project.tgz'), filepath).then(() => {
