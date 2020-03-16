@@ -5,9 +5,6 @@
 // const resolve = (param) => path.join(__dirname, param)
 const compress = () => {
   // const tarStream = new compressing.tar.Stream()
-  // tarStream.addEntry(resolve('.libraui/dist'))
-  // tarStream.addEntry(resolve('.libraui/lib'))
-  // tarStream.addEntry(resolve('.libraui/demo'))
   // tarStream.addEntry(resolve('package.json'))
   // tarStream.addEntry(resolve('../../templates/Project'))
   // const destStream = fse.createWriteStream(resolve('result.tgz'))

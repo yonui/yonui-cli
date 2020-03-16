@@ -1,8 +1,6 @@
 const { getManifestJson, getLibraConfig } = require('./index')
 const path = require('path')
 const fse = require('fs-extra')
-// const { getLibraConfig } = require('../utils')
-// const { sourcePath } = getLibraConfig()
 
 function customJsonStringify (key, value) {
   if (typeof value === 'function') {
@@ -15,7 +13,6 @@ const writeManifest = () => {
   const output = getLibraConfig().output
   require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
   const library = require(path.resolve(output.dist, 'index.js'))
-  // console.log(library)
   const manifestComponents = []
   Object.keys(library).forEach(compName => {
     const Comp = library[compName]

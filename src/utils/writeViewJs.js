@@ -1,9 +1,9 @@
 const fse = require('fs-extra')
 const path = require('path')
 const templateJs = require('../../templates/View/templateJs')
-const { getLibraConfig } = require('./index')
+const { getLibraConfig, getTempDir } = require('./index')
 const writeViewJs = () => {
-  const outputFilePath = path.resolve('./.libraui/temp/view/index.js')
+  const outputFilePath = path.resolve(`${getTempDir()}/temp/view/index.js`)
   const { previewUrl, device } = getLibraConfig()
   const { devPort, devIp } = process.env
   const url = previewUrl || `http://${devIp}:${devPort}`

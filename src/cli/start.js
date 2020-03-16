@@ -16,20 +16,6 @@ const { getLibraConfig, getIp } = require('../utils')
 const Express = require('express')
 const app = new Express()
 
-// const buildDemo = () => {
-//   const webpackConfig = webpackMerge(baseConfig(), demoConfig())
-//   const compiler = webpack(webpackConfig)
-//   compiler.watch({
-//     // watchOptions 示例
-//     aggregateTimeout: 300,
-//     poll: undefined
-//   }, () => {
-//     // 在这里打印 watch/build 结果...
-//     console.log('update')
-//   })
-//   fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
-//   fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
-// }
 const start = (cmdPort, openBrowser) => {
   const { autoTemplate, port, output } = getLibraConfig()
   const _port = cmdPort || port

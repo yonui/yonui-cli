@@ -7,6 +7,7 @@ const buildConfig = require('./webpack.build.config')
 const demoConfig = require('./webpack.demo.config')
 // const devConfig = require('./webpack.dev.config')
 const runGulp = require('../gulp/index')
+const { getTempDir } = require('../utils')
 
 const buildDist = (param, callback) => {
   runWebpack(buildConfig(), () => {
@@ -25,15 +26,15 @@ const buildDemo = (param, callback) => {
       console.log('update at', Date.now())
     }, 'watch')
   }
-  fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
-  fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
+  fse.ensureDirSync(path.resolve(`${(getTempDir())}/demo/demo-view`))
+  fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve(`${getTempDir()}/demo/demo-view/index.html`))
 }
 
 const buildDistAndDemo = (param, callback) => {
   runWebpack([buildConfig(), demoConfig(param)], () => {
     runGulp('build') //  产出lib文件和manifest.json
-    fse.ensureDirSync(path.resolve('.libraui/demo/demo-view'))
-    fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve('.libraui/demo/demo-view/index.html'))
+    fse.ensureDirSync(path.resolve(`${getTempDir()}/demo/demo-view`))
+    fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve(`${getTempDir()}/demo/demo-view/index.html`))
     console.log('build dist and demos successfully ')
   })
 }

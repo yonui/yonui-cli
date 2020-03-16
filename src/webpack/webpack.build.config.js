@@ -1,5 +1,5 @@
 const path = require('path')
-const { getManifestJson, getLib, getLibraConfig } = require('../utils')
+const { getManifestJson, getLib, getLibraConfig, getTempDir } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
@@ -33,7 +33,7 @@ const buildConfig = () => {
   }
   return {
     entry: {
-      [libName]: path.resolve('./.libraui/temp/build/index.js')
+      [libName]: path.resolve(`${getTempDir()}/temp/build/index.js`)
     },
     mode,
     externals,

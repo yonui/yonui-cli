@@ -3,7 +3,7 @@ const path = require('path')
 const { task, src, dest, series, parallel } = gulp
 const gulpBabel = require('gulp-babel')
 const gulpLess = require('gulp-less')
-const { getLibraConfig } = require('../utils')
+const { getLibraConfig, getTempDir } = require('../utils')
 const replace = require('gulp-replace')
 const { libPath, sourcePath, plugins, output } = getLibraConfig()
 const basePath = `${libPath || sourcePath}/**/`
@@ -48,10 +48,10 @@ task('less', () => {
 // less生成css文件
 task('css', () => {
   console.log('css')
-  return src(path.resolve('.libraui/temp/less/**/*.less'))
+  return src(path.resolve(`${getTempDir()}/temp/less/**/*.less`))
     .pipe(gulpLess({
       javascriptEnabled: true,
-      paths: [path.resolve('node_modules'), path.resolve('.libraui/temp/less')]
+      paths: [path.resolve('node_modules'), path.resolve(`${getTempDir()}/temp/less`)]
     }))
     .pipe(dest(dist))
 })
@@ -72,7 +72,7 @@ task('changeLess', () => {
         }
       }
     }))
-    .pipe(dest(path.resolve('.libraui/temp/less')))
+    .pipe(dest(path.resolve(`${getTempDir()}/temp/less`)))
 })
 
 // 复制图片文件

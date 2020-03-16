@@ -1,12 +1,12 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const fse = require('fs-extra')
-const { getLibraConfig } = require('../utils')
+const { getLibraConfig, getTempDir } = require('../utils')
 const getEntryList = () => {
   const res = {}
-  const demoList = require(path.resolve('./.libraui/temp/demo/demo-path.json'))
+  const demoList = require(path.resolve(`${getTempDir()}/temp/demo/demo-path.json`))
   demoList.map(item => {
-    res[item] = path.resolve('./.libraui/temp/demo', `${item}.js`)
+    res[item] = path.resolve(`${getTempDir()}/temp/demo`, `${item}.js`)
   })
   return res
 }

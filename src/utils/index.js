@@ -110,10 +110,10 @@ const getLibraConfig = () => {
 
   const { type, output = {} } = res
   const outputObj = {
-    dist: './dist',
-    lib: './lib',
-    demo: './.libraui/demo',
-    result: './result',
+    dist: 'dist',
+    lib: 'lib',
+    demo: `${getTempDir()}/demo`,
+    result: 'result',
     ...output
   }
   const suffixType = type === 'ts' ? 'tsx' : 'js'
@@ -175,6 +175,7 @@ const copyFile = (src, dest) => {
   fse.copyFileSync(path.resolve(src), path.resolve(dest))
 }
 
+const getTempDir = () => '.yonui'
 module.exports = {
   download,
   getDir,
@@ -185,5 +186,6 @@ module.exports = {
   getEntryObj,
   formatPath,
   getIp,
-  copyFile
+  copyFile,
+  getTempDir
 }
