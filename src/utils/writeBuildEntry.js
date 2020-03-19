@@ -4,7 +4,7 @@ const fse = require('fs-extra')
 const { formatPath, getDir } = require('./index')
 const writeBuildEntry = () => {
   const manifestJson = getManifestJson()
-  const { buildImport = {}, excludeNidAndUiType = true, useManifest = true, useModel2Props = true } = getLibraConfig()
+  const { buildImport = {}, excludeNidAndUiType = true, useManifest = true, useModel2Props = true, excludeNidAndUiTypeComp = [], excludeManifestComp = [], staticPropsMap = {} } = getLibraConfig()
   let imp = ''
   let impLess = ''
   let expStr = ''
@@ -30,10 +30,11 @@ const writeBuildEntry = () => {
         const fileArr = getDir(obj[item], 'file')
         const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
         // const _manifestExists = fse.existsSync(`${_path}/manifest.tsx`) || fse.existsSync(`${_path}/manifest.ts`) || fse.existsSync(`${_path}/manifest.jsx`) || fse.existsSync(`${_path}/manifest.js`)
-        if (useManifest) {
+        if (useManifest && !excludeManifestComp.includes(item)) {
           if (_manifestExists) {
-            imp += `import ${item}Comp from '${_path}';\nimport ${item}Manifest from '${_path}/manifest';\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType ? ', { excludeNidAndUiType: true }' : ''});\n`
+            imp += `import ${item}Comp from '${_path}';\nimport ${item}Manifest from '${_path}/manifest';\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? ', { excludeNidAndUiType: true }' : ''});\n`
             useModel2Props && (imp += `${item}.model2Props = ${item}Comp.model2Props || undefined;\n`)
+            staticPropsMap[item] && (imp += `${item}.${staticPropsMap[item]} = ${item}Comp.${staticPropsMap[item]};\n`)
           } else {
             imp += `import ${item} from '${_path}'\n`
             console.log(`Component ${item} misses manifest file.`)
