@@ -77,21 +77,23 @@ $ yonui -v
 
 描述组件库在开发过程中的相关配置。
 
-| 字段名称            | 说明                                                         | 类型           | 默认值           |
-| ------------------- | ------------------------------------------------------------ | -------------- | ---------------- |
-| port                | 启动本地预览时的端口号                                       | sting          | "8090"           |
-| autoTemplate        | 启动本地预览时，是否自动生成预览框架                         | true           | true             |
-| sourcePath          | 组件库中组件源码所在目录                                     | string         | './components'   |
-| type                | 组件库使用的是js代码还是ts代码                               | 'js'\|'ts'     | js               |
-| lib                 | 组件库依赖的组件库，在此配置后将在构建中排除，并可通过配置加入cdn地址以在预览时引入 | array          | -                |
-| extraImport         | 本地预览时额外导入的js/css文件                               | object         | -                |
-| buildImport         | 构建组件库时额外导入的js/css文件和导出文件                   | object         | -                |
-| libPath             | 组件库构建lib文件的根路径                                    | string         | 同sourcePath     |
-| device              | 组件库适配设配                                               | 'PC'\|'mobile' | 'PC'             |
-| previewUrl          | 移动端预览时扫码打开页面的url                                | string         | '127.0.0.1:8090' |
-| plugins             | webpack                                                      | array          | []               |
-| useManifest         | 为true时，产出的文件中每个组件会引入manifest并与组件使用ReactWrapper连接；为false时产出单纯的react组件 | Boolean        | true             |
-| excludeNidAndUiType | 组件是否外套一层div并添加nid和uitype                         | Boolean        | true             |
+| 字段名称                | 说明                                                         | 类型           | 默认值           |
+| ----------------------- | ------------------------------------------------------------ | -------------- | ---------------- |
+| port                    | 启动本地预览时的端口号                                       | sting          | "8090"           |
+| autoTemplate            | 启动本地预览时，是否自动生成预览框架                         | true           | true             |
+| sourcePath              | 组件库中组件源码所在目录                                     | string         | './components'   |
+| type                    | 组件库使用的是js代码还是ts代码                               | 'js'\|'ts'     | js               |
+| lib                     | 组件库依赖的组件库，在此配置后将在构建中排除，并可通过配置加入cdn地址以在预览时引入 | array          | -                |
+| extraImport             | 本地预览时额外导入的js/css文件                               | object         | -                |
+| buildImport             | 构建组件库时额外导入的js/css文件和导出文件                   | object         | -                |
+| libPath                 | 组件库构建lib文件的根路径                                    | string         | 同sourcePath     |
+| device                  | 组件库适配设配                                               | 'PC'\|'mobile' | 'PC'             |
+| previewUrl              | 移动端预览时扫码打开页面的url                                | string         | '127.0.0.1:8090' |
+| plugins                 | webpack                                                      | array          | []               |
+| useManifest             | 为true时，产出的文件中每个组件会引入manifest并与组件使用ReactWrapper连接；为false时产出单纯的react组件 | Boolean        | true             |
+| excludeNidAndUiType     | 组件不在最外层套一层div并添加nid和uitype                     | Boolean        | true             |
+| excludeNidAndUiTypeComp | excludeNidAndUiType为false时，不添加div的组件名称数组        | array          | []               |
+| staticPropsMap          | 添加div后再去添加属性的映射关系                              | object         | {}               |
 
 其中，工具中已经默认将react、react-dom作为依赖库，且不可修改，如对`react`的描述为(lib属性类型)：
 
@@ -125,7 +127,15 @@ buildImport属性示例如下:
   }
 ```
 
+staticPropsMap属性示例如下：
 
+```js
+"staticPropsMap": {
+    "ListView": "DataSource"
+  }
+```
+
+可将ListView的DataSource属性挂载到经过ReactWrapper包裹后的组件上。
 
 #### manifest.json
 

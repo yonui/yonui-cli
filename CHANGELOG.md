@@ -139,4 +139,20 @@
 - 0.1.61
   - 将代码中临时文件夹名称提取为常量，默认为`.yonui`
 
-
+- 0.1.66
+  - 组件自带model2Props属性时，如果经过ReactWrapper方法包裹，则会将model2Props添加到包裹后的组件上
+  - config.json新增staticPropsMap属性，例如：
+    ```json
+      {
+        "Button": "Item"
+      }
+    ```
+    以上配置可将Item属性挂载到经过ReactWrapper包裹后的Button组件上
+  - config.json新增excludeNidAndUiTypeComp属性，例如：
+    ```json
+      ["CarouselItem", "ListView"],
+    ```
+    以上配置可将`CarouselItem`和`ListView`组件在excludeNidAndUiType为false时，不为组件添加一层div
+  - dist文件中输出版本号和打包时间
+  - 组件新增版本号属性，key值为`_[LibraryName]_version`
+  - 新增组件时，默认产出目录为中划线形式，组件名为大驼峰形式
