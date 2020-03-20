@@ -1,10 +1,10 @@
 const path = require('path')
-const { getManifestJson, getLib, getLibraConfig, getTempDir } = require('../utils')
+const { getManifestJson, getLib, getLibraConfig, getTempDir, getPackageJson } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-
+const BannerPlugin = require('webpack').BannerPlugin
 const buildConfig = () => {
   const lib = getLib()
   const externals = {}
@@ -22,7 +22,8 @@ const buildConfig = () => {
       filename: 'index.css',
       chunkFilename: 'index.css'
     }),
-    new SimpleProgressWebpackPlugin()
+    new SimpleProgressWebpackPlugin(),
+    new BannerPlugin(`build time: ${new Date().toLocaleString()}\nversion: ${getPackageJson().version}`)
   ]
   if (mode === 'development') {
     plugins.push(
