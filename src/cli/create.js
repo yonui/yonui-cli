@@ -3,12 +3,13 @@ const fse = require('fs-extra')
 const { getLibraConfig } = require('../utils')
 const indexFile = require('../../templates/Component/indexTemplate')
 const compFile = require('../../templates/Component/compTemplate')
-const upper = (str) => str.replace(str[0], str[0].toUpperCase())
+const { paramCase, pascalCase } = require('change-case')
+// const upper = (str) => str.replace(str[0], str[0].toUpperCase())
 const createComponent = (name) => {
-  const componentName = upper(name)
+  const componentName = pascalCase(name)
   const libraConfig = getLibraConfig()
   const { sourcePath, suffixType } = libraConfig
-  const target = path.resolve(`${sourcePath}/${componentName}`)
+  const target = path.resolve(`${sourcePath}/${paramCase(componentName)}`)
   const exists = fse.existsSync(target)
   if (exists) {
     console.log('The component already exists, please rename it.')
