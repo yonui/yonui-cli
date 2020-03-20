@@ -1,4 +1,4 @@
-const { getManifestJson, getLibraConfig, getTempDir } = require('./index')
+const { getManifestJson, getLibraConfig, getTempDir, getPackageJson } = require('./index')
 const path = require('path')
 const fse = require('fs-extra')
 const { formatPath, getDir } = require('./index')
@@ -57,7 +57,7 @@ const writeBuildEntry = () => {
     })
   }
   const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
-  imp += `import './index.less';\n${__Library}export default {${expStr}...__Library}`
+  imp += `import './index.less';\n${__Library}export default {${expStr}...__Library, _${manifestJson.name}_version: '${getPackageJson().version}'}`
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.js`), imp)
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.less`), impLess)
 }

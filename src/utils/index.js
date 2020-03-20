@@ -41,7 +41,7 @@ const libraConfigJson = getJson('libra.config.json')
 const libraConfigOverrideJson = getJson('libra.config.override.json')
 const manifestJson = getJson('manifest.json')
 const manifestOverrideJson = getJson('manifest.override.json')
-
+const packageJson = getJson('package.json')
 const getIp = () => {
   const interfaces = os.networkInterfaces()
   for (const devName in interfaces) {
@@ -132,6 +132,8 @@ const getManifestJson = () => {
   }
 }
 
+const getPackageJson = () => packageJson
+
 const getEntryArr = () => {
   const { components } = getManifestJson()
   const res = []
@@ -187,5 +189,6 @@ module.exports = {
   formatPath,
   getIp,
   copyFile,
-  getTempDir
+  getTempDir,
+  getPackageJson
 }
