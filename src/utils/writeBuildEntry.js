@@ -32,9 +32,21 @@ const writeBuildEntry = () => {
         // const _manifestExists = fse.existsSync(`${_path}/manifest.tsx`) || fse.existsSync(`${_path}/manifest.ts`) || fse.existsSync(`${_path}/manifest.jsx`) || fse.existsSync(`${_path}/manifest.js`)
         if (useManifest && !excludeManifestComp.includes(item)) {
           if (_manifestExists) {
+            // 导入组件，包裹ReactWrapper
             imp += `import ${item}Comp from '${_path}';\nimport ${item}Manifest from '${_path}/manifest';\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? ', { excludeNidAndUiType: true }' : ''});\n`
+            // 挂载model2Props
             useModel2Props && (imp += `${item}.model2Props = ${item}Comp.model2Props || undefined;\n`)
-            staticPropsMap[item] && (imp += `${item}.${staticPropsMap[item]} = ${item}Comp.${staticPropsMap[item]};\n`)
+            // 根据staticPropsMap给组件挂载方法、子组件等
+            // staticPropsMap[item] && (imp += `${item}.${staticPropsMap[item]} = ${item}Comp.${staticPropsMap[item]};\n`)
+            if (staticPropsMap[item]) {
+              if (typeof staticPropsMap[item] === 'string') {
+                imp += `${item}.${staticPropsMap[item]} = ${item}Comp.${staticPropsMap[item]};\n`
+              } else {
+                staticPropsMap[item].forEach(mapItem => {
+                  imp += `${item}.${mapItem} = ${item}Comp.${mapItem};\n`
+                })
+              }
+            }
           } else {
             imp += `import ${item} from '${_path}'\n`
             console.log(`Component ${item} misses manifest file.`)
