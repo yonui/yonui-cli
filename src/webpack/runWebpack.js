@@ -62,7 +62,8 @@ const runWebpack = (extraConfig, callback, mode = 'run') => {
       break
     }
     case 'run': {
-      compiler.run((err) => {
+      compiler.run((err, status) => {
+        console.log(status)
         if (err) {
           console.error(err)
         } else {

@@ -9,7 +9,7 @@ const writeBuildEntry = () => {
   let impLess = ''
   let expStr = ''
   if (useManifest) {
-    imp += 'import { ReactWrapper } from \'libraui-extension\'\n'
+    imp += 'import { ReactWrapper } from \'yonui-extension\'\n'
   }
   if (buildImport.js) {
     buildImport.js.forEach(item => {

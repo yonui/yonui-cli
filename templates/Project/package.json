@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "libraui-extension": "^0.7.3"
+    "yonui-extension": "^0.7.3"
   },
   "devDependencies": {
     "@types/react": "^16.9.17",
