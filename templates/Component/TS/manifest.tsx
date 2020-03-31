@@ -1,4 +1,4 @@
-import { FieldTypes, EditTypes, ComponentManifest, UITable } from 'libraui-extension'
+import { FieldTypes, EditTypes, ComponentManifest, UITable } from 'yonui-extension'
 const manifest: ComponentManifest = {
   name: 'name',
   label: 'label',
