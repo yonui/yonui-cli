@@ -1,9 +1,9 @@
-import { FieldTypes, EditTypes, ComponentManifest, UITable } from 'yonui-extension'
+import { FieldTypes, EditTypes, ComponentManifest, UIObject, TypeProps } from 'yonui-extension'
 const manifest = {
   name: 'name',
   label: 'label',
-  type: 'type',
-  uiTable: UITable.BillItemBase,
+  type: TypeProps.BasicControls,
+  uiObject: UIObject.Controls,
   props: [
   ],
   children: []
