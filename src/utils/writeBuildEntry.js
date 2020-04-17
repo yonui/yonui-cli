@@ -4,7 +4,7 @@ const fse = require('fs-extra')
 const { formatPath, getDir } = require('./index')
 const writeBuildEntry = () => {
   const manifestJson = getManifestJson()
-  const { buildImport = {}, excludeNidAndUiType = true, useManifest = true, useModel2Props = true, excludeNidAndUiTypeComp = [], excludeManifestComp = [], staticPropsMap = {} } = getLibraConfig()
+  const { buildImport = {}, errorBoundary = false, excludeNidAndUiType = true, useManifest = true, useModel2Props = true, excludeNidAndUiTypeComp = [], excludeManifestComp = [], staticPropsMap = {} } = getLibraConfig()
   let imp = ''
   let impLess = ''
   let expStr = ''
@@ -33,7 +33,7 @@ const writeBuildEntry = () => {
         if (useManifest && !excludeManifestComp.includes(item)) {
           if (_manifestExists) {
             // 导入组件，包裹ReactWrapper
-            imp += `import ${item}Comp from '${_path}';\nimport ${item}Manifest from '${_path}/manifest';\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest${excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? ', { excludeNidAndUiType: true }' : ''});\n`
+            imp += `import ${item}Comp from '${_path}';\nimport ${item}Manifest from '${_path}/manifest';\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest, { excludeNidAndUiType : ${excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? 'true' : 'false'}, errorBoundary: ${errorBoundary} });\n`
             // 挂载model2Props
             useModel2Props && (imp += `${item}.model2Props = ${item}Comp.model2Props || undefined;\n`)
             // 根据staticPropsMap给组件挂载方法、子组件等
