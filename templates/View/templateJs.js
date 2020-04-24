@@ -7,8 +7,8 @@ import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
 import Icon from 'bee-icon';
 import 'bee-icon/build/Icon.css';
-import Popover from 'bee-popover';
-import 'bee-popover/build/Popover.css';
+// import Popover from 'bee-popover';
+// import 'bee-popover/build/Popover.css';
 import QRCode from 'qrcode.react';
 import manifest from '../../../manifest.json';
 import resources from '../../demo/resources.json';
@@ -122,12 +122,10 @@ export default class IndexView extends Component {
                 return (
                     <div className='content-item'>
                     <div className='content-title' onClick={this.viewSingleDemp(item.id)}>
-                      <Popover placement="rightTop" content={<QRCode
-                        value={\`\${previewUrl}/demo-view/#/\${item.id}\`}
-                      />}
-                      >
-                        <span>{item.name}</span>
-                      </Popover>
+                      <QRCode
+                        value={\`\${previewUrl}/demo-view/#/\${item.id}\`} className='content-title-qrcode'
+                      />
+                      <span>{item.name}</span>
                     </div>
                     <div className='content-desc'>
                         {item.description}

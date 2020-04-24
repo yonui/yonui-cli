@@ -77,14 +77,31 @@ body.demo-view {
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
             color: #424242;
             .content-title{
-                font-size: 18px;
-                color: rgba(66,66,66,1);
-                line-height: 30px;
-                cursor: pointer;
-                &-btn{
-                    float: right;
+              font-size: 18px;
+              color: rgba(66,66,66,1);
+              line-height: 30px;
+              cursor: pointer;
+              position: relative;
+              &-btn{
+                  float: right;
+              }
+              &-qrcode{
+                display: none;
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                z-index: 1;
+                padding: 10px;
+                background-color: #ffffff;
+                border: 1px solid #eeeeee;
+                border-radius: 4px;
+              }
+              &:hover{
+                .content-title-qrcode{
+                  display: block;
                 }
-            }
+              }
+          }
             .content-desc{
                 font-size: 14px;
                 color: rgba(66,66,66,1);
