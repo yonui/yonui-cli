@@ -27,10 +27,16 @@ const build = (arg) => {
       runGulp('manifest')
       break
     }
-    default: {
+    case 'all': {
       writeBuildEntry()
       writeResources()
       buildDistAndDemo('build')
+      break
+    }
+    default: {
+      runGulp('lib')
+      writeBuildEntry()
+      buildDist()
     }
   }
 }
