@@ -12,6 +12,9 @@ const compress = () => {
   tarStream.addEntry(join('templates/Project/package.json'))
   tarStream.addEntry(join('templates/Project/README.md'))
   tarStream.addEntry(join('templates/Project/tsconfig.json'))
+  tarStream.addEntry(join('templates/Project/.eslintignore'))
+  tarStream.addEntry(join('templates/Project/.eslintrc.js'))
+  tarStream.addEntry(join('templates/Project/commitlint.config.js'))
   const destStream = fse.createWriteStream(join('templates/project.tgz'))
   pump(tarStream, new compressing.gzip.FileStream(), destStream, err => {
     if (err) {

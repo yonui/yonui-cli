@@ -1,0 +1,8 @@
+lib/
+demo/build
+build
+dist
+jslib/
+
+src/components/*/demos/*.*
+static
