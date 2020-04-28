@@ -21,7 +21,6 @@
       "noEmit": true
     },
     "include": [
-      "./components"
+      "components/**/*"
     ]
   }
-  

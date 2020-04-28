@@ -6,10 +6,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yonui build",
     "start": "yonui start",
-    "lint": "eslint . --ext .js",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:quiet": "npm run lint -- --quiet",
-    "lint:git": "git diff --cached --name-only --diff-filter=ACM | grep '\\.[jt]sx\\?$' | xargs eslint",
-    "lint:fix": "npm run lint -- --quiet --fix"
+    "lint:fix": "npm run lint -- --quiet --fix",
+    "lint:git": "git diff --cached --name-only --diff-filter=ACM | grep '\\.[jt]sx\\?$' | xargs eslint"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,8 @@
     }
   },
   "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "yonui-extension": "^0.7.3"
   },
   "devDependencies": {
@@ -27,6 +29,7 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
     "bee-button": "^2.0.11",
     "bee-loading": "^2.0.3",
     "bee-modal": "^2.1.5",
