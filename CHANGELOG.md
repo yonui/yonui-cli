@@ -1,7 +1,7 @@
 ## 更新日志
 
 - 0.1.12
-  - 支持在.yonuiui/dist目录下产出manifest.json文件
+  - 支持在.yonui/dist目录下产出manifest.json文件
   - 修改了预览框架的背景色为#eee
   - `<html>`标签添加属性`font-size=50px`
   - 解决生成lib目录时由于别名配置、引用第三方包等导致的打包错误
@@ -30,7 +30,7 @@
    ],
   ```
 
-  即可实现组件的按需引入，详见https://github.com/ant-design/babel-plugin-import#readme
+  即可实现组件的按需引入，详见[文档](https://github.com/ant-design/babel-plugin-import#readme)
 
   其它插件同理。
 
@@ -156,3 +156,19 @@
   - dist文件中输出版本号和打包时间
   - 组件新增版本号属性，key值为`_[LibraryName]_version`
   - 新增组件时，默认产出目录为中划线形式，组件名为大驼峰形式
+
+- 0.1.72
+  - 提供errorBoundary功能
+    在config.json文件中配置`errorBoundary:true`可使用该功能,避免组件在渲染出错时候导致整个屏幕崩溃
+    可参考[错误边界(Error Boundaries)](http://react.caibaojian.com/docs/error-boundaries.html)
+  - 修复打印编译信息报错的bug
+
+- 0.1.74
+  - 去除预览工程中的bee-popover组件
+  - 构建过程中默认不构建demo,提高构建速度
+    可使用`yonui build all`构建所有资源
+
+- 0.1.76
+  - 初始化工程时内置eslint,commitlint工具
+    [eslint文档参考](https://eslint.bootcss.com/)
+    [commitlint文档参考](https://commitlint.js.org/#/reference-cli)
