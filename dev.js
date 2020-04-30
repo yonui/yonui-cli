@@ -2,19 +2,16 @@ const compressing = require('compressing')
 const fse = require('fs-extra')
 const pump = require('pump')
 const path = require('path')
+const fileList = [
+  'components', 'static', 'config.json', 'manifest.json', 'package.json',
+  'README.md', 'tsconfig.json', '.eslintignore', '.eslintrc.js', 'commitlint.config.js'
+]
 const join = (param) => path.join(__dirname, param)
 const compress = () => {
   const tarStream = new compressing.tar.Stream()
-  tarStream.addEntry(join('templates/Project/components'))
-  tarStream.addEntry(join('templates/Project/static'))
-  tarStream.addEntry(join('templates/Project/config.json'))
-  tarStream.addEntry(join('templates/Project/manifest.json'))
-  tarStream.addEntry(join('templates/Project/package.json'))
-  tarStream.addEntry(join('templates/Project/README.md'))
-  tarStream.addEntry(join('templates/Project/tsconfig.json'))
-  tarStream.addEntry(join('templates/Project/.eslintignore'))
-  tarStream.addEntry(join('templates/Project/.eslintrc.js'))
-  tarStream.addEntry(join('templates/Project/commitlint.config.js'))
+  fileList.forEach(element => {
+    tarStream.addEntry(join(`templates/Project/${element}`))
+  })
   const destStream = fse.createWriteStream(join('templates/project.tgz'))
   pump(tarStream, new compressing.gzip.FileStream(), destStream, err => {
     if (err) {
