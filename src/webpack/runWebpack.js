@@ -32,7 +32,7 @@ const buildDemo = (param, callback) => {
 
 const buildDistAndDemo = (param, callback) => {
   runWebpack([buildConfig(), demoConfig(param)], () => {
-    runGulp('build') //  产出lib文件和manifest.json
+    // runGulp('build') //  产出lib文件和manifest.json
     fse.ensureDirSync(path.resolve(`${getTempDir()}/demo/demo-view`))
     fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve(`${getTempDir()}/demo/demo-view/index.html`))
     console.log('build dist and demos successfully ')

@@ -1,10 +1,14 @@
 const gulp = require('gulp')
 const path = require('path')
-const { task, src, dest, series, parallel } = gulp
+const { task, src, dest, series } = gulp
 const gulpBabel = require('gulp-babel')
 const gulpLess = require('gulp-less')
 const { getLibraConfig, getTempDir } = require('../utils')
 const replace = require('gulp-replace')
+const { buildDist, buildDemo, buildDistAndDemo } = require('../webpack/runWebpack')
+const writeResources = require('../utils/writeResources')
+const writeBuildEntry = require('../utils/writeBuildEntry')
+const writeManifest = require('../utils/writeManifest')
 const { libPath, sourcePath, plugins, output } = getLibraConfig()
 const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
@@ -13,7 +17,6 @@ const dist = path.resolve(output.lib)
 const lessSource = path.resolve(`${basePath}{style,demos,}/*.{less,css}`)
 const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico,svg}`)
 const extraSource = path.resolve(`${basePath}{*.,*/*.}{html,eot,ttf,woff,woff2}`)
-const writeManifest = require('../utils/writeManifest')
 task('hello', done => {
   console.log('hello world')
   done()
@@ -21,7 +24,6 @@ task('hello', done => {
 
 // 转译js代码
 task('javascript', () => {
-  console.log('javascript')
   return src([jsSource, path.resolve(`${basePath}*.{ts,tsx,js,jsx}`)])
     .pipe(gulpBabel({
       presets: [
@@ -87,8 +89,39 @@ task('extra', () => {
     .pipe(dest(dist))
 })
 
-task('manifest', () => {
-  writeManifest()
+task('writeBuildEntry', (done) => {
+  console.log('writeBuildEntry')
+  writeBuildEntry()
+  console.log('writeBuildEntry Done')
+  done()
 })
-task('lib', parallel('javascript', 'less', 'img', 'extra'))
-task('build', series('lib', 'manifest'))
+
+task('buildDist', () => {
+  console.log('buildDist')
+  return buildDist()
+})
+
+task('buildDemo', (done) => {
+  console.log('buildDemo')
+  return buildDemo()
+})
+
+task('buildDistAndDemo', (done) => {
+  return buildDistAndDemo()
+})
+
+task('writeResources', (done) => {
+  console.log('writeResources')
+  writeResources()
+  done()
+})
+
+task('manifest', (done) => {
+  console.log('manifest')
+  writeManifest()
+  done()
+})
+task('lib', series('javascript', 'less', 'img', 'extra'))
+task('build', series('lib', 'writeBuildEntry', 'buildDist', 'manifest'))
+task('build-all', series('lib', 'writeBuildEntry', 'writeResources', 'buildDistAndDemo', 'manifest'))
+task('build-dist', series('writeBuildEntry', 'buildDist', 'manifest'))

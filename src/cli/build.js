@@ -1,4 +1,4 @@
-const { buildDist, buildDemo, buildDistAndDemo } = require('../webpack/runWebpack')
+const { buildDemo } = require('../webpack/runWebpack')
 const runGulp = require('../gulp/index')
 const writeResources = require('../utils/writeResources')
 const writeBuildEntry = require('../utils/writeBuildEntry')
@@ -14,8 +14,7 @@ const build = (arg) => {
       break
     }
     case 'dist': {
-      writeBuildEntry()
-      buildDist()
+      runGulp('build-dist')
       break
     }
     case 'demo': {
@@ -28,15 +27,11 @@ const build = (arg) => {
       break
     }
     case 'all': {
-      writeBuildEntry()
-      writeResources()
-      buildDistAndDemo('build')
+      runGulp('build-all')
       break
     }
     default: {
-      runGulp('lib')
-      writeBuildEntry()
-      buildDist()
+      runGulp('build')
     }
   }
 }
