@@ -57,7 +57,7 @@ module.exports = () => {
           ]
         },
         {
-          test: /\.(svg|png|jpg|jpeg|gif)(\?.+)?$/,
+          test: /\.(png|jpg|jpeg|gif)(\?.+)?$/,
           use: [{
             loader: require.resolve('url-loader'),
             options: {
@@ -70,8 +70,12 @@ module.exports = () => {
           }]
         },
         {
-          test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+          test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
           loader: require.resolve('url-loader')
+        },
+        {
+          test: /\.svg$/,
+          loader: require.resolve('@svgr/webpack')
         }
       ]
     }
