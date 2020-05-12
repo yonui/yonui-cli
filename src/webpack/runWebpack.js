@@ -5,75 +5,77 @@ const webpackMerge = require('webpack-merge')
 const baseConfig = require('./webpack.base.config')
 const buildConfig = require('./webpack.build.config')
 const demoConfig = require('./webpack.demo.config')
-// const devConfig = require('./webpack.dev.config')
-const runGulp = require('../gulp/index')
 const { getTempDir } = require('../utils')
 
-const buildDist = (param, callback) => {
-  runWebpack(buildConfig(), () => {
-    runGulp('manifest') //  产出manifest.json
-    console.log('build dist successfully')
+const buildDist = (param) => {
+  return new Promise((resolve, reject) => {
+    runWebpack(buildConfig())
+      .then(() => {
+        console.log('build dist done')
+        resolve()
+      })
   })
 }
 
-const buildDemo = (param, callback) => {
+const buildDemo = (param) => {
   if (param === 'build') {
-    runWebpack(demoConfig('build'), () => {
-      console.log('build demo successfully')
-    })
+    runWebpack(demoConfig('build'))
+      .then(() => {
+        console.log('build demo successfully')
+      })
   } else {
-    runWebpack(demoConfig(), () => {
-      console.log('update at', Date.now())
-    }, 'watch')
+    runWebpack(demoConfig(), 'watch')
   }
   fse.ensureDirSync(path.resolve(`${(getTempDir())}/demo/demo-view`))
   fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve(`${getTempDir()}/demo/demo-view/index.html`))
 }
 
-const buildDistAndDemo = (param, callback) => {
-  runWebpack([buildConfig(), demoConfig(param)], () => {
-    // runGulp('build') //  产出lib文件和manifest.json
-    fse.ensureDirSync(path.resolve(`${getTempDir()}/demo/demo-view`))
-    fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve(`${getTempDir()}/demo/demo-view/index.html`))
-    console.log('build dist and demos successfully ')
+const buildDistAndDemo = (param) => {
+  return new Promise((resolve, reject) => {
+    runWebpack([buildConfig(), demoConfig(param)])
+      .then(() => {
+        fse.ensureDirSync(path.resolve(`${getTempDir()}/demo/demo-view`))
+        fse.copyFileSync(path.join(__dirname, '../../templates/demoView.html'), path.resolve(`${getTempDir()}/demo/demo-view/index.html`))
+        console.log('build dist and demos successfully ')
+        resolve()
+      })
   })
 }
 
-const runWebpack = (extraConfig, callback, mode = 'run') => {
-  let webpackConfig
-  if (Array.isArray(extraConfig)) {
-    webpackConfig = extraConfig.map(item => webpackMerge(baseConfig(), item))
-  } else {
-    webpackConfig = webpackMerge(baseConfig(), extraConfig)
-  }
-  const compiler = webpack(webpackConfig)
-  switch (mode) {
-    case 'get': {
-      return compiler
+const runWebpack = (extraConfig, mode = 'run') => {
+  return new Promise((resolve, reject) => {
+    let webpackConfig
+    if (Array.isArray(extraConfig)) {
+      webpackConfig = extraConfig.map(item => webpackMerge(baseConfig(), item))
+    } else {
+      webpackConfig = webpackMerge(baseConfig(), extraConfig)
     }
-    case 'watch': {
-      compiler.watch({
-        // watchOptions 示例
-        aggregateTimeout: 300,
-        poll: undefined
-      }, () => {
-        callback && callback()
-      })
-      break
+    const compiler = webpack(webpackConfig)
+    switch (mode) {
+      case 'watch': {
+        compiler.watch({
+          // watchOptions 示例
+          aggregateTimeout: 300,
+          poll: undefined
+        }, () => {
+          console.log('update at', Date.now())
+        })
+        break
+      }
+      case 'run': {
+        compiler.run((err, status) => {
+          console.log('errors:\n', status.compilation ? status.compilation.errors : '')
+          console.log('warnings:\n', status.compilation ? status.compilation.warnings : '')
+          if (err) {
+            console.error(err)
+          } else {
+            resolve()
+          }
+        })
+        break
+      }
     }
-    case 'run': {
-      compiler.run((err, status) => {
-        console.log('errors:\n', status.compilation ? status.compilation.errors : '')
-        console.log('warnings:\n', status.compilation ? status.compilation.warnings : '')
-        if (err) {
-          console.error(err)
-        } else {
-          callback && callback()
-        }
-      })
-      break
-    }
-  }
+  })
 }
 
 module.exports = {

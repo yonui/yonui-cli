@@ -117,8 +117,9 @@ task('writeResources', (done) => {
 })
 
 task('manifest', (done) => {
-  console.log('manifest')
+  console.log('manifest start')
   writeManifest()
+  console.log('manifest done')
   done()
 })
 task('lib', series('javascript', 'less', 'img', 'extra'))
