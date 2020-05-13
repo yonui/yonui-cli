@@ -4,7 +4,17 @@ const fse = require('fs-extra')
 const { formatPath, getDir } = require('./index')
 const writeBuildEntry = () => {
   const manifestJson = getManifestJson()
-  const { buildImport = {}, errorBoundary = false, excludeNidAndUiType = true, useManifest = true, useModel2Props = true, excludeNidAndUiTypeComp = [], excludeManifestComp = [], staticPropsMap = {} } = getLibraConfig()
+  const {
+    buildImport = {},
+    errorBoundary = false,
+    excludeNidAndUiType = true,
+    useManifest = true,
+    useModel2Props = true,
+    excludeNidAndUiTypeComp = [],
+    excludeManifestComp = [],
+    staticPropsMap = {},
+    setExtendComp = false
+  } = getLibraConfig()
   let imp = ''
   let impLess = ''
   let expStr = ''
@@ -76,7 +86,8 @@ const writeBuildEntry = () => {
   imp += `    'other':Object.assign({}, ${registerComps})\n`
   imp += '  }) \n}\n'
   const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
-  imp += `import './index.less';\n${__Library}export default {${expStr}...__Library, _${manifestJson.name}_version: '${getPackageJson().version}'}`
+  const extendComp = setExtendComp ? "if (window.cb && window.cb.setExtendComp) { window.cb.setExtendComp({'other': Object.assign({}, ...__Library)})}\n" : ''
+  imp += `import './index.less';\n${__Library}\n${extendComp}export default {${expStr}...__Library, _${manifestJson.name}_version: '${getPackageJson().version}'}`
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.js`), imp)
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.less`), impLess)
 }
