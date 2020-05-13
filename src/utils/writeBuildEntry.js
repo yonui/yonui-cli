@@ -23,9 +23,11 @@ const writeBuildEntry = () => {
   }
 
   const exp = {}
+  let registerComps = ''
   const foo = (obj, res = {}) => {
     Object.keys(obj).map(item => {
       if (typeof obj[item] === 'string') {
+        registerComps += `{${item}},`
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
         const fileArr = getDir(obj[item], 'file')
         const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
@@ -68,6 +70,11 @@ const writeBuildEntry = () => {
       expStr += `...${item},`
     })
   }
+  // 运行态注册扩展组件
+  imp += 'if(window.cb && cb.setExtendComp){\n'
+  imp += '  cb.setExtendComp({\n'
+  imp += `    'other':Object.assign({}, ${registerComps})\n`
+  imp += '  }) \n}\n'
   const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
   imp += `import './index.less';\n${__Library}export default {${expStr}...__Library, _${manifestJson.name}_version: '${getPackageJson().version}'}`
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.js`), imp)
