@@ -37,6 +37,14 @@ const libra = () => {
       const args = program.args[0]
       cli.build(args)
     })
+  program
+    .command('set')
+    .description('build')
+    .option('-p,--prod')
+    .action((env) => {
+      process.env.NODE_ENV = env.prod ? 'production' : 'development'
+      cli.set('yonui-cli')
+    })
 
   program
     .command('start')
