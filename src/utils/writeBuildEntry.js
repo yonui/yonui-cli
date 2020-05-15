@@ -13,7 +13,8 @@ const writeBuildEntry = () => {
     excludeNidAndUiTypeComp = [],
     excludeManifestComp = [],
     staticPropsMap = {},
-    setExtendComp = false
+    setExtendComp = false,
+    iconMap = {}
   } = getLibraConfig()
   let imp = ''
   let impLess = ''
@@ -33,9 +34,11 @@ const writeBuildEntry = () => {
   }
 
   const exp = {}
+  // let registerComps = ''
   const foo = (obj, res = {}) => {
     Object.keys(obj).map(item => {
       if (typeof obj[item] === 'string') {
+        // registerComps += `{${item}},`
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
         const fileArr = getDir(obj[item], 'file')
         const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
@@ -43,7 +46,12 @@ const writeBuildEntry = () => {
         if (useManifest && !excludeManifestComp.includes(item)) {
           if (_manifestExists) {
             // 导入组件，包裹ReactWrapper
-            imp += `import ${item}Comp from '${_path}';\nimport ${item}Manifest from '${_path}/manifest';\nconst ${item} = ReactWrapper(${item}Comp, ${item}Manifest, { excludeNidAndUiType : ${excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? 'true' : 'false'}, errorBoundary: ${errorBoundary} });\n`
+            const excludeNidAndUiTypeStr = excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? `excludeNidAndUiType: true,` : ''
+            const errorBoundaryStr = errorBoundary ? 'errorBoundary: true, ' : ''
+            const iconStr = iconMap[item] ? `icon: '${iconMap[item]}',` : ''
+            imp += `import ${item}Comp from '${_path}';\n`
+            imp += `import ${item}Manifest from '${_path}/manifest';\n`
+            imp += `const ${item} = ReactWrapper(${item}Comp, ${item}Manifest, { ${excludeNidAndUiTypeStr}${errorBoundaryStr}${iconStr}});\n`
             // 挂载model2Props
             useModel2Props && (imp += `${item}.model2Props = ${item}Comp.model2Props || undefined;\n`)
             // 根据staticPropsMap给组件挂载方法、子组件等
@@ -72,19 +80,17 @@ const writeBuildEntry = () => {
       }
     })
   }
-  if (process.env.componentName) {
-    const compJson = {}
-    compJson[process.env.componentName] = process.env.componentPath
-    foo(compJson, exp)
-  } else {
-    foo(manifestJson.components, exp)
-  }
+  foo(manifestJson.components, exp)
   if (buildImport.export) {
     buildImport.export.forEach(item => {
       expStr += `...${item},`
     })
   }
 
+  // imp += 'if(window.cb && cb.setExtendComp){\n'
+  // imp += '  cb.setExtendComp({\n'
+  // imp += `    'other':Object.assign({}, ${registerComps})\n`
+  // imp += '  }) \n}\n'
   const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
   // 运行态注册扩展组件
   const extendComp = setExtendComp ? "if (window.cb && window.cb.setExtendComp) { window.cb.setExtendComp({'other': Object.assign({}, __Library)})}\n" : ''
