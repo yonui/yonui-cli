@@ -54,7 +54,6 @@ function set(fileName){
   }
 }
 
-
 /**
  * 获取文件
  * @param {any} fileName

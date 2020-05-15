@@ -176,9 +176,40 @@ const formatPath = (path) => {
 const copyFile = (src, dest) => {
   fse.copyFileSync(path.resolve(src), path.resolve(dest))
 }
-
+function uploadCDN(name, fileName, path) { // name 包名字， fileName，文件名， path要上传的地址
+  try {
+    let form = new formData();
+    if (fs.existsSync(path)) {
+      form.append("file", fs.readFileSync(path, 'utf-8'));
+      form.append("name", name);
+      form.append("fileName", fileName);
+      return fetch(HOST_MAIN + '/other/upload', {method: 'post', body: form})
+        .then(res => res.json())
+        .then((res) => {
+          if(res.success) {
+            console.log('\n')
+            console.log(chalk.green('CDN file upload success!'));
+          } else {
+            console.log('\n')
+            console.log(res.msg);
+          }
+        }).catch(err => {
+          console.log('\n');
+          console.log(err);
+        })
+    } else {
+      console.log('\n')
+      console.log(chalk.red('[ERROR]:Static file path exception, Please check!'));
+      return new Promise((reslove) => reslove());
+    }
+  } catch (err) {
+    console.log(chalk.dim(err));
+    return new Promise();
+  }
+}
 const getTempDir = () => '.yonui'
 module.exports = {
+  uploadCDN,
   download,
   getDir,
   getLib,
