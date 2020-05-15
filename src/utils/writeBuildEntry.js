@@ -33,11 +33,9 @@ const writeBuildEntry = () => {
   }
 
   const exp = {}
-  // let registerComps = ''
   const foo = (obj, res = {}) => {
     Object.keys(obj).map(item => {
       if (typeof obj[item] === 'string') {
-        // registerComps += `{${item}},`
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
         const fileArr = getDir(obj[item], 'file')
         const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
@@ -74,17 +72,19 @@ const writeBuildEntry = () => {
       }
     })
   }
-  foo(manifestJson.components, exp)
+  if (process.env.componentName) {
+    const compJson = {}
+    compJson[process.env.componentName] = process.env.componentPath
+    foo(compJson, exp)
+  } else {
+    foo(manifestJson.components, exp)
+  }
   if (buildImport.export) {
     buildImport.export.forEach(item => {
       expStr += `...${item},`
     })
   }
 
-  // imp += 'if(window.cb && cb.setExtendComp){\n'
-  // imp += '  cb.setExtendComp({\n'
-  // imp += `    'other':Object.assign({}, ${registerComps})\n`
-  // imp += '  }) \n}\n'
   const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
   // 运行态注册扩展组件
   const extendComp = setExtendComp ? "if (window.cb && window.cb.setExtendComp) { window.cb.setExtendComp({'other': Object.assign({}, __Library)})}\n" : ''

@@ -33,9 +33,15 @@ const libra = () => {
     .description('build')
     .option('-p,--prod')
     .action((env) => {
+      let compName = ''
       process.env.NODE_ENV = env.prod ? 'production' : 'development'
+      program.args.forEach(item => {
+        if (/name=/.test(item)) {
+          compName = item.split('=')[1]
+        }
+      })
       const args = program.args[0]
-      cli.build(args)
+      cli.build(args, compName)
     })
   program
     .command('set')

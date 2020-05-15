@@ -14,7 +14,7 @@ const buildConfig = () => {
   const manifestJson = getManifestJson()
   const libraConfigJson = getLibraConfig()
   const { output } = libraConfigJson
-  const libName = manifestJson.name
+  const libName = process.env.componentName ? process.env.componentName : manifestJson.name
   const mode = process.env.NODE_ENV
   const plugins = [
     new CleanWebpackPlugin(),

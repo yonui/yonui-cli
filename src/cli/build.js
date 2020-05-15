@@ -2,7 +2,17 @@ const { buildDemo } = require('../webpack/runWebpack')
 const runGulp = require('../gulp/index')
 const writeResources = require('../utils/writeResources')
 const writeBuildEntry = require('../utils/writeBuildEntry')
-const build = (arg) => {
+const { getLibraConfig } = require('../utils')
+const { paramCase, pascalCase } = require('change-case')
+const build = (arg, compName) => {
+  if (compName) {
+    const name = pascalCase(compName)
+    const libraConfig = getLibraConfig()
+    const { sourcePath } = libraConfig
+    const path = `${sourcePath}/${paramCase(compName)}`
+    process.env.componentName = name
+    process.env.componentPath = path
+  }
   switch (arg) {
     case 'entry': {
       writeBuildEntry()
