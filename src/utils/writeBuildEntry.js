@@ -46,7 +46,7 @@ const writeBuildEntry = () => {
         if (useManifest && !excludeManifestComp.includes(item)) {
           if (_manifestExists) {
             // 导入组件，包裹ReactWrapper
-            const excludeNidAndUiTypeStr = excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? `excludeNidAndUiType: true,` : ''
+            const excludeNidAndUiTypeStr = excludeNidAndUiType || excludeNidAndUiTypeComp.includes(item) ? 'excludeNidAndUiType: true,' : ''
             const errorBoundaryStr = errorBoundary ? 'errorBoundary: true, ' : ''
             const iconStr = iconMap[item] ? `icon: '${iconMap[item]}',` : ''
             imp += `import ${item}Comp from '${_path}';\n`
