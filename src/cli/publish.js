@@ -4,7 +4,7 @@ const FormData = require('form-data')
 const fetch = require('node-fetch')
 const { getPackageJson } = require('../utils/index')
 const { getRc } = require('./set')
-const { CONFIG_FILE_NAME, YNPM_PUBLISH_URL } = require('./global')
+const { CONFIG_FILE_NAME, YNPM_PUBLISH_URL } = require('../utils/globalConfig')
 
 const publish = () => {
   const { email = '', privateKey = '' } = getRc(CONFIG_FILE_NAME)
