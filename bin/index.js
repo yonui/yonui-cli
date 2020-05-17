@@ -53,6 +53,13 @@ const libra = () => {
     })
 
   program
+    .command('publish')
+    .description('publish')
+    .action(() => {
+      cli.publish()
+    })
+
+  program
     .command('start')
     .description('start')
     .option('-p,--prod')
