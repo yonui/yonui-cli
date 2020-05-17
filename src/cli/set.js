@@ -58,13 +58,13 @@ function set (fileName) {
  * @param {any} fileName
  * @returns
  */
-// function getRc (fileName) {
-//   if (getValidateRc(fileName)) {
-//     return propertiesParser.read(getRcFile(fileName))
-//   } else {
-//     return null
-//   }
-// }
+function getRc (fileName) {
+  if (getValidateRc(fileName)) {
+    return propertiesParser.read(getRcFile(fileName))
+  } else {
+    return null
+  }
+}
 /**
  * 判断是否有Rc文件
  * @param {any} fileName
@@ -84,4 +84,7 @@ function getRcFile (fileName) {
   return filePath
 }
 
-module.exports = set
+module.exports = {
+  set,
+  getRc
+}
