@@ -4,8 +4,10 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "_comment_build_component": "如需构建单个组件，使用命令 npm run build name=Button 即可",
     "build": "yonui build",
     "start": "yonui start",
+    "publish": "yonui publish",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:quiet": "npm run lint -- --quiet",
     "lint:fix": "npm run lint -- --quiet --fix",
