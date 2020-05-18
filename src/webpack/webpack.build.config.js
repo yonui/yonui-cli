@@ -2,7 +2,7 @@ const path = require('path')
 const { getManifestJson, getLib, getLibraConfig, getTempDir, getPackageJson } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
+// const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const BannerPlugin = require('webpack').BannerPlugin
 const buildConfig = () => {
@@ -13,18 +13,20 @@ const buildConfig = () => {
   })
   const manifestJson = getManifestJson()
   const libraConfigJson = getLibraConfig()
-  const { output } = libraConfigJson
+  const { output, extraCss = true } = libraConfigJson
   const libName = process.env.componentName ? process.env.componentName : manifestJson.name
   const mode = process.env.NODE_ENV
   const plugins = [
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'index.css',
-      chunkFilename: 'index.css'
-    }),
-    new SimpleProgressWebpackPlugin(),
+    // new SimpleProgressWebpackPlugin(),
     new BannerPlugin(`build time: ${new Date().toLocaleString()}\nversion: ${getPackageJson().version}`)
   ]
+  if (extraCss) {
+    plugins.push(new MiniCssExtractPlugin({
+      filename: 'index.css',
+      chunkFilename: 'index.css'
+    }))
+  }
   if (mode === 'development') {
     plugins.push(
       new BundleAnalyzerPlugin({
