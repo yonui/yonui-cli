@@ -27,6 +27,8 @@ module.exports = () => {
         publicPath: './'
       }
     })
+  } else {
+    cssLoaderUse.unshift({ loader: require.resolve('style-loader') })
   }
   return {
     resolve: {
