@@ -3,7 +3,31 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { getLibraConfig } = require('../utils')
 
 module.exports = () => {
-  const { sourcePath, plugins } = getLibraConfig()
+  const { sourcePath, plugins, extraCss = true } = getLibraConfig()
+  const cssLoaderUse = [
+    // {
+    //   loader: MiniCssExtractPlugin.loader,
+    //   options: {
+    //     publicPath: './'
+    //   }
+    // },
+    require.resolve('css-loader'),
+    // require.resolve('postcss-loader'),
+    {
+      loader: require.resolve('less-loader'),
+      options: {
+        javascriptEnabled: true
+      }
+    }
+  ]
+  if (extraCss) {
+    cssLoaderUse.unshift({
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: './'
+      }
+    })
+  }
   return {
     resolve: {
       // Add '.ts' and '.tsx' as resolvable extensions.
@@ -39,22 +63,7 @@ module.exports = () => {
         },
         {
           test: /\.(le|c)ss$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: './'
-              }
-            },
-            require.resolve('css-loader'),
-            // require.resolve('postcss-loader'),
-            {
-              loader: require.resolve('less-loader'),
-              options: {
-                javascriptEnabled: true
-              }
-            }
-          ]
+          use: cssLoaderUse
         },
         {
           test: /\.(png|jpg|jpeg|gif)(\?.+)?$/,
