@@ -56,6 +56,8 @@ module.exports = () => {
                 ],
                 plugins: [
                   ...plugins, // babel-plugin-import 插件的顺序会影响功能，只能放在前面
+                  [require.resolve('@babel/plugin-proposal-optional-chaining')],
+                  [require.resolve('@babel/plugin-proposal-nullish-coalescing-operator')],
                   [require.resolve('@babel/plugin-transform-modules-commonjs')],
                   [require.resolve('@babel/plugin-proposal-class-properties'), { legacy: true }]
                 ]
@@ -72,7 +74,7 @@ module.exports = () => {
           use: [{
             loader: require.resolve('url-loader'),
             options: {
-              limit: 81960000,
+              limit: 8196,
               name: 'images/[name].[hash:8].[ext]'
               // TODO 当publicPath=true 因为start.js webpack-dev-middleware 中配置了publicPath, 所以此处产出路径不在包含 context
               // outputPath: commands._[0] === 'start' && !cfg.publicPath ? `${_context}assets/images/` : 'assets/images/',
