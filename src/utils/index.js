@@ -26,6 +26,17 @@ const defaultLib = [{
   },
   js: './react-dom/react-dom.development.js',
   css: ''
+},
+{
+  key: 'yonui-ys',
+  value: {
+    commonjs: 'yonui-ys',
+    amd: 'yonui-ys',
+    commonjs2: 'yonui-ys',
+    root: '__YonUI_YS__' // 指向全局变量
+  },
+  js: './yonui-ys/yonui-ys.development.js',
+  css: ''
 }]
 
 const getJson = (_path) => {
