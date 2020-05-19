@@ -22,5 +22,6 @@
       "js":[],
       "css":[],
       "export":[]
-    }
+    },
+    "setExtendComp": true
   }
