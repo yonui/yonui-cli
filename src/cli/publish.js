@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const FormData = require('form-data')
 const fetch = require('node-fetch')
+const chalk = require('chalk')
 const { getPackageJson, getManifestJson } = require('../utils/index')
 const { getRc } = require('./set')
 const { CONFIG_FILE_NAME, YNPM_PUBLISH_URL } = require('../utils/globalConfig')
@@ -15,14 +16,21 @@ const publish = () => {
   form.append('packageJson', JSON.stringify(packageJson))
   form.append('email', email)
   form.append('privateKey', privateKey)
+  if (!email || !privateKey) {
+    console.error('Error: Cant Find User, Please Use `yonui set email=xxx && npm set privateKey=xxx` !')
+  }
   fetch(YNPM_PUBLISH_URL, {
     method: 'post',
     body: form
   })
-    .then(function (response) {
-      console.log(response)
+    .then(async function (response) {
+      const res = await response.json()
+      if (res.status === 200) {
+        console.log(`+ ${packageJson.name}@${packageJson.version}`)
+        console.log(chalk.green(`your resources have been uploaded to CDN at ${res.data}`))
+      }
     }).catch(function (error) {
-      console.log(error)
+      console.error(error)
     })
 }
 
