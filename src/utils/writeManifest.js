@@ -10,24 +10,24 @@ function customJsonStringify (key, value) {
 }
 
 const writeManifest = () => {
-  const output = getLibraConfig().output
-  require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
-  const library = require(path.resolve(output.dist, 'index.js'))
-  const manifestComponents = []
-  Object.keys(library).forEach(compName => {
-    const Comp = library[compName]
-    // console.log(object)
-    if (typeof Comp !== 'function') {
-      console.warn(`${compName} is not a Class`)
-      // continue
-      return
-    }
-    const componentManifest = Comp.manifest
-    if (componentManifest) {
-      const outputManifest = { ...componentManifest, name: componentManifest.name.toLowerCase() }
-      manifestComponents.push(outputManifest)
-    }
-  })
+  const { output, sourcePath } = getLibraConfig()
+  // require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
+  // const library = require(path.resolve(output.dist, 'index.js'))
+  // const manifestComponents = []
+  // Object.keys(library).forEach(compName => {
+  //   const Comp = library[compName]
+  //   // console.log(object)
+  //   if (typeof Comp !== 'function') {
+  //     console.warn(`${compName} is not a Class`)
+  //     // continue
+  //     return
+  //   }
+  //   const componentManifest = Comp.manifest
+  //   if (componentManifest) {
+  //     const outputManifest = { ...componentManifest, name: componentManifest.name.toLowerCase() }
+  //     manifestComponents.push(outputManifest)
+  //   }
+  // })
   // for (const compName in library) {
   //   if( )
   //   console.log(compName)
@@ -41,32 +41,28 @@ const writeManifest = () => {
   // }
   // console.log(object)
   const manifestJson = getManifestJson()
-  // const manifestComponents = []
-  // const loop = (obj, prefix = '') => {
-  //   for (const key in obj) {
-  //     const item = obj[key]
-  //     if (typeof item === 'string') {
-  //       const libPath = item.replace(sourcePath, 'lib')
-  //       console.log(path.resolve(libPath))
-  //       require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
-  //       const CLS = require(path.resolve(libPath)).default
-  //       if (typeof CLS !== 'function') {
-  //         // throw new Error(`${componentName} is not a Class`)
-  //         console.warn(`${key} is not a Class`)
-  //         continue
-  //       }
-  //       const componentManifest = CLS.manifest || new CLS().manifest
-  //       if (componentManifest) {
-  //         componentManifest.name = prefix + key
-  //         manifestComponents.push(componentManifest)
-  //       }
-  //     } else {
-  //       loop(item, `${key}.`)
-  //     }
-  //   }
-  // }
+  const manifestComponents = []
+  require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
+  const loop = (obj, prefix = '') => {
+    for (const key in obj) {
+      const item = obj[key]
+      if (typeof item === 'string') {
+        const libPath = item.replace(sourcePath, 'lib')
+        const manifestPath = path.resolve(libPath, 'manifest.js')
+        if (fse.existsSync(manifestPath)) {
+          const compManifest = require(manifestPath).default
+          if (compManifest) {
+            compManifest.name = prefix + key
+            manifestComponents.push(compManifest)
+          }
+        }
+      } else {
+        loop(item, `${key}.`)
+      }
+    }
+  }
 
-  // loop(manifestJson.components)
+  loop(manifestJson.components)
   const outputFile = { ...manifestJson, components: manifestComponents }
   fse.outputFileSync(
     path.resolve(output.dist, 'manifest.json'),
