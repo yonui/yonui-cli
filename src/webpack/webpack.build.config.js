@@ -13,7 +13,7 @@ const buildConfig = () => {
   })
   const manifestJson = getManifestJson()
   const libraConfigJson = getLibraConfig()
-  const { output, extraCss = true } = libraConfigJson
+  const { output, extraCss = true, outputConfig = {} } = libraConfigJson
   const libName = process.env.componentName ? process.env.componentName : manifestJson.name
   const mode = process.env.NODE_ENV
   const plugins = [
@@ -46,7 +46,8 @@ const buildConfig = () => {
       libraryTarget: 'umd',
       library: '__[name]__',
       libraryExport: 'default',
-      globalObject: 'this'
+      globalObject: 'this',
+      ...outputConfig
     },
     devtool: 'source-map',
     plugins
