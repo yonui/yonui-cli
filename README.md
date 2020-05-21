@@ -94,6 +94,7 @@ $ yonui -v
 | excludeNidAndUiType     | 组件不在最外层套一层div并添加nid和uitype                     | Boolean        | true             |
 | excludeNidAndUiTypeComp | excludeNidAndUiType为false时，不添加div的组件名称数组        | array          | []               |
 | staticPropsMap          | 添加div后再去添加属性的映射关系                              | object         | {}               |
+| iconMap | 为对应组件添加icon描述，设计器使用，非必需     |  object    | {}    |
 | setExtendComp | 接入MDF运行态渲染使用，默认为 true，会自动注册组件到渲染引擎     | Boolean     | true      |
 | extraCss | 控制是否单独打包css     | Boolean     | true      |
 | outputConfig | 对应webpack的output属性     | object     | {}      |

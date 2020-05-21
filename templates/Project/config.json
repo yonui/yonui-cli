@@ -11,7 +11,10 @@
       "demo": ".yonui/demo",
       "result": "result"
     },
-    "lib": [],
+    "lib": [{
+      "key": "yonui-ys",
+      "value": "YonuiYs"
+    }],
     "previewUrl": "",
     "plugins": [],
     "extraImport": {
