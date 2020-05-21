@@ -27,16 +27,6 @@ const writeManifest = () => {
       manifestComponents.push(outputManifest)
     }
   })
-  for (const compName in library) {
-    console.log(compName)
-    const Comp = library[compName]
-    if (typeof Comp !== 'function') {
-      console.warn(`${compName} is not a Class`)
-      continue
-    }
-    const componentManifest = Comp.manifest || new Comp().manifest
-    componentManifest && manifestComponents.push(componentManifest)
-  }
   // console.log(object)
   const manifestJson = getManifestJson()
   // const manifestComponents = []
