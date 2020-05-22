@@ -13,6 +13,7 @@ const publish = () => {
   const form = new FormData()
   form.append('file', fs.createReadStream(path.resolve('./dist/index.js')))
   form.append('readme', fs.createReadStream(path.resolve('./README.md')))
+  form.append('api', fs.createReadStream(path.resolve('./api.md')))
   form.append('packageJson', JSON.stringify(packageJson))
   form.append('email', email)
   form.append('privateKey', privateKey)

@@ -13,7 +13,8 @@
     },
     "lib": [{
       "key": "yonui-ys",
-      "value": "YonuiYs"
+      "value": "YonuiYs",
+      "js": "./yonui-ys/yonui-ys.production.js"
     }],
     "previewUrl": "",
     "plugins": [],

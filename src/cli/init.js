@@ -4,6 +4,7 @@
 const inquirer = require('inquirer')
 const path = require('path')
 const fse = require('fs-extra')
+const { pascalCase } = require('change-case')
 const compressing = require('compressing')
 // const shell = require('shelljs')
 const codeMode = ['js', 'ts']
@@ -43,6 +44,7 @@ const init = async () => {
 
 const create = async (ans = { codeMode: 'ts', device: 'PC', author: 'Hyj', project: 'xx' }) => {
   const filepath = path.resolve(ans.project)
+  const libraryName = pascalCase(ans.project)
   // const filepath = '.'
   const libraConfigPath = path.resolve(filepath, 'config.json')
   const packagePath = path.resolve(filepath, 'package.json')
@@ -53,7 +55,7 @@ const create = async (ans = { codeMode: 'ts', device: 'PC', author: 'Hyj', proje
     const manifestJson = require(manifestPath)
     fse.outputJSONSync(libraConfigPath, { ...libraConfig, type: ans.codeMode, device: ans.device }, { replacer: null, spaces: 2 })
     fse.outputJSONSync(packagePath, { ...packageJson, author: ans.author, name: ans.project }, { replacer: null, spaces: 2 })
-    fse.outputJSONSync(manifestPath, { ...manifestJson, name: ans.project }, { replacer: null, spaces: 2 })
+    fse.outputJSONSync(manifestPath, { ...manifestJson, name: libraryName }, { replacer: null, spaces: 2 })
   })
 }
 

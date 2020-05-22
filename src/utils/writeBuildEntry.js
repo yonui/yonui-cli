@@ -1,4 +1,5 @@
 const { getManifestJson, getLibraConfig, getTempDir, getPackageJson } = require('./index')
+const fs = require('fs')
 const path = require('path')
 const fse = require('fs-extra')
 const { formatPath, getDir } = require('./index')
@@ -37,7 +38,12 @@ const writeBuildEntry = () => {
       impLess += `${item}\n`
     })
   }
-
+  const writeApi = (basePath) => {
+    const content = fs.readFileSync(path.join(basePath, 'README.md'), 'utf-8')
+    fs.appendFile('api.md', content + '\n\n', (err) => {
+      if (err) throw err
+    })
+  }
   const exp = {}
   const foo = (obj, res = {}) => {
     Object.keys(obj).map(item => {
@@ -45,6 +51,7 @@ const writeBuildEntry = () => {
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
         const fileArr = getDir(obj[item], 'file')
         const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
+        const _readmeExists = fileArr.some(item => item.match(/^README\.md$/))
         // const _manifestExists = fse.existsSync(`${_path}/manifest.tsx`) || fse.existsSync(`${_path}/manifest.ts`) || fse.existsSync(`${_path}/manifest.jsx`) || fse.existsSync(`${_path}/manifest.js`)
         if (useManifest && !excludeManifestComp.includes(item)) {
           if (_manifestExists) {
@@ -72,6 +79,7 @@ const writeBuildEntry = () => {
             imp += `import ${item} from '${_path}'\n`
             console.log(`Component ${item} misses manifest file.`)
           }
+          if (_readmeExists) writeApi(obj[item])
         } else {
           imp += `import ${item} from '${_path}'\n`
         }
