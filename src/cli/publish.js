@@ -8,7 +8,16 @@ const { getRc } = require('./set')
 const { CONFIG_FILE_NAME, YNPM_PUBLISH_URL } = require('../utils/globalConfig')
 
 const publish = () => {
-  const { email = '', privateKey = '' } = getRc(CONFIG_FILE_NAME)
+  const userConfig = getRc(CONFIG_FILE_NAME)
+  if (userConfig === null) {
+    console.error(chalk.red('Error: Can not Find User, Please Use `yonui set email=xxx && yonui set privateKey=xxx` !'))
+    process.exit(0)
+  }
+  const { email, privateKey } = userConfig
+  if (!email || !privateKey) {
+    console.error(chalk.red('Error: Can not Find User, Please Use `yonui set email=xxx && yonui set privateKey=xxx` !'))
+    process.exit(0)
+  }
   const packageJson = replacePackageName(getPackageJson(), getManifestJson())
   const form = new FormData()
   form.append('file', fs.createReadStream(path.resolve('./dist/index.js')))
@@ -17,9 +26,6 @@ const publish = () => {
   form.append('packageJson', JSON.stringify(packageJson))
   form.append('email', email)
   form.append('privateKey', privateKey)
-  if (!email || !privateKey) {
-    console.error('Error: Cant Find User, Please Use `yonui set email=xxx && npm set privateKey=xxx` !')
-  }
   fetch(YNPM_PUBLISH_URL, {
     method: 'post',
     body: form

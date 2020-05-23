@@ -7,7 +7,7 @@
     "_comment_build_component": "如需构建单个组件，使用命令 npm run build name=Button 即可",
     "build": "yonui build",
     "start": "yonui start",
-    "publish": "yonui publish",
+    "deploy": "yonui publish",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:quiet": "npm run lint -- --quiet",
     "lint:fix": "npm run lint -- --quiet --fix",
@@ -15,6 +15,7 @@
   },
   "author": "",
   "license": "ISC",
+  "syncToMDD": true,
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint:git",
