@@ -1,7 +1,7 @@
 const path = require('path')
 const { getManifestJson, getLib, getLibraConfig, getTempDir, getPackageJson } = require('../utils')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const BannerPlugin = require('webpack').BannerPlugin
@@ -27,13 +27,13 @@ const buildConfig = () => {
       chunkFilename: 'index.css'
     }))
   }
-  if (mode === 'development') {
-    plugins.push(
-      new BundleAnalyzerPlugin({
-        analyzerPort: 8080,
-        generateStatsFile: false
-      }))
-  }
+  // if (mode === 'development') {
+  //   plugins.push(
+  //     new BundleAnalyzerPlugin({
+  //       analyzerPort: 8080,
+  //       generateStatsFile: false
+  //     }))
+  // }
   return {
     entry: {
       [libName]: path.resolve(`${getTempDir()}/temp/build/index.js`)
