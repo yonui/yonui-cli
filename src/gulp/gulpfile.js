@@ -9,6 +9,7 @@ const { buildDist, buildDemo, buildDistAndDemo } = require('../webpack/runWebpac
 const writeResources = require('../utils/writeResources')
 const writeBuildEntry = require('../utils/writeBuildEntry')
 const writeManifest = require('../utils/writeManifest')
+const sourcemaps = require('gulp-sourcemaps')
 const { libPath, sourcePath, plugins, output } = getLibraConfig()
 const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
@@ -25,6 +26,7 @@ task('hello', done => {
 // 转译js代码
 task('javascript', () => {
   return src([jsSource, path.resolve(`${basePath}*.{ts,tsx,js,jsx}`)])
+    .pipe(sourcemaps.init())
     .pipe(gulpBabel({
       presets: [
         resolve('@babel/preset-env'),
@@ -37,6 +39,7 @@ task('javascript', () => {
         [resolve('@babel/plugin-proposal-class-properties'), { legacy: true }]
       ]
     }))
+    .pipe(sourcemaps.write(''))
     .pipe(dest(dist))
 })
 
