@@ -10,7 +10,7 @@ const writeResources = require('../utils/writeResources')
 const writeBuildEntry = require('../utils/writeBuildEntry')
 const writeManifest = require('../utils/writeManifest')
 const sourcemaps = require('gulp-sourcemaps')
-const { libPath, sourcePath, plugins, output } = getLibraConfig()
+const { libPath, sourcePath, plugins, output, outputManifest = true } = getLibraConfig()
 const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`)
@@ -120,9 +120,13 @@ task('writeResources', (done) => {
 })
 
 task('manifest', (done) => {
-  console.log('manifest start')
-  writeManifest()
-  console.log('manifest done')
+  if (outputManifest) {
+    console.log('manifest start')
+    writeManifest()
+    console.log('manifest done')
+  } else {
+    console.log('don\'t output manifest.json.')
+  }
   done()
 })
 task('lib', series('javascript', 'less', 'img', 'extra'))
