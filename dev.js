@@ -4,7 +4,8 @@ const pump = require('pump')
 const path = require('path')
 const fileList = [
   'components', 'static', 'config.json', 'manifest.json', 'package.json',
-  'README.md', 'tsconfig.json', '.eslintignore', '.eslintrc.js', 'commitlint.config.js'
+  'README.md', 'tsconfig.json', '.eslintignore', '.eslintrc.js', 'commitlint.config.js',
+  '.gitignore'
 ]
 const join = (param) => path.join(__dirname, param)
 const compress = () => {
