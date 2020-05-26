@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { getLibraConfig } = require('../utils')
 
 module.exports = () => {
-  const { sourcePath, plugins, extraCss = true } = getLibraConfig()
+  const { sourcePath, plugins, extraCss = true, imgSize = 10000 } = getLibraConfig()
   const cssLoaderUse = [
     // {
     //   loader: MiniCssExtractPlugin.loader,
@@ -74,7 +74,7 @@ module.exports = () => {
           use: [{
             loader: require.resolve('url-loader'),
             options: {
-              limit: 8196,
+              limit: imgSize,
               name: 'images/[name].[hash:8].[ext]'
               // TODO 当publicPath=true 因为start.js webpack-dev-middleware 中配置了publicPath, 所以此处产出路径不在包含 context
               // outputPath: commands._[0] === 'start' && !cfg.publicPath ? `${_context}assets/images/` : 'assets/images/',
