@@ -43,6 +43,24 @@ task('javascript', () => {
     .pipe(dest(dist))
 })
 
+task('es', () => {
+  return src([jsSource, path.resolve(`${basePath}*.{ts,tsx,js,jsx}`)])
+    .pipe(sourcemaps.init())
+    .pipe(gulpBabel({
+      presets: [
+        [resolve('@babel/preset-env'), { modules: false }],
+        resolve('@babel/preset-react'),
+        resolve('@babel/preset-typescript')
+      ],
+      plugins: [
+        ...plugins,
+        [resolve('@babel/plugin-proposal-class-properties'), { legacy: true }]
+      ]
+    }))
+    .pipe(sourcemaps.write(''))
+    .pipe(dest(dist.replace(/lib$/, 'es')))
+})
+
 // 复制less文件
 task('less', () => {
   return src(lessSource)
@@ -129,7 +147,7 @@ task('manifest', (done) => {
   }
   done()
 })
-task('lib', series('javascript', 'less', 'img', 'extra'))
+task('lib', series('javascript', 'es', 'less', 'img', 'extra'))
 task('build', series('lib', 'writeBuildEntry', 'buildDist', 'manifest'))
 task('build-all', series('lib', 'writeBuildEntry', 'writeResources', 'buildDistAndDemo', 'manifest'))
 task('build-dist', series('writeBuildEntry', 'buildDist', 'manifest'))
