@@ -5,7 +5,7 @@ const webpackMerge = require('webpack-merge')
 const baseConfig = require('./webpack.base.config')
 const buildConfig = require('./webpack.build.config')
 const demoConfig = require('./webpack.demo.config')
-const { getTempDir } = require('../utils')
+const { getTempDir, logger } = require('../utils')
 
 const buildDist = (param) => {
   return new Promise((resolve, reject) => {
@@ -64,8 +64,11 @@ const runWebpack = (extraConfig, mode = 'run') => {
       }
       case 'run': {
         compiler.run((err, status) => {
-          console.log('errors:\n', status.compilation ? status.compilation.errors : '')
-          console.log('warnings:\n', status.compilation ? status.compilation.warnings : '')
+          // console.log('errors:\n', status.compilation ? status.compilation.errors : '')
+          logger.error(status.compilation ? status.compilation.errors : '')
+          // console.log('warnings:\n', status.compilation ? status.compilation.warnings : '')
+          logger.warnning(status.compilation ? status.compilation.warnings : '')
+
           if (err) {
             console.error(err)
           } else {

@@ -1,7 +1,7 @@
 const { getManifestJson, getLibraConfig } = require('./index')
 const path = require('path')
 const fse = require('fs-extra')
-
+const chalk = require('chalk')
 function customJsonStringify (key, value) {
   if (typeof value === 'function') {
     return `/Function(${value.toString()})/`
@@ -72,6 +72,7 @@ const writeManifest = () => {
     path.resolve(output.dist, 'manifest.json'),
     JSON.stringify(outputFile, customJsonStringify)
   )
+  console.log(chalk.green('Output manifest.json successfully.'))
   process.exit(0)
 }
 module.exports = writeManifest

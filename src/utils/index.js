@@ -211,6 +211,18 @@ function uploadCDN (name, fileName, path) { // name 包名字， fileName，文�
   }
 }
 const getTempDir = () => '.yonui'
+
+const logger = {
+  success: (...param) => {
+    if (param.length > 0) console.log(chalk.green('[success]:', ...param))
+  },
+  warnning: (...param) => {
+    if (param.length > 0) console.log(chalk.yellow('[warnning]:', ...param))
+  },
+  error: (...param) => {
+    if (param.length > 0) console.log(chalk.red('[error]:', ...param))
+  }
+}
 module.exports = {
   uploadCDN,
   download,
@@ -224,5 +236,6 @@ module.exports = {
   getIp,
   copyFile,
   getTempDir,
-  getPackageJson
+  getPackageJson,
+  logger
 }

@@ -20,7 +20,8 @@ const writeBuildEntry = () => {
     excludeManifestComp = [],
     staticPropsMap = {},
     setExtendComp = false,
-    iconMap = {}
+    iconMap = {},
+    outputApi = true
   } = getLibraConfig()
   let imp = ''
   let impLess = ''
@@ -79,7 +80,7 @@ const writeBuildEntry = () => {
             imp += `import ${item} from '${_path}'\n`
             console.log(`Component ${item} misses manifest file.`)
           }
-          if (_readmeExists) writeApi(obj[item])
+          if (_readmeExists && outputApi) writeApi(obj[item])
         } else {
           imp += `import ${item} from '${_path}'\n`
         }
