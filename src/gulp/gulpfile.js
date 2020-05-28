@@ -15,6 +15,7 @@ const basePath = `${libPath || sourcePath}/**/`
 const resolve = (module) => require.resolve(module)
 const jsSource = path.resolve(`${basePath}{style/,}*.{tsx,js}`)
 const dist = path.resolve(output.lib)
+const es = path.resolve(output.es)
 const lessSource = path.resolve(`${basePath}{style,demos,}/*.{less,css}`)
 const imgSource = path.resolve(`${basePath}{*.,*/*.}{png,jpg,gif,ico,svg}`)
 const extraSource = path.resolve(`${basePath}{*.,*/*.}{html,eot,ttf,woff,woff2}`)
@@ -58,7 +59,7 @@ task('es', () => {
       ]
     }))
     .pipe(sourcemaps.write(''))
-    .pipe(dest(dist.replace(/lib$/, 'es')))
+    .pipe(dest(es))
 })
 
 // 复制less文件

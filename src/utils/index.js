@@ -115,6 +115,7 @@ const getLibraConfig = () => {
   const outputObj = {
     dist: 'dist',
     lib: 'lib',
+    es: 'es',
     demo: `${getTempDir()}/demo`,
     result: 'result',
     ...output
