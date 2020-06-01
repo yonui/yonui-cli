@@ -43,7 +43,7 @@ const publish = () => {
 
 function replacePackageName (packageJson, manifestJson) {
   const libraryName = manifestJson && manifestJson.name
-  packageJson.name = `__${libraryName}__`
+  packageJson.name = `${libraryName}`
   return packageJson
 }
 
