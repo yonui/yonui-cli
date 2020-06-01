@@ -44,7 +44,7 @@ const buildConfig = () => {
       filename: 'index.js',
       path: path.resolve(output.dist),
       libraryTarget: 'umd',
-      library: '__[name]__',
+      library: '[name]',
       libraryExport: 'default',
       globalObject: 'this',
       ...outputConfig
