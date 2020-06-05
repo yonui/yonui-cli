@@ -53,6 +53,13 @@ const libra = () => {
     })
 
   program
+    .command('login')
+    .description('Log in to YonBuilder')
+    .action(() => {
+      cli.login()
+    })
+
+  program
     .command('publish')
     .description('publish')
     .action(() => {

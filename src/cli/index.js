@@ -5,6 +5,7 @@ const start = require('./start')
 const create = require('./create')
 const compress = require('./compress')
 const publish = require('./publish')
+const login = require('./login')
 module.exports = {
   init,
   build,
@@ -12,5 +13,6 @@ module.exports = {
   create,
   set,
   publish,
-  compress
+  compress,
+  login
 }

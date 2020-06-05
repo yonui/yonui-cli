@@ -15,7 +15,6 @@
   },
   "author": "",
   "license": "ISC",
-  "syncToMDD": true,
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint:git",
