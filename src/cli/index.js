@@ -1,5 +1,5 @@
 const init = require('./init')
-const { set } = require('./set')
+const { set, getRc } = require('./set')
 const build = require('./build')
 const start = require('./start')
 const create = require('./create')
@@ -12,6 +12,7 @@ module.exports = {
   start,
   create,
   set,
+  getRc,
   publish,
   compress,
   login

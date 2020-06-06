@@ -53,6 +53,17 @@ const libra = () => {
     })
 
   program
+    .command('config')
+    .description('show config')
+    .option('-l')
+    .action((env) => {
+      if (env.L) {
+        const config = cli.getRc('yonui-cli')
+        console.log(config)
+      }
+    })
+
+  program
     .command('login')
     .description('Log in to YonBuilder')
     .action(() => {
