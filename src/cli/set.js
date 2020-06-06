@@ -5,7 +5,7 @@ const fs = require('fs')
 const propertiesParser = require('properties-parser')
 const objectAssign = require('object-assign')
 const userPath = process.env.HOME || process.env.USERPROFILE
-function getCommands (fileName) {
+function getConfig (fileName) {
   let config = {}
   const argvs = process.argv
   try {
@@ -23,38 +23,23 @@ function getCommands (fileName) {
     return null
   }
 }
-function set (fileName) {
+function set (fileName, property = {}) {
   const path = getRcFile(fileName)
   try {
-    const valida = getValidateRc(fileName)
-    if (!valida) {
-      const comm = getCommands(fileName)
-      const editor = propertiesParser.createEditor()
-      for (const item in comm) {
-        editor.set(item, comm[item])
-      }
-      fs.writeFileSync(path, editor.toString())
-      // comm?fs.writeFileSync(path,JSON.stringify(comm)):"";
-    } else {
-      const comm = getCommands(fileName)
-      let config = propertiesParser.read(path)
-      if (comm) {
-        config = config || {}
-        config = objectAssign(config, comm)
-        const editor = propertiesParser.createEditor()
-        for (const item in config) {
-          editor.set(item, config[item])
-        }
-        fs.writeFileSync(path, editor.toString())
-      };
+    const comm = getConfig(fileName)
+    const config = objectAssign(property, comm)
+    const editor = propertiesParser.createEditor()
+    for (const item in config) {
+      editor.set(item, config[item])
     }
+    fs.writeFileSync(path, editor.toString())
   } catch (e) {
-
+    console.log(e)
   }
 }
 
 /**
- * 获取文件
+ * 获取文件内容
  * @param {any} fileName
  * @returns
  */

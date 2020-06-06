@@ -10,12 +10,12 @@ const { CONFIG_FILE_NAME, YNPM_PUBLISH_URL } = require('../utils/globalConfig')
 const publish = () => {
   const userConfig = getRc(CONFIG_FILE_NAME)
   if (userConfig === null) {
-    console.error(chalk.red('Error: Can not Find User, Please Use `yonui set email=xxx && yonui set privateKey=xxx` !'))
+    console.error(chalk.red('Error: Can not Find User, Please Use `yonui login` !'))
     process.exit(0)
   }
-  const { email, privateKey } = userConfig
-  if (!email || !privateKey) {
-    console.error(chalk.red('Error: Can not Find User, Please Use `yonui set email=xxx && yonui set privateKey=xxx` !'))
+  const { username, privateKey, userId } = userConfig
+  if (!(userId || username) && !privateKey) {
+    console.error(chalk.red('Error: Can not Find User, Please Use `yonui login` !'))
     process.exit(0)
   }
   const packageJson = replacePackageName(getPackageJson(), getManifestJson())
@@ -24,7 +24,8 @@ const publish = () => {
   form.append('readme', fs.createReadStream(path.resolve('./README.md')))
   form.append('api', fs.createReadStream(path.resolve('./api.md')))
   form.append('packageJson', JSON.stringify(packageJson))
-  form.append('email', email)
+  userId && form.append('userId', userId)
+  username && form.append('username', username)
   form.append('privateKey', privateKey)
   fetch(YNPM_PUBLISH_URL, {
     method: 'post',

@@ -1,8 +1,8 @@
 const fetch = require('node-fetch')
 const FormData = require('form-data')
 const inquirer = require('inquirer')
-const chalk = require('chalk')
-const { LOGIN_URL } = require('../utils/globalConfig')
+const { set } = require('./set')
+const { BASE_URL, LOGIN_URL, CONFIG_FILE_NAME } = require('../utils/globalConfig')
 
 const login = async () => {
   // 输入友互通账号密码
@@ -56,7 +56,10 @@ const setUserInfo = async (ans) => {
     .then(async function (response) {
       const res = await response.json()
       if (res.status === 200) {
-        console.log(chalk.green(`${res.data}`))
+        const { userId, privateKey } = res.data
+        set(CONFIG_FILE_NAME, { userId, privateKey })
+        console.log(res)
+        console.log(`Logged in as ${ans.username} on ${BASE_URL}.`)
       }
     }).catch(function (error) {
       console.error(error.message)
