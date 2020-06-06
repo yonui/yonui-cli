@@ -20,10 +20,10 @@ const publish = () => {
   }
   const packageJson = replacePackageName(getPackageJson(), getManifestJson())
   const form = new FormData()
-  form.append('file', getValidateFile(path.resolve('./dist/index.js'))) // file必须
-  form.append('readme', getValidateFile(path.resolve('./README.md'))) // readme必须
-  form.append('api', getValidateFile(path.resolve('./api.md')))// 需要api文件。没有可以不传
-  form.append('changelog', getValidateFile(path.resolve('./changelog.md'))) // 需要changelog文件。没有可以不传
+  form.append('file', checkFileExist('./dist/index.js', true, 'Please execute `npm run build` first'))
+  form.append('readme', checkFileExist('./README.md', true, 'Error: readme file is required'))
+  form.append('api', checkFileExist('./api.md', false))
+  form.append('changelog', checkFileExist('./changelog.md', false))
   form.append('packageJson', JSON.stringify(packageJson))
   userId && form.append('userId', userId)
   username && form.append('username', username)
@@ -51,13 +51,23 @@ function replacePackageName (packageJson, manifestJson) {
   return packageJson
 }
 
-function getValidateFile (path) {
+/**
+ * 检查待上传的文件是否存在
+ * @param {*} filePath 文件路径
+ * @param {*} isRequired 是否必需
+ * @param {*} message 提示信息
+ */
+function checkFileExist (filePath, isRequired, message = '') {
   try {
-    fs.accessSync(path, fs.F_OK)
+    fs.accessSync(path.resolve(filePath), fs.F_OK)
   } catch (e) {
+    if (isRequired) {
+      console.error(chalk.red(message))
+      process.exit(0)
+    }
     return ''
   }
-  return fs.createReadStream(path)
+  return fs.createReadStream(filePath)
 }
 
 module.exports = publish
