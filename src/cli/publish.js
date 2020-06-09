@@ -46,9 +46,25 @@ const publish = () => {
 }
 
 function replacePackageName (packageJson, manifestJson) {
-  const libraryName = manifestJson && manifestJson.name
+  let libraryName, controlTypes
+  if (manifestJson) {
+    libraryName = manifestJson.name
+    controlTypes = manifestJson.components
+  }
   packageJson.name = `${libraryName}`
+  packageJson.components = getControlTypes(controlTypes)
   return packageJson
+}
+
+function getControlTypes (comps) {
+  const results = []
+  for (const key in comps) {
+    const obj = {}
+    obj.name = key
+    obj.path = comps[key]
+    results.push(obj)
+  }
+  return results
 }
 
 /**
