@@ -1,3 +1,26 @@
+## [0.1.93](https://github.com/yonui/yonui-cli/compare/v0.1.88...v0.1.93) (2020-06-09)
+
+
+### Bug Fixes
+
+* publish 0.1.89 ([be00ae8](https://github.com/yonui/yonui-cli/commit/be00ae8936cd6b88d20a28dde46c2694ac47160c))
+* publish 0.1.89 ([da65c49](https://github.com/yonui/yonui-cli/commit/da65c49eaa8783c6b74e37dd83aab58781beaf7f))
+* publish 错误提示 ([5d0154b](https://github.com/yonui/yonui-cli/commit/5d0154bb0f4846a475ba8b494b9cf695aac29d6e))
+* 修改es路径配置 ([fa3f512](https://github.com/yonui/yonui-cli/commit/fa3f512afd611d7d2700c418c9b8ac20bce3b07e))
+* 组件命名去掉__ ([7d05f1c](https://github.com/yonui/yonui-cli/commit/7d05f1c423579a121ba147e185b4558a2346f6a3))
+* 组件命名去掉__ ([9040b71](https://github.com/yonui/yonui-cli/commit/9040b715ef32994e184b60164162dc096c4d9c18))
+
+
+### Features
+
+* conventional Commits ([a50ce45](https://github.com/yonui/yonui-cli/commit/a50ce45e1220f675eced0cc03a6da6a7a6256d2a))
+* login自动配置userId、privateKey ([b997029](https://github.com/yonui/yonui-cli/commit/b997029fcb2e46b5bcb17888ac7a5d51ce7e005e))
+* publish 携带controlType信息 ([44a736f](https://github.com/yonui/yonui-cli/commit/44a736f36ef09f6f77b5a49e1ca7b5ca3ee5be5d))
+* 支持登录友互通 ([1b83f9c](https://github.com/yonui/yonui-cli/commit/1b83f9c08417c5be474730b9a018dae439cef274))
+* 新增 yonui config -l 命令 ([1e82f01](https://github.com/yonui/yonui-cli/commit/1e82f01484df8f6686f74a4d8cb2c73a5bf37a0f))
+
+
+
 ## 更新日志
 
 - 0.1.12
