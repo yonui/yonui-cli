@@ -57,7 +57,7 @@ const libra = () => {
     .description('show config')
     .option('-l')
     .action((env) => {
-      if (env.L) {
+      if (env.L || /^ls$/.test(program.args[0])) {
         const config = cli.getRc('yonui-cli')
         console.log(config)
       }
