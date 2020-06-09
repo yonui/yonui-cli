@@ -1,3 +1,12 @@
+## [0.1.95](https://github.com/yonui/yonui-cli/compare/v0.1.94...v0.1.95) (2020-06-09)
+
+
+### Features
+
+* 支持 yonui config ls ([ee54c87](https://github.com/yonui/yonui-cli/commit/ee54c8792a54b5dd4cf65cb5a864346b8d31597f))
+
+
+
 ## [0.1.94](https://github.com/yonui/yonui-cli/compare/v0.1.93...v0.1.94) (2020-06-09)
 
 
