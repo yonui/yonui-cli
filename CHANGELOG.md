@@ -1,3 +1,12 @@
+## [0.1.94](https://github.com/yonui/yonui-cli/compare/v0.1.93...v0.1.94) (2020-06-09)
+
+
+### Features
+
+* eslint 分号规则 ([0e669a2](https://github.com/yonui/yonui-cli/commit/0e669a2af9707368e1dbb1b373dc771b4ac06f97))
+
+
+
 ## [0.1.93](https://github.com/yonui/yonui-cli/compare/v0.1.88...v0.1.93) (2020-06-09)
 
 
