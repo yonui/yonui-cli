@@ -36,6 +36,7 @@ task('javascript', () => {
       ],
       plugins: [
         ...plugins,
+        [resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
         [resolve('@babel/plugin-transform-modules-commonjs')],
         [resolve('@babel/plugin-proposal-class-properties'), { legacy: true }]
       ]
@@ -55,6 +56,7 @@ task('es', () => {
       ],
       plugins: [
         ...plugins,
+        [resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
         [resolve('@babel/plugin-proposal-class-properties'), { legacy: true }]
       ]
     }))

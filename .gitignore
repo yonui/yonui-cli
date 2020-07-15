@@ -27,3 +27,5 @@ yarn-error.log*
 /jslib
 package-lock.json
 /demo/build
+
+/.vscode

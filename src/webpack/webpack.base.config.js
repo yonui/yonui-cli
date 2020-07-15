@@ -56,6 +56,7 @@ module.exports = () => {
                 ],
                 plugins: [
                   ...plugins, // babel-plugin-import 插件的顺序会影响功能，只能放在前面
+                  [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
                   [require.resolve('@babel/plugin-proposal-optional-chaining')],
                   [require.resolve('@babel/plugin-proposal-nullish-coalescing-operator')],
                   [require.resolve('@babel/plugin-transform-modules-commonjs')],
