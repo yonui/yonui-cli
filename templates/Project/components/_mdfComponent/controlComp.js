@@ -1,6 +1,6 @@
 import React from 'react';
 import compUtils from './common';
-export default (WrapComponent) => {
+export default (WrapComponent, model) => {
   return class ControlComp extends React.Component {
     constructor (props) {
       super();
@@ -8,7 +8,7 @@ export default (WrapComponent) => {
 
     componentDidMount () {
       console.log('%c container didMount', 'color:red');
-      compUtils.bind(this);
+      compUtils.bind(this, model);
     }
 
     componentWillUnmount () {
@@ -21,7 +21,8 @@ export default (WrapComponent) => {
      * @param {*} value 当前输入框值
      */
     afterValueChange = (value) => {
-      this.props.model.setValue(value);
+      const currentModel = this.newModel || this.props.model;
+      currentModel.setValue(value);
     }
 
     /**
@@ -35,11 +36,16 @@ export default (WrapComponent) => {
       });
     }
 
+    setModelConfig = (data) => {
+      compUtils.setModelConfig(this, data)
+    }
+
     render () {
       const allProps = {
         ...this.props,
         ...this.state,
-        afterValueChange: this.afterValueChange
+        afterValueChange: this.afterValueChange,
+        setModelConfig: this.setModelConfig
       }
       return <WrapComponent {...allProps} />
     }

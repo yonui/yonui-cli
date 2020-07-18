@@ -1,6 +1,6 @@
 import React from 'react';
 import compUtils from './common';
-export default (WrapComponent) => {
+export default (WrapComponent, model) => {
   return class ButtonComp extends React.Component {
     componentDidMount () {
       console.log('%c container didMount', 'color:red');

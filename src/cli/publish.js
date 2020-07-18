@@ -3,7 +3,7 @@ const path = require('path')
 const FormData = require('form-data')
 const fetch = require('node-fetch')
 const chalk = require('chalk')
-const { getPackageJson, getManifestJson } = require('../utils/index')
+const { getPackageJson, getManifestJson, getLibraConfig } = require('../utils/index')
 const { getRc } = require('./set')
 const { CONFIG_FILE_NAME, YNPM_PUBLISH_URL } = require('../utils/globalConfig')
 
@@ -58,11 +58,23 @@ function replacePackageName (packageJson, manifestJson) {
 
 function getControlTypes (comps) {
   const results = []
+  const output = getLibraConfig().output
+  // console.log(output);
+  const mainfestPath = path.resolve(output.dist, 'manifest.json');
+  const compMainfest = require(mainfestPath) || {};
+  const componentsInfo = compMainfest.components || [];
+  let i = 0;
   for (const key in comps) {
     const obj = {}
-    obj.name = key
+    const currentCompInfo = componentsInfo[i] || {}
+    obj.name = currentCompInfo.label
     obj.path = comps[key]
+    obj.businessType = currentCompInfo.businessType
+    obj.code = key
+    obj.propList = currentCompInfo.api
+    // console.log('---', compMainfest);
     results.push(obj)
+    i++;
   }
   return results
 }

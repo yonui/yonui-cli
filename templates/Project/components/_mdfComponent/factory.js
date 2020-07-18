@@ -4,20 +4,20 @@ import ButtonComp from './buttonComp'
 import ContainerComp from './containerComp'
 
 function createComp (compInfo = {}) {
-  const { type } = compInfo
-  console.log('type', type);
   return function (targetCompent, name, descriptor) {
     console.log(targetCompent, name, descriptor)
-    return getAbstractCompFactory(type, targetCompent)
+    return getAbstractCompFactory(compInfo, targetCompent)
   }
 }
 
-function getAbstractCompFactory (type = 'control', targetCompent) {
+function getAbstractCompFactory (compInfo, targetCompent) {
+  const { type, model } = compInfo
+  console.log('type', type);
   switch (type) {
     case 'control':
-      return ControlComp(targetCompent);
+      return ControlComp(targetCompent, model);
     case 'container':
-      return ContainerComp(targetCompent);
+      return ContainerComp(targetCompent, model);
     case 'button':
       return ButtonComp(targetCompent);
     default:

@@ -2,6 +2,7 @@ const { getManifestJson, getLibraConfig } = require('./index')
 const path = require('path')
 const fse = require('fs-extra')
 const chalk = require('chalk')
+const { JSDOM } = require('jsdom')
 function customJsonStringify (key, value) {
   if (typeof value === 'function') {
     return `/Function(${value.toString()})/`
@@ -11,6 +12,22 @@ function customJsonStringify (key, value) {
 
 const writeManifest = () => {
   const output = getLibraConfig().output
+  // 创建 JSDOM，获得 window 对象
+  const { window } = new JSDOM('<div id="dum-id" ></div>');
+  global.window = window;
+  // 将被测函数需要用到的变量挂到全局
+  // global.localStorage = window.localStorage;
+  global.document = window.document;
+  global.navigator = { userAgent: 'node.js' }
+  global.window.matchMedia = window.matchMedia || function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {}
+    };
+  };
+  global.location = { search: '' }
+
   require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
   const library = require(path.resolve(output.dist, 'index.js'))
   const manifestComponents = []

@@ -1,6 +1,6 @@
 import React from 'react';
 import compUtils from './common';
-export default (WrapComponent) => {
+export default (WrapComponent, model) => {
   return class ControlComp extends React.Component {
     constructor (props) {
       super();
@@ -8,7 +8,7 @@ export default (WrapComponent) => {
 
     componentDidMount () {
       console.log('%c container didMount', 'color:red');
-      compUtils.bind(this);
+      compUtils.bind(this, model);
       const { viewModel, meta } = this.props;
       viewModel.on('updateViewMeta', args => {
         const { code, visible } = args;
@@ -23,10 +23,15 @@ export default (WrapComponent) => {
       compUtils.unbind(this);
     }
 
+    setModelConfig = (data) => {
+      compUtils.setModelConfig(this, data)
+    }
+
     render () {
       const allProps = {
         ...this.props,
-        ...this.state
+        ...this.state,
+        setModelConfig: this.setModelConfig
       }
       return <WrapComponent {...allProps} />
     }
