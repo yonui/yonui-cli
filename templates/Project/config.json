@@ -13,7 +13,12 @@
     },
     "lib": [{
       "key": "yonui-ys",
-      "value": "YonuiYs",
+      "value": {
+        "commonjs": "../static/yonui-ys/yonui-ys.production.js",
+        "amd": "yonui-ys",
+        "commonjs2": "../static/yonui-ys/yonui-ys.production.js",
+        "root": "YonuiYs"
+      },
       "js": "./yonui-ys/yonui-ys.production.js"
     }],
     "previewUrl": "",
