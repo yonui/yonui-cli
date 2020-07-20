@@ -1,3 +1,8 @@
+<a name="0.1.98"></a>
+## [0.1.98](https://github.com/yonui/yonui-cli/compare/v0.1.97...v0.1.98) (2020-07-20)
+
+
+
 <a name="0.1.97"></a>
 ## [0.1.97](https://github.com/yonui/yonui-cli/compare/v0.1.95...v0.1.97) (2020-07-18)
 
