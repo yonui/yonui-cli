@@ -1,3 +1,18 @@
+<a name="0.1.100"></a>
+## [0.1.100](https://github.com/yonui/yonui-cli/compare/v0.1.99...v0.1.100) (2020-07-20)
+
+
+### Bug Fixes
+
+* 构建external yonui-ys ([f75b8fe](https://github.com/yonui/yonui-cli/commit/f75b8fe))
+
+
+
+<a name="0.1.98"></a>
+## [0.1.98](https://github.com/yonui/yonui-cli/compare/v0.1.97...v0.1.98) (2020-07-20)
+
+
+
 ## [0.1.99](https://github.com/yonui/yonui-cli/compare/v0.1.98...v0.1.99) (2020-07-20)
 
 
