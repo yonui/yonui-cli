@@ -1,5 +1,19 @@
-<a name="0.1.98"></a>
-## [0.1.98](https://github.com/yonui/yonui-cli/compare/v0.1.97...v0.1.98) (2020-07-20)
+## [0.1.99](https://github.com/yonui/yonui-cli/compare/v0.1.98...v0.1.99) (2020-07-20)
+
+
+
+## [0.1.98](https://github.com/yonui/yonui-cli/compare/v0.1.95...v0.1.98) (2020-07-20)
+
+
+### Bug Fixes
+
+* publish增加api businessType说明 ([bf944b4](https://github.com/yonui/yonui-cli/commit/bf944b4c43e17421171e39c1a824557006c47969))
+* version ([fcfb940](https://github.com/yonui/yonui-cli/commit/fcfb940604e7e24b7d8a684f169c09afeebf860b))
+
+
+### Features
+
+* cli支持装饰器;增加mdf底层控件分类,公共功能抽取 ([b996999](https://github.com/yonui/yonui-cli/commit/b996999e227cddb96adfcf25b7627e24e6a75527))
 
 
 
