@@ -1,3 +1,17 @@
+## [0.1.101](https://github.com/yonui/yonui-cli/compare/v0.1.100...v0.1.101) (2020-07-22)
+
+
+### Bug Fixes
+
+* jsdom is undefined ([6fd05f2](https://github.com/yonui/yonui-cli/commit/6fd05f297cebca779e4586243e63642842491f6e))
+
+
+### Features
+
+* yonui init 自动配置library ([afc4c2d](https://github.com/yonui/yonui-cli/commit/afc4c2dcd9dcc218360d29ea11567bfb7fcca1a6))
+
+
+
 <a name="0.1.100"></a>
 ## [0.1.100](https://github.com/yonui/yonui-cli/compare/v0.1.99...v0.1.100) (2020-07-20)
 
