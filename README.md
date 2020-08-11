@@ -40,10 +40,6 @@ $ yonui -v
   - `demo/` 组件的demo文件打包后的代码，按组件为单元划分，用于注册中心中的组件预览页面。
   - 其他如 `package.json` `readme.md`等文件
 
-- `yonui compress` 
-
-  在构建完成后，使用该命令将打包后的多个资源压缩成一个文件`result.tgz`，位于项目根目录，以供后续发布使用。
-
 ### 工程目录结构
 
 ```js
@@ -83,7 +79,7 @@ $ yonui -v
 | autoTemplate            | 启动本地预览时，是否自动生成预览框架                         | true           | true             |
 | sourcePath              | 组件库中组件源码所在目录                                     | string         | './components'   |
 | type                    | 组件库使用的是js代码还是ts代码                               | 'js'\|'ts'     | js               |
-| lib                     | 组件库依赖的组件库，在此配置后将在构建中排除，并可通过配置加入cdn地址以在预览时引入 | array          | -                |
+| lib                     | 避免将一些很通用的模块打包进你发布的library里，相当于external的模块声明。可通过配置加入cdn地址以在本地预览时引入。 | array          | -                |
 | extraImport             | 本地预览时额外导入的js/css文件                               | object         | -                |
 | buildImport             | 构建组件库时额外导入的js/css文件和导出文件                   | object         | -                |
 | libPath                 | 组件库构建lib文件的根路径                                    | string         | 同sourcePath     |
