@@ -16,7 +16,7 @@ const compUtils = {
       oThis.newModel = new cb.models[newModelType](oThis.modelData || {});
       if (cItemName) {
         viewModel.removeProperty(cItemName)
-        viewModel.addProperty('new10', oThis.newModel)
+        viewModel.addProperty(cItemName, oThis.newModel)
       }
     }
     const currentModel = oThis.newModel || oThis.props.model;
