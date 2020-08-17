@@ -107,7 +107,7 @@ const writeBuildEntry = () => {
 
   const __Library = `const __Library = ${JSON.stringify(exp).replace(/'|"/g, '')}\n`
   // 运行态注册扩展组件
-  const extendComp = setExtendComp ? "if (window.cb && window.cb.setExtendComp) { window.cb.setExtendComp({'other': Object.assign({}, __Library)})}\n" : ''
+  const extendComp = setExtendComp ? "if (typeof window !== 'undefined' && window.cb && window.cb.setExtendComp) { window.cb.setExtendComp({'other': Object.assign({}, __Library)})}\n" : ''
   imp += `import './index.less';\n${__Library}\n${extendComp}export default {${expStr}...__Library, _${manifestJson.name}_version: '${getPackageJson().version}'}`
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.js`), imp)
   fse.outputFile(path.resolve(`${getTempDir()}/temp/build/index.less`), impLess)
