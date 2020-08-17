@@ -1,7 +1,0 @@
-node_modules
-lib
-es
-.DS_Store
-dist
-.yonui
-package-lock.json
