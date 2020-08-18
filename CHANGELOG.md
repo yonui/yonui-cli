@@ -1,3 +1,14 @@
+## [0.2.1](https://github.com/yonui/yonui-cli/compare/v0.1.101...v0.2.1) (2020-08-18)
+
+
+### Bug Fixes
+
+* citemNamw ([c27d221](https://github.com/yonui/yonui-cli/commit/c27d221815d6d4479eba4211d1f478fe6f364724))
+* format ([7c502ba](https://github.com/yonui/yonui-cli/commit/7c502ba58178509b00ae09f1d56ccd4da0da0693))
+* mdfComponent以包形式管理 ([5e30a1b](https://github.com/yonui/yonui-cli/commit/5e30a1b4408c6ddd6296d55c91756bea4d48ba98))
+
+
+
 ## [0.1.101](https://github.com/yonui/yonui-cli/compare/v0.1.100...v0.1.101) (2020-07-22)
 
 
