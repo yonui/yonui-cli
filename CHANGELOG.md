@@ -1,3 +1,12 @@
+## [0.2.2](https://github.com/yonui/yonui-cli/compare/v0.2.1...v0.2.2) (2020-08-20)
+
+
+### Bug Fixes
+
+* 修改svg loader ([04e1339](https://github.com/yonui/yonui-cli/commit/04e13391ad72fadf246c2f5577830c328495df8b))
+
+
+
 ## [0.2.1](https://github.com/yonui/yonui-cli/compare/v0.1.101...v0.2.1) (2020-08-18)
 
 
