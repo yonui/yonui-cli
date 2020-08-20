@@ -84,12 +84,8 @@ module.exports = () => {
           }]
         },
         {
-          test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
+          test: /\.(eot|ttf|woff|woff2|svg)(\?\S*)?$/,
           loader: require.resolve('url-loader')
-        },
-        {
-          test: /\.svg$/,
-          loader: require.resolve('@svgr/webpack')
         }
       ]
     }
