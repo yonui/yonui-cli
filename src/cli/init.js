@@ -71,7 +71,7 @@ const create = async (ans = { codeMode: 'ts', device: 'PC', author: 'Hyj', proje
     fse.outputJSONSync(packagePath, { ...packageJson, author: ans.author, name: ans.project }, { replacer: null, spaces: 2 })
     fse.outputJSONSync(manifestPath, { ...manifestJson, name: libraryName }, { replacer: null, spaces: 2 })
     fse.remove(path.resolve(filepath, templateTempFile));
-    console.log(chalk.cyan(`[Tips] : Project has inited ! 🏆  cd ${ans.project} && ynpm install && ynpm start`));
+    console.log(chalk.cyan(`[Tips] : Project has inited ! 🏆  cd ${ans.project} && ynpm install`));
   })
 }
 

@@ -67,10 +67,33 @@ function getControlTypes (comps) {
   for (const key in comps) {
     const obj = {}
     const currentCompInfo = componentsInfo[i] || {}
+    const type = (currentCompInfo.type || 'control').toLocaleLowerCase();
+    // 代表控件的类型
+    let groupId = '40280d70726eaebd01726edb34e70046'
+    const defaults = {}
+    if (type.includes('container')) {
+      defaults.uiExtClass = 'xcontainer'
+      defaults.uiTable = 'BillTplGroupBase'
+      defaults.uiObject = 'containers'
+      groupId = '40280d70726eaebd01726edb21570042'
+    } else if (type.includes('button')) {
+      defaults.uiExtClass = 'xbutton'
+      defaults.uiTable = 'BillToolbarItem'
+      defaults.uiObject = 'controls'
+      groupId = '40280d70726eaebd01726edb454c0047'
+    } else {
+      defaults.uiExtClass = 'xcontrol'
+      defaults.uiObject = 'controls'
+      defaults.uiTable = 'BillItemBase'
+    }
+
     obj.name = currentCompInfo.label
     obj.path = comps[key]
-    obj.businessType = currentCompInfo.businessType
-    obj.code = key
+
+    obj.code = `${compMainfest.name}#${key}`
+    defaults.cControlType = key
+    obj.defaults = defaults
+    obj.groupId = groupId
     obj.propList = currentCompInfo.api
     // console.log('---', compMainfest);
     results.push(obj)
