@@ -1,3 +1,12 @@
+## [0.2.3](https://github.com/yonui/yonui-cli/compare/v0.2.2...v0.2.3) (2020-08-22)
+
+
+### Bug Fixes
+
+* link fix ([cd1a408](https://github.com/yonui/yonui-cli/commit/cd1a4089a326335c21376b24d64f4948cb015de0))
+
+
+
 ## [0.2.2](https://github.com/yonui/yonui-cli/compare/v0.2.1...v0.2.2) (2020-08-20)
 
 
