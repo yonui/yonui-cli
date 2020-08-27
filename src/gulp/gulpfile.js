@@ -150,7 +150,7 @@ task('manifest', (done) => {
   }
   done()
 })
-task('lib', series('javascript', 'es', 'less', 'img', 'extra'))
+task('lib', series('javascript', 'less', 'img', 'extra'))
 task('build', series('lib', 'writeBuildEntry', 'buildDist', 'manifest'))
 task('build-all', series('lib', 'writeBuildEntry', 'writeResources', 'buildDistAndDemo', 'manifest'))
 task('build-dist', series('writeBuildEntry', 'buildDist', 'manifest'))

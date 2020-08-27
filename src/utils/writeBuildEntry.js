@@ -84,7 +84,7 @@ const writeBuildEntry = () => {
         } else {
           imp += `import ${item} from '${_path}'\n`
         }
-        impLess += `@import '${_path}/style/index.less';\n`
+        // impLess += `@import '${_path}/style/index.less';\n`
         res[item] = item
       } else {
         res[item] = {}
