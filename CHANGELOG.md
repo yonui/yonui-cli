@@ -1,3 +1,12 @@
+## [0.2.5](https://github.com/yonui/yonui-cli/compare/v0.2.4...v0.2.5) (2020-09-01)
+
+
+### Bug Fixes
+
+* format ([eb864d2](https://github.com/yonui/yonui-cli/commit/eb864d2c2c21598c98faff5d347da12f7eb94447))
+
+
+
 ## [0.2.3](https://github.com/yonui/yonui-cli/compare/v0.2.2...v0.2.3) (2020-08-22)
 
 
