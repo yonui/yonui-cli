@@ -12,6 +12,12 @@ function customJsonStringify (key, value) {
 const writeManifest = () => {
   const output = getLibraConfig().output
   require('ignore-styles').default(['.sass', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.css', '.less', '.svg'])
+  const jsdom = require('jsdom');
+  const { JSDOM } = jsdom;
+  const { window } = new JSDOM('...');
+  const { document } = (new JSDOM('...')).window;
+  global.window = window;
+  global.document = document;
   const library = require(path.resolve(output.dist, 'index.js'))
   const manifestComponents = []
   Object.keys(library).forEach(compName => {
