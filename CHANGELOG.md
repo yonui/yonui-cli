@@ -1,3 +1,12 @@
+## [0.2.6](https://github.com/yonui/yonui-cli/compare/v0.2.5...v0.2.6) (2020-09-02)
+
+
+### Bug Fixes
+
+* build error ([16a15ac](https://github.com/yonui/yonui-cli/commit/16a15ac96765338ba9ff36eca8fe2d8e1e139064))
+
+
+
 ## [0.2.5](https://github.com/yonui/yonui-cli/compare/v0.2.4...v0.2.5) (2020-09-01)
 
 
