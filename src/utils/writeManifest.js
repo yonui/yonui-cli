@@ -18,6 +18,7 @@ const writeManifest = () => {
   const { document } = (new JSDOM('...')).window;
   global.window = window;
   global.document = document;
+  global.navigator = global.window.navigator
   const library = require(path.resolve(output.dist, 'index.js'))
   const manifestComponents = []
   Object.keys(library).forEach(compName => {
