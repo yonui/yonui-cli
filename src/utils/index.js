@@ -78,16 +78,22 @@ const download = async (options, filename, cb) => {
 }
 
 const getDir = (_path = '.', type = 'dir', config = {}) => {
-  const arr = fse.readdirSync(path.resolve(_path))
-  const isNeed = (item) => (!config.include || config.include.test(item)) && (!config.exclude || !config.exclude.test(item))
-  switch (type) {
-    case 'file': return arr.filter(item => {
-      return item.includes('.') && isNeed(item)
-    })
-    case 'dir': return arr.filter(item => {
-      return !item.includes('.') && isNeed(item)
-    })
-    case 'all': default: return arr
+  try {
+    const arr = fse.readdirSync(path.resolve(_path))
+    const isNeed = (item) => (!config.include || config.include.test(item)) && (!config.exclude || !config.exclude.test(item))
+    switch (type) {
+      case 'file': return arr.filter(item => {
+        return item.includes('.') && isNeed(item)
+      })
+      case 'dir': return arr.filter(item => {
+        return !item.includes('.') && isNeed(item)
+      })
+      case 'all': default: return arr
+    }
+  } catch (error) {
+    // console.log(error.message);
+    console.log('\x1b[91m', error.message)
+    return null
   }
 }
 
@@ -101,10 +107,10 @@ const getLibraConfig = () => {
   const isDev = process.env.NODE_ENV === 'development'
   let res = {}
   if (isDev && (configOverrideJson || libraConfigOverrideJson)) {
-    console.log('use override file')
+    // console.log('use override file')
     res = configOverrideJson || libraConfigOverrideJson
   } else if (configJson || libraConfigJson) {
-    console.log('use file')
+    // console.log('use file')
     res = configJson || libraConfigJson
   } else {
     console.log('Missing file: config.json ')

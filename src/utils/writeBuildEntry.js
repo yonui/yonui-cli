@@ -51,6 +51,7 @@ const writeBuildEntry = () => {
       if (typeof obj[item] === 'string') {
         const _path = formatPath(path.join('../../../', obj[item])) // path.resolve(obj[item]);
         const fileArr = getDir(obj[item], 'file')
+        if (!fileArr) return
         const _manifestExists = fileArr.some(item => item.match(/^manifest\.(j|t)sx?$/))
         const _readmeExists = fileArr.some(item => item.match(/^README\.md$/))
         // const _manifestExists = fse.existsSync(`${_path}/manifest.tsx`) || fse.existsSync(`${_path}/manifest.ts`) || fse.existsSync(`${_path}/manifest.jsx`) || fse.existsSync(`${_path}/manifest.js`)
