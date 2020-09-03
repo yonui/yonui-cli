@@ -1,3 +1,12 @@
+## [0.2.9](https://github.com/yonui/yonui-cli/compare/v0.2.8...v0.2.9) (2020-09-03)
+
+
+### Bug Fixes
+
+* build 文件不存在时给出提示;不阻塞流程 ([5595d74](https://github.com/yonui/yonui-cli/commit/5595d7470888679cd69b4e59f61a39ba39c98059))
+
+
+
 ## [0.2.8](https://github.com/yonui/yonui-cli/compare/v0.2.7...v0.2.8) (2020-09-03)
 
 
