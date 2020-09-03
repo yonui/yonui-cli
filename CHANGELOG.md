@@ -1,3 +1,12 @@
+## [0.2.7](https://github.com/yonui/yonui-cli/compare/v0.2.6...v0.2.7) (2020-09-03)
+
+
+### Features
+
+* create component reset name and label ([03f835b](https://github.com/yonui/yonui-cli/commit/03f835b4922331af16cf8e6667835ef446b9d93f))
+
+
+
 ## [0.2.6](https://github.com/yonui/yonui-cli/compare/v0.2.5...v0.2.6) (2020-09-02)
 
 
