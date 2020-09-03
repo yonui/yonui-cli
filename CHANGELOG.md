@@ -1,3 +1,12 @@
+## [0.2.8](https://github.com/yonui/yonui-cli/compare/v0.2.7...v0.2.8) (2020-09-03)
+
+
+### Bug Fixes
+
+* create name ([e4519ee](https://github.com/yonui/yonui-cli/commit/e4519ee5a9c52fe94d5fc2354da810181a94182a))
+
+
+
 ## [0.2.7](https://github.com/yonui/yonui-cli/compare/v0.2.6...v0.2.7) (2020-09-03)
 
 
