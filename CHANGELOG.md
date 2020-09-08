@@ -1,3 +1,17 @@
+## [0.2.10](https://github.com/yonui/yonui-cli/compare/v0.2.9...v0.2.10) (2020-09-08)
+
+
+### Bug Fixes
+
+* 优化输出内容&& zip ([3c914b8](https://github.com/yonui/yonui-cli/commit/3c914b8f9e3b1d2476f46a16873625e90380f90d))
+
+
+### Features
+
+* 产出物支持zip压缩 ([3c102c8](https://github.com/yonui/yonui-cli/commit/3c102c8c4c77d04af91a5231e58c438066d8ce38))
+
+
+
 ## [0.2.9](https://github.com/yonui/yonui-cli/compare/v0.2.8...v0.2.9) (2020-09-03)
 
 
