@@ -224,10 +224,16 @@ const logger = {
     if (param.length > 0) console.log(chalk.green('[success]:', ...param))
   },
   warnning: (...param) => {
-    if (param.length > 0) console.log(chalk.yellow('[warnning]:', ...param))
+    if (param.length > 0) {
+      const msg = param.join();
+      msg.length > 0 && console.log(chalk.yellow('[warnning]:', msg))
+    }
   },
   error: (...param) => {
-    if (param.length > 0) console.log(chalk.red('[error]:', ...param))
+    if (param.length > 0) {
+      const msg = param.join();
+      msg.length > 0 && console.log(chalk.red('[error]:', msg))
+    }
   }
 }
 module.exports = {

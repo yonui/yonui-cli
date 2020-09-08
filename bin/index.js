@@ -101,6 +101,12 @@ const libra = () => {
       cli.compress()
     })
 
+  program.command('zip')
+    .description('zip build file')
+    .action(() => {
+      cli.zip()
+    })
+
   program
     .command('clg')
   // .option("--c", "cc")
