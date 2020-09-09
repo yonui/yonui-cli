@@ -39,12 +39,17 @@ function writeManifestJson (name, path) {
   // 更改当前组件的name和lable为当前控件名称
   if (name) {
     const compPath = `components/${paramCase(name)}/manifest.js`;
+    const libraConfig = getLibraConfig()
     fs.readFile(compPath, 'utf8', function (err, data) {
       if (err) {
         return console.log(err);
       }
-      var result = data.replace(/name: 'name'/, `name: '${name}'`);
+      let result = data.replace(/name: 'name'/, `name: '${name}'`);
       result = result.replace(/label: 'label'/, `label: '${name}'`);
+      // 如果是PC扩展组件不需要UIObject信息
+      if (libraConfig.device === 'PC') {
+        result = result.replace(/,uiObject: UIObject.Controls,\n/, ',');
+      }
       fs.writeFile(compPath, result, 'utf8', function (err) {
         if (err) return console.log(err);
       });
